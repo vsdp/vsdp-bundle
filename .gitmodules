@@ -22,3 +22,12 @@
 [submodule "solver/csdp"]
 	path = solver/csdp
 	url = https://github.com/coin-or/Csdp.git
+[submodule "vsdp/2012"]
+	path = vsdp/2012
+	url = https://github.com/vsdp/vsdp-2012.git
+[submodule "vsdp/2006"]
+	path = vsdp/2006
+	url = https://github.com/vsdp/vsdp-2006.git
+[submodule "vsdp/2018"]
+	path = vsdp/2018
+	url = https://github.com/vsdp/vsdp-2018.git
