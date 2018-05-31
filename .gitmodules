@@ -1,0 +1,21 @@
+[submodule "solver/sdpt3"]
+	path = solver/sdpt3
+	url = https://github.com/sqlp/sdpt3.git
+[submodule "solver/sedumi"]
+	path = solver/sedumi
+	url = https://github.com/sqlp/sedumi.git
+[submodule "benchmarks/ESC"]
+	path = benchmarks/ESC
+	url = https://github.com/vsdp/ESC.git
+[submodule "benchmarks/RDM"]
+	path = benchmarks/RDM
+	url = https://github.com/vsdp/RDM.git
+[submodule "benchmarks/SDPLIB"]
+	path = benchmarks/SDPLIB
+	url = https://github.com/vsdp/SDPLIB.git
+[submodule "benchmarks/SPARSE_SDP"]
+	path = benchmarks/SPARSE_SDP
+	url = https://github.com/vsdp/SPARSE_SDP.git
+[submodule "benchmarks/DIMACS"]
+	path = benchmarks/DIMACS
+	url = https://github.com/vsdp/DIMACS.git
