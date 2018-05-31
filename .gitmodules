@@ -19,3 +19,6 @@
 [submodule "benchmarks/DIMACS"]
 	path = benchmarks/DIMACS
 	url = https://github.com/vsdp/DIMACS.git
+[submodule "solver/csdp"]
+	path = solver/csdp
+	url = https://github.com/coin-or/Csdp.git
