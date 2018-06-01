@@ -1,4 +1,7 @@
 github: [metadata]
+zip_url: https://example.com/foo.zip
+tar_url: https://example.com/foo.tar.gz
+repository: vsdp/vsdp.github.io
 encoding: UTF-8
 kramdown:
   input: GFM
