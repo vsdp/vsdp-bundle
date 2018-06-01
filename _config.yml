@@ -1,0 +1,15 @@
+github: [metadata]
+encoding: UTF-8
+kramdown:
+  input: GFM
+  hard_wrap: false
+future: false
+jailed: false
+incremental: true
+theme: jekyll-theme-minimal
+title: "VSDP"
+description: "Verified SemiDefinite-quadratic-linear Programming"
+logo: /doc/img/sdp_cone.png
+show_downloads: true
+include: ['_pages']
+exclude: [benchmarks/, solver/, vsdp/]
