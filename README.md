@@ -1,4 +1,4 @@
-# VSDP: Verified SemiDefinite-quadratic-linear Programming
+# VSDP &mdash; <small>Verified SemiDefinite-quadratic-linear Programming</small>
 
 VSDP is a software package that is designed for the computation of verified
 results in conic programming.  The current version of VSDP supports the
@@ -30,10 +30,10 @@ supported as well.
 
 ## Contributors
 
-- Christian Jansson <<jansson@tuhh.de>>
-- Marko Lange <<m.lange@tuhh.de>>
+- Christian Jansson (<jansson@tuhh.de>)
+- Marko Lange (<m.lange@tuhh.de>)
 - Viktor Härter
-- Kai Torben Ohlhus <<kai.ohlhus@tuhh.de>>
+- Kai Torben Ohlhus (<kai.ohlhus@tuhh.de>)
 
 
 ## References
