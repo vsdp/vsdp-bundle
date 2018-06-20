@@ -1,6 +1,6 @@
 ---
 title: VSDP -- Verified SemiDefinite-quadratic-linear Programming
-permalink: vsdpdemo.html
+permalink: demovsdp.html
 ---
 
 VSDP is a software package that is designed for the computation of verified
