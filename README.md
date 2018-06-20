@@ -9,10 +9,9 @@ rigorous error bounds of the true optimal value, verified enclosures of
 errors due to floating point arithmetic are taken into account.
 
 VSDP is completely written in [MATLAB](https://www.mathworks.com) /
-[GNU Octave](https://www.gnu.org/software/octave).  Therefore it runs on any
-system that runs  It uses
-[INTLAB](http://www.ti3.tuhh.de/rump/intlab), and thus interval input data are
-supported as well.
+[GNU Octave](https://www.gnu.org/software/octave) and thus runs on any system
+supporting them.  It uses [INTLAB](http://www.ti3.tuhh.de/rump/intlab) and
+therefore supports interval input data as well.
 
 
 
