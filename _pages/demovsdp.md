@@ -46,11 +46,11 @@ Computational errors fall into three classes:
 3. Unintentional bugs and blunders in software and hardware.
 
 
-VSDP controls rounding errors rigorously.  Please contact us, if you discover
-any unintentional bugs [jansson@tuhh.de](mailto:jansson@tuhh.de).  In the
-latter case the version numbers of the used software together with an
-appropriate M-file should be provided.  Any suggestions, comments, and
-criticisms are welcome.  Many thanks in advance.
+VSDP controls rounding errors rigorously.  Please contact [jansson@tuhh.de](jansson@tuhh.de),
+if you discover any unintentional bugs.  In the latter case the version
+numbers of the used software together with an appropriate M-file should be
+provided.  Any suggestions, comments, and criticisms are welcome.  Many thanks
+in advance.
 
 For theoretical details of the implemented algorithms in VSDP we refer to
 [[Jansson2004]](/references#Jansson2004),
@@ -98,37 +98,29 @@ fulfilled and the necessary search paths are set, VSDP is fully functional.
 
 ## The Conic Programming Problem
 
-Let $\mathbb{R}^{n}_{+}$ denote the nonnegative orthant, and let
-$
-\mathbb{L}^{n} := \{x \in \mathbb{R}^{n} \colon x_{1} \geq |`x_{2:n}`|_{2}\},
-$
-be the Lorentz cone.  We denote by $\langle c, x \rangle := c^{T} x$ the
-usual Euclidean inner product of vectors in $\mathbb{R}^{n}$.
+Let \(\mathbb{R}^{n}_{+}\) denote the nonnegative orthant, and let
+\(\mathbb{L}^{n} := \{x \in \mathbb{R}^{n} \colon x_{1} \geq ||x_{2:n}||_{2}\}\)
+be the Lorentz cone.  We denote by \(\langle c, x \rangle := c^{T} x\) the
+usual Euclidean inner product of vectors in \(\mathbb{R}^{n}\).
 
 The set
-$$
-\label{sdpCone}
-\mathbb{S}^{n}_{+} := \left\{ X \in \mathbb{R}^{n \times n} \colon
-X = X^{T}, v^{T} X v \geq 0, \forall v \in \mathbb{R}^{n} \right\},
-$$
-denotes the cone of symmetric positive semidefinite $n \times n$ matrices.
-For symmetric matrices $X$, $Y$ the inner product is given by
-$$
-\label{innerProdMatr}
-\langle X,Y \rangle := \text{trace}(XY).
-$$
+\(\mathbb{S}^{n}_{+} := \left\{ X \in \mathbb{R}^{n \times n} \colon
+X = X^{T}, v^{T} X v \geq 0, \forall v \in \mathbb{R}^{n} \right\}\)
+denotes the cone of symmetric positive semidefinite \(n \times n\) matrices.
+For symmetric matrices \(X\), \(Y\) the inner product is given by
+\(\langle X,Y \rangle := \text{trace}(XY)\).
 
-Let $A^{f}$ and $A^{l}$ be a $m \times n_{f}$ and a $m \times n_{l}$ matrix,
-respectively, and let $A_{i}^{q}$ be $m \times q_{i}$ matrices for
-$i = 1,\ldots,n_{q}$.  Let $x^{f} \in \mathbb{R}^{n_{f}}$,
-$x^{l} \in \mathbb{R}^{n_{l}}$, $x_{i}^{q} \in \mathbb{R}^{q_i}$, and
-$b \in \mathbb{R}^{m}$.  Moreover, let $A_{1,j}^{s}, \ldots, A_{m,j}^{s}$,
-$C_{j}^{s}$, $X_{j}^{s}$ be symmetric $(s_{j} \times s_{j})$ matrices for
-$j = 1, \ldots, n_{s}$.
+Let \(A^{f}\) and \(A^{l}\) be a \(m \times n_{f}\) and a \(m \times n_{l}\) matrix,
+respectively, and let \(A_{i}^{q}\) be \(m \times q_{i}\) matrices for
+\(i = 1,\ldots,n_{q}\).  Let \(x^{f} \in \mathbb{R}^{n_{f}}\),
+\(x^{l} \in \mathbb{R}^{n_{l}}\), \(x_{i}^{q} \in \mathbb{R}^{q_i}\), and
+\(b \in \mathbb{R}^{m}\).  Moreover, let \(A_{1,j}^{s}, \ldots, A_{m,j}^{s}\),
+\(C_{j}^{s}\), \(X_{j}^{s}\) be symmetric \((s_{j} \times s_{j})\) matrices for
+\(j = 1, \ldots, n_{s}\).
 
 Now we can define the conic semidefinite-quadratic-linear programming
 problem in primal standard form:
-$$
+\(\)
 \begin{equation}
 \begin{aligned}
 \hat{f}_{p} := \min\quad
@@ -151,17 +143,17 @@ $$
 \end{aligned}
 \label{stdPrim}
 \end{equation}
-$$
+\(\)
 
 Here, the linear operator
-$$
+\(\)
 \label{linOpAij}
 \mathcal{A}_{j}^{s}(X_{j}^{s}) := (\langle A_{1,j}^{s}, X_{j}^{s} \rangle,
 \ldots, \langle A_{m,j}^{s}, X_{j}^{s} \rangle)^{T},
-$$
-maps the symmetric matrices $X_{j}^{s}$ to $\mathbb{R}^{m}$.
+\(\)
+maps the symmetric matrices \(X_{j}^{s}\) to \(\mathbb{R}^{m}\).
 
-By definition the vector $x^{f}$ contains all unconstrained or free
+By definition the vector \(x^{f}\) contains all unconstrained or free
 variables, whereas all other variables are bounded by conic constraints.
 In several applications some solvers (for example SDPA or CSDP) require that
 free variables are converted into the difference of nonnegative variables.
@@ -174,12 +166,12 @@ The objective function is a linear function and all equality constraints are
 linear, and thus conic programming is an extension of linear programming with
 additional conic constraints.
 
-The adjoint operator $(\mathcal{A}_{j}^{s})^{*}$ of the linear operator
-$\mathcal{A}_{j}^{s}$ is
-$$(\mathcal{A}_{j}^{s})^{*} y := \sum_{k=1}^{n_{s}} A_{k,j}^{s} y_{k}.$$
+The adjoint operator \((\mathcal{A}_{j}^{s})^{*}\) of the linear operator
+\(\mathcal{A}_{j}^{s}\) is
+\[(\mathcal{A}_{j}^{s})^{*} y := \sum_{k=1}^{n_{s}} A_{k,j}^{s} y_{k}.\]
 
 The dual problem associated with the primal problem \eqref{stdPrim} is
-$$
+\(\)
 \begin{equation}
 \begin{aligned}
 \hat{f}_{d} := \max\quad
@@ -196,23 +188,23 @@ $$
 \end{aligned}
 \label{StdDual}
 \end{equation}
-$$
+\(\)
 
 Occasionally, it is useful to represent the conic programming problem in a
 more compact form by using the vectorization operator \eqref{vec}.  For any
-quadratic matrix $X$ this operator is defined by
-$$
+quadratic matrix \(X\) this operator is defined by
+\(\)
 \label{vec}
 x = \operatorname{vec}(X) = (X_{11}, \ldots, X_{n1},
                              X_{12}, \ldots, X_{n2}, \ldots,
                              X_{1n}, \ldots, X_{nn})^{T}.
-$$
+\(\)
 
-The inverse operation is denoted by $\operatorname{mat}(x)$ such that
-$\operatorname{mat}(\operatorname{vec}(X)) = X$.
+The inverse operation is denoted by \(\operatorname{mat}(x)\) such that
+\(\operatorname{mat}(\operatorname{vec}(X)) = X\).
 
 We condense the above quantities as follows:
-$$
+\(\)
 \begin{equation}
 \begin{aligned}
 x^{s} &amp;:= (\operatorname{vec}(X_{1}^{s}); \ldots;
@@ -226,17 +218,17 @@ c     &amp;:= (c^{f}; c^{l}; c^{q}; c^{s}).
 \end{aligned}
 \label{condensedX}
 \end{equation}
-$$
+\(\)
 
-Here $c^{q}$ and $x^{q}$ consist of $\bar{q} = \sum_{i=1}^{n_{q}} q_i$
-components, and $c^{s}$, $x^{s}$ are vectors of length
-$\bar{s} = \sum_{j=1}^{n_{s}} s_{j}^{2}$.  The total length of $x$ and $c$
-is equal to $n = n_{f} + n_{l} + \bar{q} + \bar{s}$.  As in the syntax of
+Here \(c^{q}\) and \(x^{q}\) consist of \(\bar{q} = \sum_{i=1}^{n_{q}} q_i\)
+components, and \(c^{s}\), \(x^{s}\) are vectors of length
+\(\bar{s} = \sum_{j=1}^{n_{s}} s_{j}^{2}\).  The total length of \(x\) and \(c\)
+is equal to \(n = n_{f} + n_{l} + \bar{q} + \bar{s}\).  As in the syntax of
 Matlab the separating column denotes the vertical concatenation of the
 corresponding vectors.
 
 The matrices describing the linear equations are condensed as follows:
-$$
+\(\)
 \begin{equation}
 \begin{aligned}
 A^{s} &amp;= (A_{1}^{s}, \ldots, A_{n_{s}}^{s}),
@@ -247,10 +239,10 @@ A     &amp;= (A^{f}, A^{l}, A^{q}, A^{s}).
 \end{aligned}
 \label{condensedA}
 \end{equation}
-$$
+\(\)
 
-Let the constraint cone $K$ and its dual cone $K^{*}$ be
-$$
+Let the constraint cone \(K\) and its dual cone \(K^{*}\) be
+\(\)
 \begin{equation}
 \begin{aligned}
 K &amp;:=&amp;
@@ -266,55 +258,55 @@ K^{*} &amp;:=&amp;
 \end{aligned}
 \label{primalDualCone}
 \end{equation}
-$$
+\(\)
 
 With these abbreviations we obtain the following block form of the conic
 problem \eqref{stdPrim}:
-$$
+\(\)
 \label{cpPrim}
 \begin{array}{ll}
 \text{minimize}   &amp; c^{T} x, \\
 \text{subject to} &amp; Ax = b, \\
                   &amp; x \in K,
 \end{array}
-$$
-with optimal value $\hat{f}_{p}$ and the corresponding dual problem
-$$
+\(\)
+with optimal value \(\hat{f}_{p}\) and the corresponding dual problem
+\(\)
 \label{cpDual}
 \begin{array}{ll}
 \text{maximize}   &amp; b^{T} y, \\
 \text{subject to} &amp; z = c - (A)^{T} y \in K^{*},
 \end{array}
-$$
-with optimal value $\hat{f}_{d}$.
+\(\)
+with optimal value \(\hat{f}_{d}\).
 
-For a linear programming problem a vector $x \in \mathbb{R}^{n_{l}}$ is in
-the interior of the cone $K = \mathbb{R}^{n_{l}}_{+}$, if $x_{i} > 0$ for
-$i = 1,\ldots,n_{l}$.  For a vector $x \in \mathbb{R}^{n}$ let
-$\lambda_{\min}(x) := x_{1} - ||x_{:}||_{2}$ denote the smallest eigenvalue
-of $x$ (see [[Alizadeh2003]](/references#Alizadeh2003)).  Then
+For a linear programming problem a vector \(x \in \mathbb{R}^{n_{l}}\) is in
+the interior of the cone \(K = \mathbb{R}^{n_{l}}_{+}\), if \(x_{i} > 0\) for
+\(i = 1,\ldots,n_{l}\).  For a vector \(x \in \mathbb{R}^{n}\) let
+\(\lambda_{\min}(x) := x_{1} - ||x_{:}||_{2}\) denote the smallest eigenvalue
+of \(x\) (see [[Alizadeh2003]](/references#Alizadeh2003)).  Then
 for second order cone programming problems a vector
-$x \in \mathbb{R}^{\bar{q}}$ is in the interior of the cone
-$K = \mathbb{L}^{q_{1}} \times, \ldots, \times \mathbb{L}^{q_{n_{q}}}$,
-if $\lambda_{\min}(x_{i}) > 0$ for $i = 1,\ldots,n_{q}$.  Furthermore, for
-a symmetric matrix $X \in \mathbb{S}^{n}$ let $\lambda_{\min}(X)$ denote the
-smallest eigenvalue of $X$.  Then for semidefinite programming problems a
+\(x \in \mathbb{R}^{\bar{q}}\) is in the interior of the cone
+\(K = \mathbb{L}^{q_{1}} \times, \ldots, \times \mathbb{L}^{q_{n_{q}}}\),
+if \(\lambda_{\min}(x_{i}) > 0\) for \(i = 1,\ldots,n_{q}\).  Furthermore, for
+a symmetric matrix \(X \in \mathbb{S}^{n}\) let \(\lambda_{\min}(X)\) denote the
+smallest eigenvalue of \(X\).  Then for semidefinite programming problems a
 symmetric block matrix
-$$
+\(\)
 X = \begin{pmatrix}
 X_{1} &amp; 0 &amp; 0 \\
 0 &amp; \ddots &amp; 0 \\
 0 &amp; 0 &amp; X_{n_{s}}
 \end{pmatrix},
-$$
+\(\)
 is in the interior of the cone
-$K = \mathbb{S}^{s_{1}}_{+} \times,\ldots,\times \mathbb{S}^{s_{n_{s}}}_{+}$,
-if $\lambda_{\min}(X_{j}) > 0$ for $j = 1,\ldots,n_{s}$.
+\(K = \mathbb{S}^{s_{1}}_{+} \times,\ldots,\times \mathbb{S}^{s_{n_{s}}}_{+}\),
+if \(\lambda_{\min}(X_{j}) > 0\) for \(j = 1,\ldots,n_{s}\).
 
 It is well known that for linear programming problems strong duality
-$\hat{f}_{p} = \hat{f}_{d}$ holds without any constraint qualifications.
+\(\hat{f}_{p} = \hat{f}_{d}\) holds without any constraint qualifications.
 General conic programs satisfy only the weak duality condition
-$\hat{f}_{d} \leq \hat{f}_{p}$.  Strong duality requires additional
+\(\hat{f}_{d} \leq \hat{f}_{p}\).  Strong duality requires additional
 constraint qualifications, such as *Slater's constraint qualifications* (see
 [[Boyd1996]](/references#Boyd1996),
 [[NestNem]](/references#NestNem)).
@@ -322,11 +314,11 @@ constraint qualifications, such as *Slater's constraint qualifications* (see
 **Strong Duality Theorem**
 
 * If the primal problem is strictly feasible (i.e. there exists a primal
-  feasible point $x$ in the interior of $K$) and $\hat{f}_{p}$ is finite,
-  then $\hat{f}_{p} = \hat{f}_{d}$ and the dual supremum is attained.
-* If the dual problem is strictly feasible (i.e. there exists some $y$ such
-  that $z = c - (A)^{T} y$ is in the interior of $K^{*}$) and $\hat{f}_{d}$
-  is finite, then $\hat{f}_{d} = \hat{f}_{p}$, and the primal infimum is
+  feasible point \(x\) in the interior of \(K\)) and \(\hat{f}_{p}\) is finite,
+  then \(\hat{f}_{p} = \hat{f}_{d}\) and the dual supremum is attained.
+* If the dual problem is strictly feasible (i.e. there exists some \(y\) such
+  that \(z = c - (A)^{T} y\) is in the interior of \(K^{*}\)) and \(\hat{f}_{d}\)
+  is finite, then \(\hat{f}_{d} = \hat{f}_{p}\), and the primal infimum is
   attained.
 
 
@@ -364,7 +356,7 @@ This section provides a step-by-step introduction to VSDP.  Basically, VSDP
 consists of four main functions: `mysdps`, `vsdplow`, `vsdpup`, and
 `vsdpinfeas`.  The function `mysdps` represents a simple interface to the
 conic solvers mentioned in the first chapter.  The functions `vsdplow` and
-`vsdpup` compute rigorous enclosures of $ε$-optimal solutions as well as
+`vsdpup` compute rigorous enclosures of \(ε\)-optimal solutions as well as
 lower and upper bounds of the primal and dual optimal value, respectively.
 The function `vsdpinfeas` establishes a rigorous certificate of primal or
 dual infeasibility.
@@ -378,18 +370,18 @@ can be imported into VSDP.
 In this section we describe how linear programming problems can be solved
 with VSDP.  In particular, two linear programming examples are considered
 in detail.  Each conic problem is fully described by the four variables
-$(A,b,c,K)$.  The first two quantities represent the affine constraints
-$Ax = b$.  The third is the primal objective vector `c`, and the last
+\((A,b,c,K)\).  The first two quantities represent the affine constraints
+\(Ax = b\).  The third is the primal objective vector `c`, and the last
 describes the underlying cone.  The cone `K` is a structure with four fields:
 `K.f`, `K.l`, `K.q`, and `K.s`.  The field `K.f` stores the number of free
-variables $n_{f}$, the field `K.l` stores the number of nonnegative variables
-$n_{l}$, the field `K.q` stores the dimensions $q_{1}, \ldots, q_{n_{q}}$ of
-the second order cones, and similarly `K.s` stores the dimensions $s_{1},
-\ldots, s_{n_{s}}$ of the semidefinite cones.  If a component of `K` is
+variables \(n_{f}\), the field `K.l` stores the number of nonnegative variables
+\(n_{l}\), the field `K.q` stores the dimensions \(q_{1}, \ldots, q_{n_{q}}\) of
+the second order cones, and similarly `K.s` stores the dimensions \(s_{1},
+\ldots, s_{n_{s}}\) of the semidefinite cones.  If a component of `K` is
 empty, then it is assumed that the corresponding cone do not occur.
 
 Consider the linear programming problem
-$$
+\(\)
 \label{LP1}
 \begin{array}{ll}
 \text{minimize}   &amp; 2x_{2} + 3x_{4} + 5x_{5}, \\
@@ -400,9 +392,9 @@ $$
 \end{pmatrix} x = \begin{pmatrix} 2 \\ 3 \end{pmatrix}, \\
 &amp; x \in \mathbb{R}^{5}_{+},
 \end{array}
-$$
+\(\)
 with its corresponding dual problem
-$$
+\(\)
 \label{LP1Dual}
 \begin{array}{ll}
 \text{maximize}   &amp; 2 y_{1} + 3 y_{2}, \\
@@ -416,12 +408,12 @@ z = \begin{pmatrix} 0 \\ 2 \\ 0 \\ 3 \\ 5 \end{pmatrix} -
 1 &amp;  2
 \end{pmatrix} y \in \mathbb{R}^{5}_{+},
 \end{array}
-$$
+\(\)
 
 The unique exact optimal solution is given by
-$x^{*} = \begin{pmatrix} 0 & 0.25 & 0 & 0 & 1.5 \end{pmatrix}^{T}$,
-$y^{*} = \begin{pmatrix} 1 &2 \end{pmatrix}^{T}$ with
-$\hat{f}_{p} = \hat{f}_{d} = 8$.
+\(x^{*} = \begin{pmatrix} 0 & 0.25 & 0 & 0 & 1.5 \end{pmatrix}^{T}\),
+\(y^{*} = \begin{pmatrix} 1 &2 \end{pmatrix}^{T}\) with
+\(\hat{f}_{p} = \hat{f}_{d} = 8\).
 
 The input data of the problem in VSDP are
 
@@ -490,7 +482,7 @@ The output consists of
 
 1. a verified lower bound for the optimal value stored in `fL`,
 2. a rigorous interval enclosure of a dual feasible solution `y`, and
-3. a componentwise lower bound of $z = c - A^{T} y$ stored in `dl`.
+3. a componentwise lower bound of \(z = c - A^{T} y\) stored in `dl`.
 
 
 Since `dl` is positive, the dual problem is strictly feasible, and the
@@ -553,12 +545,12 @@ infsup(x(1))
 {% endhighlight %}
 
 Summarizing, we have obtained a primal dual interval solution pair that
-contains a primal and dual strictly feasible $ε$-optimal solution, where
-$ε = \frac{2 (fU-fL)}{|fU|+|fL|} \approx 4.83 \times 10^{-9}$.
+contains a primal and dual strictly feasible \(ε\)-optimal solution, where
+\(ε = \frac{2 (fU-fL)}{|fU|+|fL|} \approx 4.83 \times 10^{-9}\).
 
 How a linear program with free variables can be solved with VSDP is
-demonstrated by the following example with one free variable $x_{3}$:
-$$
+demonstrated by the following example with one free variable \(x_{3}\):
+\(\)
 \begin{array}{ll}
 \text{minimize}   &amp; x_{1} + x_{2} - 0.5 x_{3}, \\
 \text{subject to}
@@ -567,19 +559,19 @@ $$
 &amp; x_{1} \geq 0, \\
 &amp; x_{2} \geq 0.
 \end{array}
-$$
+\(\)
 
 The optimal solution pair of this problem is
-$x^{*} = \begin{pmatrix} \dfrac{5}{6} & 0 & -\dfrac{1}{6} \end{pmatrix}^{T}$,
-$y^{*} = \begin{pmatrix} \dfrac{1}{6} & \dfrac{5}{6}\end{pmatrix}^{T}$ with
-$\hat{f}_{p} = \hat{f}_{d} = \dfrac{11}{12}$.
+\(x^{*} = \begin{pmatrix} \dfrac{5}{6} & 0 & -\dfrac{1}{6} \end{pmatrix}^{T}\),
+\(y^{*} = \begin{pmatrix} \dfrac{1}{6} & \dfrac{5}{6}\end{pmatrix}^{T}\) with
+\(\hat{f}_{p} = \hat{f}_{d} = \dfrac{11}{12}\).
 
 When entering a problem the order of the variables is important: Firstly free
 variables, secondly nonnegative variables, thirdly second order cone
 variables, and last semidefinite variables.  This order must be maintained
 in the matrix `A` as well as in the primal objective `c`.  In the given
-example, the free variable is $x_{3}$, the nonnegative variables are $x_{1}$,
-$x_{2}$.  Second order cone variables and semidefinite variables are not
+example, the free variable is \(x_{3}\), the nonnegative variables are \(x_{1}\),
+\(x_{2}\).  Second order cone variables and semidefinite variables are not
 present.  Therefore, the problem data are
 
 {% highlight matlab %}
@@ -617,7 +609,7 @@ fU = vsdpup (A,b,c,K,xt,yt,zt)
 This section explains how to work with second order cone problems.  Due to
 \eqref{stdPrim} the second order cone problem in standard primal form is
 given by
-$$
+\(\)
 \label{socpPrim}
 \begin{array}{ll}
 \text{minimize}
@@ -628,9 +620,9 @@ $$
 &amp; x^{f} \in \mathbb{R}^{n_{f}}, \\
 &amp; x_{i}^{q} \in \mathbb{L}^{q_{i}}, \quad i = 1, \ldots, n_{q}.
 \end{array}
-$$
+\(\)
 The corresponding dual problem is
-$$
+\(\)
 \label{socpDual}
 \begin{array}{ll}
 \text{maximize}   &amp; b^{T} y, \\
@@ -642,11 +634,11 @@ $$
 \quad z^{f} \in \mathbb{R}^{n_{f}}, \\
 &amp; z^{f} = 0.
 \end{array}
-$$
+\(\)
 
 Let us consider the total least squares problem taken from
 [[ElGhaoui1997]](/references#ElGhaoui1997):
-$$
+\(\)
 \label{LSQexample}
 \begin{array}{ll}
 \text{maximize}   &amp; -y_{1} - y_{2}, \\
@@ -655,9 +647,9 @@ $$
 &amp; y_{2} \geq
   \begin{Vmatrix}\begin{pmatrix} 1 \\ y_{3:5} \end{pmatrix}\end{Vmatrix}_{2},
 \end{array}
-$$
+\(\)
 where
-$$
+\(\)
 P = \begin{pmatrix}
  3 &amp; 1 &amp; 4 \\
  0 &amp; 1 &amp; 1 \\
@@ -666,16 +658,16 @@ P = \begin{pmatrix}
 \end{pmatrix},
 \quad q = \begin{pmatrix} 0 \\ 2 \\ 1 \\ 3 \end{pmatrix},
 \quad y \in \mathbb{R}^5.
-$$
+\(\)
 We want to transform this problem to the dual form \eqref{socpDual}.
 The two inequalities can be written in the form
-$$
+\(\)
 \begin{pmatrix} y_{1} \\ q - P y_{3:5} \end{pmatrix} \in \mathbb{L}^{5}
 \quad\text{and}\quad
 \begin{pmatrix} y_{2} \\ 1 \\ y_{3:5} \end{pmatrix} \in \mathbb{L}^{5}.
-$$
+\(\)
 Since
-$$
+\(\)
 \begin{pmatrix} y_{1} \\ q - P y_{3:5} \end{pmatrix} =
 \underbrace{\begin{pmatrix} 0 \\ 0 \\ 2 \\ 1 \\ 3 \end{pmatrix}}_{=c_{1}^{q}}
 - \underbrace{\begin{pmatrix}
@@ -686,9 +678,9 @@ $$
  0 &amp; 0 &amp;  1 &amp; 4 &amp; 5
 \end{pmatrix}}_{=(A_{1}^{q})^{T}}
 \begin{pmatrix} y_{1} \\ y_{2} \\ y_{3} \\ y_{4} \\ y_{5} \end{pmatrix},
-$$
+\(\)
 and
-$$
+\(\)
 \begin{pmatrix} y_{2} \\ 1 \\ y_{3:5} \end{pmatrix} =
 \underbrace{\begin{pmatrix} 0 \\ 1 \\ 0 \\ 0 \\ 0 \end{pmatrix}}_{=c_{2}^{q}}
 - \underbrace{\begin{pmatrix}
@@ -699,9 +691,9 @@ $$
 0 &amp;  0 &amp;  0 &amp;  0 &amp; -1
 \end{pmatrix}}_{=(A_{2}^{q})^{T}}
 \begin{pmatrix} y_{1} \\ y_{2} \\ y_{3} \\ y_{4} \\ y_{5} \end{pmatrix},
-$$
+\(\)
 our dual problem \eqref{socpDual} takes the form
-$$
+\(\)
 \label{SOCPexample}
 \begin{array}{ll}
 \text{maximize}
@@ -723,8 +715,8 @@ $$
                    0 &amp;  0 &amp;  0 &amp;  0 &amp; -1
                   \end{pmatrix}}_{=A^{T}} y \in K^{*},
 \end{array}
-$$
-where $K^{*} = \mathbb{L}^{5} \times \mathbb{L}^{5}$.
+\(\)
+where \(K^{*} = \mathbb{L}^{5} \times \mathbb{L}^{5}\).
 
 We want to solve this problem with SeDuMi and enter the problem data of the
 primal problem.
@@ -804,13 +796,13 @@ lb, dl
 
 the primal and the dual set of feasible solutions have a non empty relative
 interior.  Thus Slater's constraint qualifications (**Strong Duality Theorem**)
-imply that the duality gap is zero.  The intervals $x$ and $y$ contain
-interior feasible $ε$-optimal solutions, where
-$ε = \dfrac{2 (fU-fL)}{|fU|+|fL|} \approx 1.85 \times 10^{-9}$.
+imply that the duality gap is zero.  The intervals \(x\) and \(y\) contain
+interior feasible \(ε\)-optimal solutions, where
+\(ε = \dfrac{2 (fU-fL)}{|fU|+|fL|} \approx 1.85 \times 10^{-9}\).
 
 The conic program \eqref{cpPrim} allows to mix constraints of different types.
 Let us, for instance, add the linear inequality
-$\sum_{i=1}^{5} y_{i} \leq 3.5$ to the previous dual problem.  By using the
+\(\sum_{i=1}^{5} y_{i} \leq 3.5\) to the previous dual problem.  By using the
 standard form \eqref{cpPrim}, \eqref{cpDual}, and the condensed quantities
 \eqref{condensedX} it follows that we must add to the matrix `A` the column
 consisting of ones and to `c` the value 3.5.  We extend the input data as
@@ -859,7 +851,7 @@ fL, fU
 ## Semidefinite Programming
 
 Let the SDP program be given in the standard form \eqref{cpPrim}
-$$
+\(\)
 \label{BlockDiagPSDP}
 \begin{array}{lll}
 \text{minimize}
@@ -870,9 +862,9 @@ $$
 &amp; X_{j}^{s} \in \mathbb{S}^{s_{j}}_{+},
 &amp; j = 1,\ldots,n_{s}.
 \end{array}
-$$
+\(\)
 Its dual problem \eqref{cpDual} is
-$$
+\(\)
 \label{BlockDiagDSDP}
 \begin{array}{ll}
 \text{maximize} &amp; b^{T} y, \\
@@ -880,14 +872,14 @@ $$
 &amp; Z_{j}^{s} = C_{j}^{s} - \sum_{i=1}^{m} y_{i} A_{i,j}^{s}
   \in \mathbb{S}^{s_{j}}_{+},\quad j = 1, \ldots, n_{s}.
 \end{array}
-$$
-The matrices $A_{i,j}^{s}, C_{j}^{s}, X_{j}^{s}$ are assumed to be
-symmetric $s_{j} \times s_{j}$ matrices. We store this problem in our
+\(\)
+The matrices \(A_{i,j}^{s}, C_{j}^{s}, X_{j}^{s}\) are assumed to be
+symmetric \(s_{j} \times s_{j}\) matrices. We store this problem in our
 condensed format \eqref{vec}, \eqref{condensedX}, and \eqref{condensedA}.
 
 Let us consider the example
 (see [[Borchers2009]](/references#Borchers2009)):
-$$
+\(\)
 \begin{array}{lll}
 \text{minimize}
 &amp; \sum_{j=1}^{3} \langle C_{j}^{s}, X_{j}^{s} \rangle, &amp; \\
@@ -898,9 +890,9 @@ $$
 &amp; X_{2}^{s} \in \mathbb{S}^{3}_{+}, \\
 &amp; X_{3}^{s} \in \mathbb{S}^{2}_{+},
 \end{array}
-$$
+\(\)
 where
-$$
+\(\)
 \begin{array}{ccc}
   A^{s}_{1,1} = \begin{pmatrix} 3 &amp; 1 \\ 1 &amp; 3 \end{pmatrix}
 &amp; A^{s}_{1,2} =
@@ -916,11 +908,11 @@ $$
 &amp; C^{s}_{3} = \begin{pmatrix} 0 &amp; 0 \\ 0 &amp; 0 \end{pmatrix} \\
   b = \begin{pmatrix} 1 \\ 2 \end{pmatrix} &amp; &amp;
 \end{array}
-$$
+\(\)
 
 In the condensed format the corresponding coefficient matrix and the primal
 objective are
-$$
+\(\)
 \begin{aligned}
 A &amp;= \begin{pmatrix}
      3 &amp; 1 &amp; 1 &amp; 3 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 \\
@@ -930,7 +922,7 @@ c &amp;= \begin{pmatrix}
   -2 &amp; -1 &amp; -1 &amp; -2 &amp; -3 &amp; 0 &amp; -1 &amp; 0 &amp; -2 &amp; 0 &amp; -1 &amp; 0 &amp; -3 &amp; 0 &amp; 0 &amp; 0 &amp; 0
   \end{pmatrix}^{T}.
 \end{aligned}
-$$
+\(\)
 
 We enter the problem data
 
@@ -999,20 +991,20 @@ error: 'xt' undefined near line 4 column 27
 {% endhighlight %}
 
 The components `lb(j)` are lower bounds of the smallest eigenvalues
-$\lambda_{\min}([X_{j}^{s}])$ for `j = 1,2,3`.  Hence `lb &gt; 0` proves that
-all real matrices $X_{j}^{s}$, that are contained in the corresponding
-interval matrices $[X_{j}^{s}]$, are in the interior of the cone
-$\mathbb{S}^{2}_{+} \times \mathbb{S}^{3}_{+} \times\mathbb{S}^{2}_{+}$,
-where the interval matrices $[X_{j}^{s}]$ are obtained by applying the `mat`
+\(\lambda_{\min}([X_{j}^{s}])\) for `j = 1,2,3`.  Hence `lb &gt; 0` proves that
+all real matrices \(X_{j}^{s}\), that are contained in the corresponding
+interval matrices \([X_{j}^{s}]\), are in the interior of the cone
+\(\mathbb{S}^{2}_{+} \times \mathbb{S}^{3}_{+} \times\mathbb{S}^{2}_{+}\),
+where the interval matrices \([X_{j}^{s}]\) are obtained by applying the `mat`
 operator to intval `x`.  Analogously, `dl(j)` are lower bounds for the
-smallest eigenvalues of the dual interval matrices $[Z_{j}^{s}]$ that
+smallest eigenvalues of the dual interval matrices \([Z_{j}^{s}]\) that
 correspond to the dual solution `y`.  Since, for this example, both `dl`
 and `lb` are positive, strict feasibility is proved for the primal and the
 dual problem, and strong duality holds valid.
 
 Now we consider the following example
 (see [[Jansson2006]](/references#Jansson2006)):
-$$
+\(\)
 \label{SDPexample}
 \begin{array}{ll}
 \text{minimize} &amp; \langle C_{1}, X \rangle, \\
@@ -1023,9 +1015,9 @@ $$
 &amp; \langle A_{4,1}, X \rangle = 0, \\
 &amp; X \in \mathbb{S}^{3}_{+},
 \end{array}
-$$
+\(\)
 where
-$$
+\(\)
 \begin{array}{cc}
 C_{1} = \begin{pmatrix}
         0   &amp; 0.5 &amp; 0 \\
@@ -1054,28 +1046,28 @@ A_{3,1} = \begin{pmatrix}
             0 &amp; 1 &amp; 0
             \end{pmatrix}.
 \end{array}
-$$
+\(\)
 
 It is easy to prove that for
 
-* $δ > 0$: the problem is feasible with
-  $\hat{f}_{p} = \hat{f}_{d} = -0.5$ (zero duality gap),
-* $δ = 0$: the problem is feasible but ill-posed with nonzero duality
+* \(δ > 0\): the problem is feasible with
+  \(\hat{f}_{p} = \hat{f}_{d} = -0.5\) (zero duality gap),
+* \(δ = 0\): the problem is feasible but ill-posed with nonzero duality
   gap,
-* $δ < 0$: the problem is infeasible.
+* \(δ < 0\): the problem is infeasible.
 
 
-For $δ > 0$ the primal optimal solution of the problem is given by the
+For \(δ > 0\) the primal optimal solution of the problem is given by the
 matrix
-$$
+\(\)
 \label{OptSolSDPExp}
 X^{*} = \begin{pmatrix}
 2δ &amp; -1 &amp; 0 \\ -1 &amp; \dfrac{1}{2δ} &amp; 0 \\ 0 &amp; 0 &amp; 0
 \end{pmatrix}.
-$$
+\(\)
 The corresponding dual optimal vector is
-$y^{*} = \begin{pmatrix} 0 & -1/(4δ) & 0 & 0 \end{pmatrix}^{T}$.
-We choose $δ = 10^{-4}$ and enter the problem.
+\(y^{*} = \begin{pmatrix} 0 & -1/(4δ) & 0 & 0 \end{pmatrix}^{T}\).
+We choose \(δ = 10^{-4}\) and enter the problem.
 
 {% highlight matlab %}
 % define delta parameter
@@ -1129,7 +1121,7 @@ objt, xt, yt, info  % zt:  hidden for brevity
 
 The value of the return parameter `info` confirms successful termination of
 the solver.  The first eight decimal digits of the primal and dual optimal
-values are correct, since $\hat{f}_{p} = \hat{f}_{d} = -0.5$, all components
+values are correct, since \(\hat{f}_{p} = \hat{f}_{d} = -0.5\), all components
 of the approximate solutions `xt` and `yt` have at least five correct decimal
 digits.  Nevertheless, successful termination reported by a solver gives no
 guarantee on the quality of the computed solution.
@@ -1199,8 +1191,8 @@ vsdpinit('sdpt3');
 
 {% endhighlight %}
 
-the vector `y` is a rigorous interior dual $ε$-optimal solution where we shall
-see that $ε \approx 2.27 \times 10^{-8}$.  The positivity of `dl` verifies
+the vector `y` is a rigorous interior dual \(ε\)-optimal solution where we shall
+see that \(ε \approx 2.27 \times 10^{-8}\).  The positivity of `dl` verifies
 that `y` contains a dual strictly feasible solution.  In particular, strong
 duality holds.  By using SeDuMi similar rigorous results are obtained.  But
 for the SDPA-solver we get
@@ -1228,7 +1220,7 @@ on the computed approximate solution and therefore on the used approximate
 conic solver.
 
 Similarly, a verified upper bound and a rigorous enclosure of a primal
-$ε$-optimal solution can be computed by using the `vsdpup` function
+\(ε\)-optimal solution can be computed by using the `vsdpup` function
 together with SDPT3:
 
 {% highlight matlab %}
@@ -1248,18 +1240,18 @@ vsdpinit('sdpt3');
 
 {% endhighlight %}
 
-The output `fU` is close to the dual optimal value $\hat{f}_{d} = -0.5$.
+The output `fU` is close to the dual optimal value \(\hat{f}_{d} = -0.5\).
 The interval vector `x` contains a primal strictly feasible solution, see
 \eqref{OptSolSDPExp}, and the variable `lb` is a lower bound for the smallest
 eigenvalue of `x`.  Because `lb` is positive, Slater's condition is fulfilled
 and strong duality is verified once more.
 
 Summarizing, by using SDPT3 for the considered example with parameter
-$δ = 10^{-4}$, VSDP verified strong duality with rigorous bounds for the
+\(δ = 10^{-4}\), VSDP verified strong duality with rigorous bounds for the
 optimal value
-$$
+\(\)
 -0.500000007 \leq \hat{f}_{p} = \hat{f}_{d} \leq -0.499999994.
-$$
+\(\)
 
 The rigorous upper and lower error bounds of the optimal value show only
 modest overestimation.  Strictly primal and dual feasible solutions are
@@ -1277,22 +1269,22 @@ are available they can speed up the computation of guaranteed error bounds
 for the optimal value substantially, see
 [[Jansson2006]](/references#Jansson2006).
 
-For linear programming problems the upper bound for the variable $x^{l}$
-is a vector $\bar{x}$ such that $x^{l} \leq \bar{x}$.  For second
-order cone programming the upper bounds for block variables $x_{i}^{q}$
-can be entered as a vector of upper bounds $\overline{\lambda}_{i}$ of the
-largest eigenvalues $\lambda_{\max}(x_{i}^{q}) = (x_{i}^{q})_{1} +
-||(x_{i}^{q})_{:}||_{2}$, $i = 1,\ldots,n_{q}$.  Similarly, for
-semidefinite programs upper bounds for the primal variables $X_{j}^{s}$
+For linear programming problems the upper bound for the variable \(x^{l}\)
+is a vector \(\bar{x}\) such that \(x^{l} \leq \bar{x}\).  For second
+order cone programming the upper bounds for block variables \(x_{i}^{q}\)
+can be entered as a vector of upper bounds \(\overline{\lambda}_{i}\) of the
+largest eigenvalues \(\lambda_{\max}(x_{i}^{q}) = (x_{i}^{q})_{1} +
+||(x_{i}^{q})_{:}||_{2}\), \(i = 1,\ldots,n_{q}\).  Similarly, for
+semidefinite programs upper bounds for the primal variables \(X_{j}^{s}\)
 can be entered as a vector of upper bounds of the largest eigenvalues
-$\lambda_{\max}(X_{j}^{s})$, $j = 1,\ldots,n_{s}$. An upper bound
-$\bar{y}$ for the dual optimal solution $y$ is a vector which is
-componentwise larger then $|y|$. Analogously, for conic programs with free
-variables the upper bound can be entered as a vector $\bar{x}$ such that
-$|x^{f}| \leq \bar{x}$.
+\(\lambda_{\max}(X_{j}^{s})\), \(j = 1,\ldots,n_{s}\). An upper bound
+\(\bar{y}\) for the dual optimal solution \(y\) is a vector which is
+componentwise larger then \(|y|\). Analogously, for conic programs with free
+variables the upper bound can be entered as a vector \(\bar{x}\) such that
+\(|x^{f}| \leq \bar{x}\).
 
 As an example, we consider the previous SDP problem \eqref{SDPexample} with
-an upper bound $xu = 10^{5}$ for $\lambda_{\max}(X)$.
+an upper bound \(xu = 10^{5}\) for \(\lambda_{\max}(X)\).
 
 {% highlight matlab %}
 vsdpinit('sedumi');
@@ -1342,7 +1334,7 @@ function.
 We consider a slightly modified second order cone problem
 ([[BenTal2001]](/references#BenTal2001), Example 2.4.2)
 
-$$
+\(\)
 \begin{array}{ll}
 \text{minimize} &amp; 0^{T} x, \\
 \text{subject to}
@@ -1350,9 +1342,9 @@ $$
   x = \begin{pmatrix} 0 \\ 1 \end{pmatrix}, \\
 &amp; x \in \mathbb{L}^{3},
 \end{array}
-$$
+\(\)
 with its dual problem
-$$
+\(\)
 \begin{array}{ll}
 \text{maximize} &amp; -y_{2}, \\
 \text{subject to}
@@ -1360,16 +1352,16 @@ $$
   \begin{pmatrix} 1 &amp; 0 \\ 0 &amp; 1 \\ 0.5 &amp; 0 \end{pmatrix}
   y \in \mathbb{L}^{3}.
 \end{array}
-$$
+\(\)
 
 Both, the primal and the dual problem, are infeasible.  We can easily prove
-this fact by assuming that there exists a primal feasible point $x$.  This
-point has to satisfy $x_{3} = -2x_{1}$, and therefore
-$x_{1} \geq \sqrt{x_{2}^{2} + (-2x_{1})^{2}}$.  From the second equality
-constraint we get $x_{2} = 1$ yielding the contradiction
-$x_{1} \geq \sqrt{1 + 4x_{1}^{2}}$.  Thus, the primal problem has no feasible
+this fact by assuming that there exists a primal feasible point \(x\).  This
+point has to satisfy \(x_{3} = -2x_{1}\), and therefore
+\(x_{1} \geq \sqrt{x_{2}^{2} + (-2x_{1})^{2}}\).  From the second equality
+constraint we get \(x_{2} = 1\) yielding the contradiction
+\(x_{1} \geq \sqrt{1 + 4x_{1}^{2}}\).  Thus, the primal problem has no feasible
 solution.  A certificateof infeasibility of the primal problem is given by
-the dual unbounded ray $y = \alpha (-2,1)^{T}$.
+the dual unbounded ray \(y = \alpha (-2,1)^{T}\).
 
 The input data are
 
@@ -1436,7 +1428,7 @@ Hence, primal infeasibility is verified.  The return parameter `y` provides
 a rigorous dual improving ray. The return parameter `x` must be `NaN`, since
 we did not check dual infeasibility.
 
-Now we try to solve the problem \eqref{SDPexample} for $δ = -10^{4} < 0$.
+Now we try to solve the problem \eqref{SDPexample} for \(δ = -10^{4} < 0\).
 We know that in this case the problem is primal and dual infeasible.
 
 {% highlight matlab %}
@@ -1526,7 +1518,7 @@ fU = vsdpup (A,b,c,K,xt,yt,zt)
 
 {% endhighlight %}
 
-then the bounds $fL$, $fU$ are infinite, as expected.  By applying
+then the bounds \(fL\), \(fU\) are infinite, as expected.  By applying
 `vsdpinfeas` we obtain
 
 {% highlight matlab %}
@@ -1545,7 +1537,7 @@ error: 'xt' undefined near line 4 column 40
 Since `isinfeas = 0`, primal infeasibility could not be verified, and
 therefore the certificates `x`, `y` are set to `NaN`.  The reason is that
 all dual improving rays `y` must satisfy
-$$
+\(\)
 \label{exmImpvRay}
 -\sum_{i=1}^{4} y_{i} A_{i,1} =
 \begin{pmatrix}
@@ -1553,9 +1545,9 @@ $$
  y_{1}/2 &amp; 0       &amp; -y_{4} \\
 -y_{3}   &amp; -y_{4}  &amp; 0
 \end{pmatrix} \in \mathbb{S}^{3}_{+}.
-$$
+\(\)
 
-This is only possible for $y_{1} = y_{3} = y_{4} = 0$.  Hence, for each
+This is only possible for \(y_{1} = y_{3} = y_{4} = 0\).  Hence, for each
 improving ray the matrix \eqref{exmImpvRay} has a zero eigenvalue.  In VSDP
 we verify positive semidefiniteness by computing enclosures of the
 eigenvalues.  If all enclosures are non-negative positive semidefiniteness is
@@ -1581,13 +1573,13 @@ error: 'xt' undefined near line 4 column 40
 
 Also dual infeasibility cannot be proved.  An easy calculation shows that the
 primal improving ray must satisfy
-$$
+\(\)
 X = \begin{pmatrix}
 0 &amp; 0 &amp; 0\\
 0 &amp; x_{22} &amp; 0\\
 0 &amp; 0 &amp; x_{33}
 \end{pmatrix} \in \mathbb{S}^{3}_{+}.
-$$
+\(\)
 
 and with the same argument as above positive semidefiniteness cannot be
 verified.
@@ -1648,8 +1640,8 @@ empty.  An ill-posed problem has the property that the distance to primal or
 dual infeasibility is zero.  If as above the distance to dual infeasibility
 is zero, then there are sequences of dual infeasible problems with input data
 converging to the input data of the original problem. Each problem of the
-sequence is dual infeasible and thus has the dual optimal solution $-\infty$.
-Hence, the result $-\infty$ of `vsdplow` is exactly the limit of the optimal
+sequence is dual infeasible and thus has the dual optimal solution \(-\infty\).
+Hence, the result \(-\infty\) of `vsdplow` is exactly the limit of the optimal
 values of the dual infeasible problems and reflects the fact that the
 distance to dual infeasibility is zero.  This demonstrates that the infinite
 bound computed by VSDP is sharp, when viewed as the limit of a sequence of
@@ -1697,9 +1689,9 @@ problems have been modified by reversing the substitution of the free
 variables.  We have listed the results for the problems with free variables
 and for the same problems when representing the free variables as the
 difference of two nonnegative variables.  The table contains the rigorous
-upper bounds $fU$, the rigorous lower bounds $fL$, and the computing times
-measured in seconds for the approximate solution $t_s$, the lower bound
-$t_u$, and the upper bound $t_l$, respectively.  The table demonstrates the
+upper bounds \(fU\), the rigorous lower bounds \(fL\), and the computing times
+measured in seconds for the approximate solution \(t_s\), the lower bound
+\(t_u\), and the upper bound \(t_l\), respectively.  The table demonstrates the
 drastic improvement if free variables are not split.
 
 Independent of the transformation of the free variables the primal problems
@@ -1729,17 +1721,17 @@ approximations computed by the conic solvers: CSDP, SEDUMI, SDPT3, SDPA,
 LINPROG, and LPSOLVE.  For second order cone programming problems only
 SEDUMI and SDPT3 were used.  The solvers have been called with their default
 parameters.  Almost all of the problems that could not be solved with a
-guaranteed accuracy about $10^{-7}$ are known to be ill-posed
+guaranteed accuracy about \(10^{-7}\) are known to be ill-posed
 (cf. [[Freund2003]](/references#Freund2003)).
 
 We measure the difference between two numbers by the frequently used quantity
-$$
+\(\)
 \label{eq:accurracy_measure}
 μ(a,b) := \dfrac{a-b}{\max\{1.0, (`a`+`b`)/2\}}.
-$$
+\(\)
 
-Notice that we do not use the absolute value of $a - b$.  Hence, a negative
-sign implies that $a < b$.
+Notice that we do not use the absolute value of \(a - b\).  Hence, a negative
+sign implies that \(a < b\).
 
 ## SDPLIB
 
@@ -1752,16 +1744,16 @@ problems are infeasible, and 32 problems are ill-posed.
 VSDP could compute rigorous bounds of the optimal values for all feasible
 well-posed problems and verify the existence of strictly primal and dual
 feasible solutions.  Hence, strong duality is proved. For the 32 ill-posed
-problems VSDP has computed the upper bound $fU = \infty$, which reflects the
+problems VSDP has computed the upper bound \(fU = \infty\), which reflects the
 fact that the distance to the next primal infeasible problem is zero.  For
 the four infeasible problems VSDP could compute rigorous certificates of
 infeasibility.  Detailed numerical results can be found in Table
 [benchmark_sdplib_2012_12_12.html](benchmark_sdplib_2012_12_12.html), where the computed rigorous upper bound
-$fU$, the rigorous lower bound $fL$, and the rigorous error bound $μ(fU,fL)$
-are displayed.  We have set $μ(fU,fL) = NaN$ if the upper or the lower bound
+\(fU\), the rigorous lower bound \(fL\), and the rigorous error bound \(μ(fU,fL)\)
+are displayed.  We have set \(μ(fU,fL) = NaN\) if the upper or the lower bound
 is infinite.  Table [benchmark_sdplib_2012_12_12.html](benchmark_sdplib_2012_12_12.html) also contains
-running times in seconds, where $t_{s}$ is the time for computing the
-approximations, and $t_{u}$ and $t_{l}$ are the times for computing the upper
+running times in seconds, where \(t_{s}\) is the time for computing the
+approximations, and \(t_{u}\) and \(t_{l}\) are the times for computing the upper
 and the lower rigorous error bounds, respectively.
 
 Some major characteristics of our numerical results for the SDPLIB are
@@ -1782,22 +1774,22 @@ med (tl/ts)        1.55        0.01        0.01        1.26
 
 {% endhighlight %}
 
-It displays in the first row the median $\operatorname{med}(μ(fU,fL))$ of the
+It displays in the first row the median \(\operatorname{med}(μ(fU,fL))\) of the
 computed error bounds, in the second row the largest error bound
-$\max(μ(fU,fL))$, and in the third row the minimal error bound
-$\min(μ(fU,fL))$.  For this statistic only the well-posed problems are taken
+\(\max(μ(fU,fL))\), and in the third row the minimal error bound
+\(\min(μ(fU,fL))\).  For this statistic only the well-posed problems are taken
 into account.  In the two last rows the medians of time ratios
-$t_{u} / t_{s}$ and $t_{l} / t_{s}$ are displayed.
+\(t_{u} / t_{s}\) and \(t_{l} / t_{s}\) are displayed.
 
-The median of $μ(fU,fL)$ shows that for all conic solvers rigorous error
+The median of \(μ(fU,fL)\) shows that for all conic solvers rigorous error
 bounds with 7 or 8 significant decimal digits could be computed for most
 problems.
 
 Furthermore, the table shows that the error bounds as well as the time ratios
 depend significantly on the used conic solver.  In particular the resulting
 time ratios indicate that the conic solvers CSDP and SeDuMi aim to compute
-approximate primal interior $ε$-optimal solutions.  In contrast SDPA and SDPT3
-aim to compute dual interior $ε$-optimal solutions.
+approximate primal interior \(ε\)-optimal solutions.  In contrast SDPA and SDPT3
+aim to compute dual interior \(ε\)-optimal solutions.
 
 Even the largest problem *MaxG60* with about 24 million variables and 7000
 constraints can be solved rigorously by VSDP, with high accuracy and in a
@@ -1894,7 +1886,7 @@ semidefinite programming problems.  More details on these problems can be
 found in [[BenTal2000]](/references#BenTal2000),
 [[Kocvara2002]](/references#Kocvara2002), and
 [[Bendsoe1997]](/references#Bendsoe1997).  For 24 problems out
-of this collection VSDP could compute a rigorous primal and dual $ε$-optimal
+of this collection VSDP could compute a rigorous primal and dual \(ε\)-optimal
 solution.  Caused by the limited available memory and the great computational
 times the largest problems *mater-5*, *mater-6*, *shmup5*, *trto5*, and
 *vibra5* has been tested only with the solver SDPT3.  The largest problem
