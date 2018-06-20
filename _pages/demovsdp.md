@@ -1,7 +1,10 @@
 ---
-title: VSDP -- Verified SemiDefinite-quadratic-linear Programming
+title: demovsdp.m
 permalink: demovsdp.html
 ---
+
+# demovsdp.m
+
 
 VSDP is a software package that is designed for the computation of verified
 results in conic programming.  The current version of VSDP supports the
@@ -15,7 +18,7 @@ errors due to floating point arithmetic are taken into account.
 {:toc}
 
 
-# Introduction
+## Introduction
 
 The extraordinary success and extensive growth of conic programming,
 especially of semidefinite programming, is due to the polynomial time
@@ -65,7 +68,7 @@ equations.  The main differences to the first version of VSDP
 3. the easy access to several conic solvers.
 
 
-# Installation
+## Installation
 
 To run VSDP, the following requirements have to be fulfilled:
 
@@ -93,7 +96,7 @@ After the files have been extracted, call the initialization function
 `vsdpinit` to add the necessary search paths.  If all requirements are
 fulfilled and the necessary search paths are set, VSDP is fully functional.
 
-# The Conic Programming Problem
+## The Conic Programming Problem
 
 Let $\mathbb{R}^{n}_{+}$ denote the nonnegative orthant, and let
 $
@@ -346,7 +349,7 @@ can be initialized with the routine `infsup`.  Equivalently, these quantities
 can be defined by a midpoint-radius representation, using the routine
 `midrad`.
 
-# Getting started with VSDP
+## Getting started with VSDP
 
 {% highlight text %}
 "[...] the routine can produce a computed result that is nonsensical and
@@ -370,7 +373,7 @@ The VSDP data format coincides with the SeDuMi format.  Semidefinite
 programs that are defined in the format of one of the supported solvers
 can be imported into VSDP.
 
-# Linear Programming
+## Linear Programming
 
 In this section we describe how linear programming problems can be solved
 with VSDP.  In particular, two linear programming examples are considered
@@ -422,7 +425,7 @@ $\hat{f}_{p} = \hat{f}_{d} = 8$.
 
 The input data of the problem in VSDP are
 
-{% highlight octave %}
+{% highlight matlab %}
 A = [-1, 2,  0, 1, 1;
       0, 0, -1, 0, 2];
 b = [2; 3];
@@ -433,14 +436,14 @@ K.l = 5;
 By using `vsdpinit` the approximate conic solver can be set globally for all
 VSDP functions. Here we choose the solver SDPT3:
 
-{% highlight octave %}
+{% highlight matlab %}
 vsdpinit('sdpt3');
 {% endhighlight %}
 
 If we call the `mysdps` for problem \eqref{LP1} this problem will be solved
 approximately, yielding the output
 
-{% highlight octave %}
+{% highlight matlab %}
 format infsup long
 [objt,xt,yt,zt,info] = mysdps(A,b,c,K)
 {% endhighlight %}
@@ -470,7 +473,7 @@ conic solver:
 With the approximate solution, a verified lower bound of the primal optimal
 value can be computed by the function `vsdplow`:
 
-{% highlight octave %}
+{% highlight matlab %}
 [fL,y,dl] = vsdplow(A,b,c,K,xt,yt,zt)
 {% endhighlight %}
 
@@ -499,7 +502,7 @@ see [[Rump1999]](/references#Rump1999).
 
 Next we compute an upper bound for the optimal value by using `vsdpup`:
 
-{% highlight octave %}
+{% highlight matlab %}
 [fU,x,lb] = vsdpup(A,b,c,K,xt,yt,zt)
 {% endhighlight %}
 
@@ -521,7 +524,7 @@ interval vector `y` also for the interval vector `x` only some significant
 digits are displayed.  The quantity `x` is proper interval vector.  This
 becomes clear when displaying the first component with `midrad`
 
-{% highlight octave %}
+{% highlight matlab %}
 midrad(x(1))
 {% endhighlight %}
 
@@ -536,7 +539,7 @@ midrad(x(1))
 
 or `infsup`
 
-{% highlight octave %}
+{% highlight matlab %}
 infsup(x(1))
 {% endhighlight %}
 
@@ -579,7 +582,7 @@ example, the free variable is $x_{3}$, the nonnegative variables are $x_{1}$,
 $x_{2}$.  Second order cone variables and semidefinite variables are not
 present.  Therefore, the problem data are
 
-{% highlight octave %}
+{% highlight matlab %}
 K.f = 1;  % number of free variables
 K.l = 2;  % number of nonnegative variables
 A = [ 2, 1, -1;   % first column corresponds to free variable x3
@@ -590,7 +593,7 @@ b = [0.5; 1];
 
 Rigorous bounds for the optimal value can be optained with:
 
-{% highlight octave %}
+{% highlight matlab %}
 [objt,xt,yt,zt,info] = mysdps(A,b,c,K);
 fL = vsdplow(A,b,c,K,xt,yt,zt)
 fU = vsdpup (A,b,c,K,xt,yt,zt)
@@ -609,7 +612,7 @@ fU = vsdpup (A,b,c,K,xt,yt,zt)
 
 {% endhighlight %}
 
-# Second Order Cone Programming
+## Second Order Cone Programming
 
 This section explains how to work with second order cone problems.  Due to
 \eqref{stdPrim} the second order cone problem in standard primal form is
@@ -726,7 +729,7 @@ where $K^{*} = \mathbb{L}^{5} \times \mathbb{L}^{5}$.
 We want to solve this problem with SeDuMi and enter the problem data of the
 primal problem.
 
-{% highlight octave %}
+{% highlight matlab %}
 clear A b c K
 
 vsdpinit('sedumi');
@@ -742,14 +745,14 @@ b = [-1; -1; 0; 0; 0];
 Apart from the data `(A,b,c)`, the vector `q = [5;5]` of the second order
 cone block sizes must be forwarded to the structure `K`:
 
-{% highlight octave %}
+{% highlight matlab %}
 K.q = [5;5];
 {% endhighlight %}
 
 Now we compute approximate solutions by using `mysdps` and then verified
 error bounds by using `vsdplow` and `vsdpup`:
 
-{% highlight octave %}
+{% highlight matlab %}
 [objt,xt,yt,zt,info] = mysdps(A,b,c,K);
 [fL,y,dl] = vsdplow(A,b,c,K,xt,yt,zt);
 [fU,x,lb] = vsdpup (A,b,c,K,xt,yt,zt);
@@ -769,7 +772,7 @@ error: 'import_vsdp' undefined near line 78 column 34
 The approximate primal and dual optimal values and the rigorous lower and
 upper bounds are
 
-{% highlight octave %}
+{% highlight matlab %}
 objt, fL, fU
 {% endhighlight %}
 
@@ -786,7 +789,7 @@ The quantities `x` and `y` are not diplayed here. The two output vectors
 `lb` and `dl` provide rigorous lower bounds for the eigenvalues of these
 variables.  Since both vectors are positive
 
-{% highlight octave %}
+{% highlight matlab %}
 lb, dl
 {% endhighlight %}
 
@@ -813,7 +816,7 @@ standard form \eqref{cpPrim}, \eqref{cpDual}, and the condensed quantities
 consisting of ones and to `c` the value 3.5.  We extend the input data as
 follows:
 
-{% highlight octave %}
+{% highlight matlab %}
 A = [[1; 1; 1; 1; 1], A];
 c = [3.5; c];
 K.l = 1;
@@ -838,7 +841,7 @@ fU = vsdpup (A,b,c,K,xt,yt,zt);
 
 Then we obtain
 
-{% highlight octave %}
+{% highlight matlab %}
 fL, fU
 {% endhighlight %}
 
@@ -853,7 +856,7 @@ fL, fU
 
 {% endhighlight %}
 
-# Semidefinite Programming
+## Semidefinite Programming
 
 Let the SDP program be given in the standard form \eqref{cpPrim}
 $$
@@ -931,7 +934,7 @@ $$
 
 We enter the problem data
 
-{% highlight octave %}
+{% highlight matlab %}
 clear A b c K
 
 A = [3, 1, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0;
@@ -942,13 +945,13 @@ b = [1; 2];
 
 define the structure `K` for the PSD-cone
 
-{% highlight octave %}
+{% highlight matlab %}
 K.s = [2; 3; 2];
 {% endhighlight %}
 
 and call `mysdps`
 
-{% highlight octave %}
+{% highlight matlab %}
 vsdpinit('sdpt3');
 [objt,xt,yt,zt,info] = mysdps(A,b,c,K);
 objt
@@ -969,7 +972,7 @@ The other quantities are not displayed for brevity.
 
 By calling `vsdplow` and `vsdpup` we get verified error bounds
 
-{% highlight octave %}
+{% highlight matlab %}
 [fL,y,dl] = vsdplow(A,b,c,K,xt,yt,zt)
 {% endhighlight %}
 
@@ -982,7 +985,7 @@ error: 'xt' undefined near line 4 column 28
 
 {% endhighlight %}
 
-{% highlight octave %}
+{% highlight matlab %}
 [fU,x,lb] = vsdpup(A,b,c,K,xt,yt,zt)
 {% endhighlight %}
 
@@ -1074,7 +1077,7 @@ The corresponding dual optimal vector is
 $y^{*} = \begin{pmatrix} 0 & -1/(4δ) & 0 & 0 \end{pmatrix}^{T}$.
 We choose $δ = 10^{-4}$ and enter the problem.
 
-{% highlight octave %}
+{% highlight matlab %}
 % define delta parameter
 d = 1e-4;
 % define the constraint matrices
@@ -1107,7 +1110,7 @@ c = C(:);
 
 The SDPT3-solver provides the following results:
 
-{% highlight octave %}
+{% highlight matlab %}
 vsdpinit('sdpt3');
 [objt,xt,yt,zt,info] = mysdps(A,b,c,K);
 objt, xt, yt, info  % zt:  hidden for brevity
@@ -1133,7 +1136,7 @@ guarantee on the quality of the computed solution.
 
 For instance, if we apply SeDuMi to the same problem we obtain:
 
-{% highlight octave %}
+{% highlight matlab %}
 vsdpinit('sedumi');
 [objt,xt,yt,zt,info] = mysdps(A,b,c,K);
 objt, xt, yt, info  % zt:  hidden for brevity
@@ -1155,7 +1158,7 @@ approximate primal optimal value is smaller than the dual one, weak duality
 is not satisfied. In other words, the algorithm is not backward stable for
 this example.  The CSDP-solver gives similar results:
 
-{% highlight octave %}
+{% highlight matlab %}
 vsdpinit('csdp');
 [objt,xt,yt,zt,info] = mysdps(A,b,c,K);
 objt, xt, yt, info  % zt:  hidden for brevity
@@ -1179,7 +1182,7 @@ these solvers, including SDPT3 and SDPA
 Reliable results can be obtained by the functions `vsdplow` and `vsdpup`.
 Firstly, we consider `vsdplow` and the approximate solver SDPT3.
 
-{% highlight octave %}
+{% highlight matlab %}
 vsdpinit('sdpt3');
 [objt,xt,yt,zt,info] = mysdps(A,b,c,K);
 [fL,y,dl] = vsdplow(A,b,c,K,xt,yt,zt)
@@ -1202,7 +1205,7 @@ that `y` contains a dual strictly feasible solution.  In particular, strong
 duality holds.  By using SeDuMi similar rigorous results are obtained.  But
 for the SDPA-solver we get
 
-{% highlight octave %}
+{% highlight matlab %}
 vsdpinit('sdpa');
 [objt,xt,yt,zt,info] = mysdps(A,b,c,K);
 [fL,y,dl] = vsdplow(A,b,c,K,xt,yt,zt)
@@ -1228,7 +1231,7 @@ Similarly, a verified upper bound and a rigorous enclosure of a primal
 $ε$-optimal solution can be computed by using the `vsdpup` function
 together with SDPT3:
 
-{% highlight octave %}
+{% highlight matlab %}
 vsdpinit('sdpt3');
 [objt,xt,yt,zt,info] = mysdps(A,b,c,K);
 [fU,x,lb] = vsdpup(A,b,c,K,xt,yt,zt)
@@ -1264,7 +1267,7 @@ obtained.  Strong duality is verified.  Moreover, we have seen that the
 quality of the rigorous results depends strongly on the quality of the
 computed approximations.
 
-# A Priori Upper Bounds for Optimal Solutions
+## A Priori Upper Bounds for Optimal Solutions
 
 In many practical applications the order of the magnitude of a primal or dual
 optimal solution is known a priori.  This is the case in many combinatorial
@@ -1291,7 +1294,7 @@ $|x^{f}| \leq \bar{x}$.
 As an example, we consider the previous SDP problem \eqref{SDPexample} with
 an upper bound $xu = 10^{5}$ for $\lambda_{\max}(X)$.
 
-{% highlight octave %}
+{% highlight matlab %}
 vsdpinit('sedumi');
 [objt,xt,yt,zt,info] = mysdps(A,b,c,K);
 xu = 1e5;
@@ -1312,7 +1315,7 @@ fL = vsdplow(A,b,C,K,xt,yt,zt,xu)
 
 Now, we suppose the existence of dual upper bounds
 
-{% highlight octave %}
+{% highlight matlab %}
 yu = 1e5 * [1 1 1 1]';
 fU = vsdpup(A, b, C, K, xt, yt, zt, yu)
 {% endhighlight %}
@@ -1329,7 +1332,7 @@ fU = vsdpup(A, b, C, K, xt, yt, zt, yu)
 
 yielding also a reasonable bound.
 
-# Rigorous Certificates of Infeasibility
+## Rigorous Certificates of Infeasibility
 
 The functions `vsdplow` and `vsdpup` prove strict feasibility and compute
 rigorous error bounds.  For the verification of infeasibility the function
@@ -1370,7 +1373,7 @@ the dual unbounded ray $y = \alpha (-2,1)^{T}$.
 
 The input data are
 
-{% highlight octave %}
+{% highlight matlab %}
 clear A b c K
 
 A = [1, 0, 0.5;
@@ -1383,7 +1386,7 @@ K.q = 3;
 Using the approximate solver SDPT3 we obtain a rigorous certificate of
 infeasibility with the routine `vsdpinfeas`:
 
-{% highlight octave %}
+{% highlight matlab %}
 vsdpinit('sdpt3');
 [objt,xt,yt,zt,info] = mysdps(A,b,c,K);
 [isinfeas,x,y] = vsdpinfeas(A,b,c,K,'p',xt,yt,zt);
@@ -1416,7 +1419,7 @@ infeasibility could be found `vsdpinfeas` returns zero.
 
 For the considered example `vsdpinfeas` returns
 
-{% highlight octave %}
+{% highlight matlab %}
 isinfeas, x, y
 {% endhighlight %}
 
@@ -1436,7 +1439,7 @@ we did not check dual infeasibility.
 Now we try to solve the problem \eqref{SDPexample} for $δ = -10^{4} < 0$.
 We know that in this case the problem is primal and dual infeasible.
 
-{% highlight octave %}
+{% highlight matlab %}
 d = -1e-4;
 A1 = [ 0,   -0.5, 0;
       -0.5,  0,   0;
@@ -1498,7 +1501,7 @@ info
 SeDuMi terminates the computation with the termination code `info = 1` and
 gives the warnings
 
-{% highlight octave %}
+{% highlight matlab %}
 ...
   Dual infeasible, primal improving direction found.
 ...
@@ -1508,7 +1511,7 @@ gives the warnings
 
 If we apply the routines `vsdplow` and `vsdpup`
 
-{% highlight octave %}
+{% highlight matlab %}
 fL = vsdplow(A,b,c,K,xt,yt,zt)
 fU = vsdpup (A,b,c,K,xt,yt,zt)
 {% endhighlight %}
@@ -1526,7 +1529,7 @@ fU = vsdpup (A,b,c,K,xt,yt,zt)
 then the bounds $fL$, $fU$ are infinite, as expected.  By applying
 `vsdpinfeas` we obtain
 
-{% highlight octave %}
+{% highlight matlab %}
 [isinfeas,x,y] = vsdpinfeas(A,b,c,K,'p',xt,yt,zt)
 {% endhighlight %}
 
@@ -1563,7 +1566,7 @@ semidefinitness cannot be proved and primal infeasibility is not verified.
 Now we try to verify dual infeasibility by using `vsdpinfeas` with the
 parameter `'d'`.
 
-{% highlight octave %}
+{% highlight matlab %}
 [isinfeas,x,y] = vsdpinfeas(A,b,c,K,'d',xt,yt,zt)
 {% endhighlight %}
 
@@ -1589,7 +1592,7 @@ $$
 and with the same argument as above positive semidefiniteness cannot be
 verified.
 
-# Handling Free Variables
+## Handling Free Variables
 
 Free variables occur often in practice.  Handling free variables in interior
 point algorithms is a pending issue (see for example
@@ -1611,14 +1614,14 @@ nonnegative variables.  This problem can be loaded from the examples
 directory of VSDP.  As the computation is more expensive, only the results
 are reported here:
 
-{% highlight octave %}
+{% highlight matlab %}
 vsdpinit('sdpt3');
 load(fullfile('examples','nb_L1.mat'));
 [objt,xt,yt,zt,info] = mysdps(A,b,c,K);
 objt
 {% endhighlight %}
 
-{% highlight octave %}
+{% highlight matlab %}
 objt =
  -13.012270628163670 -13.012270796164543
 {% endhighlight %}
@@ -1628,12 +1631,12 @@ to Renegar's definition [[Renegar1994]](/references#Renegar1994).
 
 Now we try to get rigorous bounds using the approximation of SDPT3.
 
-{% highlight octave %}
+{% highlight matlab %}
 fL = vsdplow(A,b,c,K,xt,yt,zt)
 fU = vsdpup (A,b,c,K,xt,yt,zt)
 {% endhighlight %}
 
-{% highlight octave %}
+{% highlight matlab %}
 fL =
   -Inf
 fU =
@@ -1656,25 +1659,25 @@ infeasibility is zero.
 If the free variables are not converted into restricted ones then the problem
 is well-posed and a rigorous finite lower bound can be computed.
 
-{% highlight octave %}
+{% highlight matlab %}
 load(fullfile('examples','nb_L1free.mat'));
 [objt,xt,yt,zt,info] = mysdps(A,b,c,K);
 objt
 {% endhighlight %}
 
-{% highlight octave %}
+{% highlight matlab %}
 objt =
  -13.012270619970032 -13.012270818869100
 {% endhighlight %}
 
 By using the computed approximations we obtain the following rigorous bounds:
 
-{% highlight octave %}
+{% highlight matlab %}
 fL = vsdplow(A,b,c,K,xt,yt,zt)
 fU = vsdpup (A,b,c,K,xt,yt,zt)
 {% endhighlight %}
 
-{% highlight octave %}
+{% highlight matlab %}
 fL =
  -13.012270819014953
 fU =
@@ -1706,7 +1709,7 @@ number of equality system with 130141 equality constraints and 261365
 variables has to be solved rigorously.  In the next version of VSDP the
 accuracy for such large problems will be improved.
 
-# Statistics of the Numerical Results
+## Statistics of the Numerical Results
 
 {% highlight text %}
 "If error analysis could be automated, the mysteries of floating-point
@@ -1738,7 +1741,7 @@ $$
 Notice that we do not use the absolute value of $a - b$.  Hence, a negative
 sign implies that $a < b$.
 
-# SDPLIB
+## SDPLIB
 
 In the following, we describe the numerical results for problems from the
 SDPLIB suite of Borchers
@@ -1764,7 +1767,7 @@ and the lower rigorous error bounds, respectively.
 Some major characteristics of our numerical results for the SDPLIB are
 summarized below.
 
-{% highlight octave %}
+{% highlight matlab %}
 disp(print_csv_table_statistic(fullfile('doc', ...
   'benchmark_sdplib_2012_12_12.csv')))
 {% endhighlight %}
@@ -1800,7 +1803,7 @@ Even the largest problem *MaxG60* with about 24 million variables and 7000
 constraints can be solved rigorously by VSDP, with high accuracy and in a
 reasonable time.
 
-# NETLIB LP
+## NETLIB LP
 
 Here we describe some numerical results for the
 [NETLIB linear programming library](http://www.netlib.org).  This is a well
@@ -1819,7 +1822,7 @@ SEDUMI, and SDPT3.  In the following table we display the same quantities as
 in the previous section.  Again only the well-posed problems are taken into
 account.
 
-{% highlight octave %}
+{% highlight matlab %}
 disp(print_csv_table_statistic(fullfile('doc', ...
   'benchmark_netlib_lp_2012_12_12.csv')))
 {% endhighlight %}
@@ -1842,7 +1845,7 @@ software packages for the computation of rigorous errors bounds are described.
 
 Detailed results can be found in Table [benchmark_netlib_lp_2012_12_12.html](benchmark_netlib_lp_2012_12_12.html).
 
-# DIMACS
+## DIMACS
 
 We present some statistics of numerical results for the DIMACS test library
 of semidefinte-quadratic-linear programs.  This library was assembled for
@@ -1858,7 +1861,7 @@ and *qssp180old*.
 One of the largest problems which could be solved by VSDP is the problem
 *hamming102*, with 23041 equality constraints and 1048576 variables.
 
-{% highlight octave %}
+{% highlight matlab %}
 disp(print_csv_table_statistic(fullfile('doc', ...
   'benchmark_dimacs_2012_12_12.csv')))
 {% endhighlight %}
@@ -1879,7 +1882,7 @@ statistic of the SDP problems.
 
 Detailed results can be found in Table [benchmark_dimacs_2012_12_12.html](benchmark_dimacs_2012_12_12.html).
 
-# Kovcara's Library of Structural Optimization Problems
+## Kovcara's Library of Structural Optimization Problems
 
 In this section a statistic of the numerical results for problems from
 structural and topological optimization is presented.  Structural and
@@ -1900,7 +1903,7 @@ equality constraints and 13849441 variables.
 
 A statistic of these numerical experiments is given below:
 
-{% highlight octave %}
+{% highlight matlab %}
 disp(print_csv_table_statistic(fullfile('doc', ...
   'benchmark_kovcara_2012_12_12.csv')))
 {% endhighlight %}
