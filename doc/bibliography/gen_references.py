@@ -14,6 +14,9 @@ permalink: references.html
 ---
 
 ## References
+
+Download all references in BibTeX format:
+[references.bib](/doc/bibliography/references.bib).
 """
 
 item_template_str = Template("""

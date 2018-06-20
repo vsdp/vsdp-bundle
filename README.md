@@ -1,4 +1,4 @@
-# VSDP &mdash; <small>Verified SemiDefinite-quadratic-linear Programming</small>
+# VSDP <small>Verified SemiDefinite-quadratic-linear Programming</small>
 
 VSDP is a software package that is designed for the computation of verified
 results in conic programming.  The current version of VSDP supports the
@@ -16,7 +16,7 @@ supported as well.
 
 
 
-## Supported conic solvers
+## Supported Conic Solvers
 
 - [CSDP](https://projects.coin-or.org/Csdp)
 - [LINPROG](https://www.mathworks.com/help/optim/ug/linprog.html)
@@ -25,6 +25,12 @@ supported as well.
 - [SDPA](https://sdpa.sourceforge.io)
 - [SDPT3](https://github.com/sqlp/sdpt3)
 - [SeDuMi](https://github.com/sqlp/sedumi)
+
+
+
+## Getting Started
+
+- Read the published version of [demovsdp.m](/demovsdp).
 
 
 
@@ -38,4 +44,4 @@ supported as well.
 
 ## References
 
-See the [comprehensive list of references](https://vsdp.github.io/references).
+- See the [comprehensive list of references](/references).

@@ -5,6 +5,9 @@ permalink: references.html
 
 ## References
 
+Download all references in BibTeX format:
+[references.bib](/doc/bibliography/references.bib).
+
 - <a id="Alizadeh2003"></a>
   *Alizadeh, F. and Goldfarb, D.*
   **"Second-order cone programming"**
@@ -546,7 +549,7 @@ permalink: references.html
   **"The DIMACS library of mixed semidefinite-quadratic-linear programs"**
   (2002).
 
-  
+
   <details>
   <summary>Show BibTeX</summary>
   <pre>
@@ -689,4 +692,3 @@ permalink: references.html
   </details>
 
   &nbsp;
-
