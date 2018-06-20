@@ -10,8 +10,8 @@ errors due to floating point arithmetic are taken into account.
 
 VSDP is completely written in [MATLAB](https://www.mathworks.com) /
 [GNU Octave](https://www.gnu.org/software/octave) and thus runs on any system
-supporting them.  It uses [INTLAB](http://www.ti3.tuhh.de/rump/intlab) and
-therefore supports interval input data as well.
+supporting them.  Additionally, VSDP makes use of
+[INTLAB](http://www.ti3.tuhh.de/rump/intlab) and supports interval input data.
 
 
 
