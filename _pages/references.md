@@ -549,7 +549,7 @@ Download all references in BibTeX format:
   **"The DIMACS library of mixed semidefinite-quadratic-linear programs"**
   (2002).
 
-
+  
   <details>
   <summary>Show BibTeX</summary>
   <pre>
@@ -643,6 +643,30 @@ Download all references in BibTeX format:
   &nbsp;
 
 
+- <a id="Rump2013a"></a>
+  *Rump, S. M.*
+  **"Accurate solution of dense linear systems, Part II: Algorithms using directed rounding"**
+  (2013).
+
+  DOI: <https://doi.org/10.1016/j.cam.2012.09.024>
+  <details>
+  <summary>Show BibTeX</summary>
+  <pre>
+@article{Rump2013a,
+  author       = {Rump, S. M.},
+  date         = {2013},
+  doi          = {10.1016/j.cam.2012.09.024},
+  journaltitle = {Journal of Computational and Applied Mathematics},
+  pages        = {185--212},
+  title        = {Accurate solution of dense linear systems, Part II: Algorithms using directed rounding},
+  volume       = {242},
+}
+  </pre>
+  </details>
+
+  &nbsp;
+
+
 - <a id="Vandenberghe1996"></a>
   *Vandenberghe, L. and Boyd, S.*
   **"Semidefinite Programming"**
@@ -692,3 +716,4 @@ Download all references in BibTeX format:
   </details>
 
   &nbsp;
+
