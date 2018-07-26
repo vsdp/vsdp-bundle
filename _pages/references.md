@@ -302,7 +302,7 @@ Download all references in BibTeX format:
 - <a id="Jansson2007a"></a>
   *Jansson, C. and Chaykin, D. and Keil, C.*
   **"Rigorous Error Bounds for the Optimal Value in Semidefinite Programming"**
-  (2008).
+  (2007).
 
   DOI: <https://doi.org/10.1137/050622870>
   <details>
@@ -310,7 +310,7 @@ Download all references in BibTeX format:
   <pre>
 @article{Jansson2007a,
   author       = {Jansson, C. and Chaykin, D. and Keil, C.},
-  date         = {2008},
+  date         = {2007},
   doi          = {10.1137/050622870},
   journaltitle = {SIAM Journal on Numerical Analysis},
   number       = {1},
