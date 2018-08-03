@@ -16,3 +16,5 @@ logo: /doc/img/sdp_cone.png
 show_downloads: true
 include: ['_pages']
 exclude: [benchmarks/, solver/, vsdp/]
+plugins:
+  - jekyll-mentions
