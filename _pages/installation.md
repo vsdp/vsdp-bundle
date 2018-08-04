@@ -83,9 +83,7 @@ testVSDP
 {% highlight text %}
 Test summary
 ------------
-{% endhighlight %}
 
-{% highlight text %}
 testSINDEX      PASSED  0.036834
 testSVEC_SMAT   PASSED  0.277806
 testLP          PASSED  0.923324
