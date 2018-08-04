@@ -27,7 +27,8 @@ The latest version of VSDP provides easy access to the conic solvers:
 
 ## Getting Started
 
-- [Installation](/installation).
+- [Installation](/installation)
+- [Conic Programming](/conic_programming)
 - Read the published version of [demovsdp.m](/demovsdp).
 
 
