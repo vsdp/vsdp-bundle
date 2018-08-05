@@ -1,6 +1,5 @@
 ---
 title: Conic Programming
-permalink: conic_programming.html
 ---
 
 # Conic Programming
@@ -62,7 +61,7 @@ A^{f} x^{f} + A^{l} x^{l} + \sum_{i=1}^{n_{q}} A_{i}^{q} x_{i}^{q} +
 \end{array}
 $$
 where $x^{f} \in \mathbb{R}^{n_{f}}$ are "free variables",
-$x^{l} \in \mathbb{R}^{n_{l}}_{+}$ are "non-negative variables",
+`$x^{l} \in \mathbb{R}^{n_{l}}_{+}$` are "non-negative variables",
 $x_{i}^{q} \in \mathbb{L}^{q_i}$, $i = 1, \ldots, n_{q}$, are "second-order
 cone (SOCP) variables", and finally $X_{j}^{s} \in \mathbb{S}^{s_{j}}_{+}$,
 $j = 1, \ldots, n_{s}$ "positive semidefinite (SDP) variables".  The linear
