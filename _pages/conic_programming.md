@@ -79,7 +79,8 @@ The dual problem associated with the primal standard form is
 & (A_{i}^{q})^{T} y + z_{i}^{q} = c_{i}^{q}, \\
 & (\mathcal{A}_{j}^{s})^{*} y + Z_{j}^{s} = C_{j}^{s},
 \end{array}$$</div>
-where <span>$z^{f} \in \{0\}^{n_{f}}$</span>, <span>$z^{l} \in \mathbb{R}^{n_{l}}_{+}$</span>,
+where <span>$z^{f} \in \lbrace 0 \rbrace^{n_{f}}$</span>,
+<span>$z^{l} \in \mathbb{R}^{n_{l}}_{+}$</span>,
 <span>$z_{i}^{q} \in \mathbb{L}^{q_i}$</span>, <span>$i = 1, \ldots, n_{q}$</span>, and
 <span>$Z_{j}^{s} \in \mathbb{S}^{s_{j}}_{+}$</span>, <span>$j = 1, \ldots, n_{s}$</span>.
 
@@ -133,7 +134,7 @@ z^{f} \\ z^{l} \\ z_{1}^{q} \\ \vdots \\ z_{n_{q}}^{q} \\
 svec(Z_{1}^{s},1) \\ \vdots \\ svec(Z_{n_{s}}^{s},1) \\
 \end{pmatrix},$$</div>
 where
-<span>$n = n_{f} + n_{l} + \sum_{i = 1}^{n_{q}} q_{i} + \sum_{j = 1}^{n_{s}} s_{i}(s_{i} + 1)/2$</span>
+<span>$n = n_{f} + n_{l} + \sum_{i = 1}^{n_{q}} q_{i} + \sum_{j = 1}^{n_{s}} s_{j}(s_{j} + 1)/2$</span>
 and <span>$A^{T}$</span> becomes a <span>$n \times m$</span> matrix
 <div>$$A^{T} :=
 \begin{pmatrix}
