@@ -52,11 +52,11 @@ Now we can define the conic semidefinite-quadratic-linear programming
 problem in primal standard form:
 $$
 \begin{array}{ll}
-\text{minimize} &amp;
+\text{minimize} &
 \langle c^{f}, x^{f} \rangle + \langle c^{l}, x^{l} \rangle +
 \sum_{i=1}^{n_{q}} \langle c_{i}^{q}, x_{i}^{q} \rangle +
 \sum_{j=1}^{n_{s}} \langle C_{j}^{s}, X_{j}^{s} \rangle \\
-\text{subject to} &amp;
+\text{subject to} &
 A^{f} x^{f} + A^{l} x^{l} + \sum_{i=1}^{n_{q}} A_{i}^{q} x_{i}^{q} +
 \sum_{j=1}^{n_{s}}\mathcal{A}_{j}^{s}(X_{j}^{s}) = b,
 \end{array}
@@ -84,12 +84,12 @@ $$
 The dual problem associated with the primal standard form is
 $$
 \begin{array}{ll}
-\text{maximize} &amp; b^{T} y \\
+\text{maximize} & b^{T} y \\
 \text{subject to}
-&amp; (A^{f})^{T} y + z^{f} = c^{f}, \\
-&amp; (A^{l})^{T} y + z^{l} = c^{l}, \\
-&amp; (A_{i}^{q})^{T} y + z_{i}^{q} = c_{i}^{q}, \\
-&amp; (\mathcal{A}_{j}^{s})^{*} y + Z_{j}^{s} = C_{j}^{s},
+& (A^{f})^{T} y + z^{f} = c^{f}, \\
+& (A^{l})^{T} y + z^{l} = c^{l}, \\
+& (A_{i}^{q})^{T} y + z_{i}^{q} = c_{i}^{q}, \\
+& (\mathcal{A}_{j}^{s})^{*} y + Z_{j}^{s} = C_{j}^{s},
 \end{array}
 $$
 where $z^{f} \in \{0\}^{n_{f}}$, $z^{l} \in \mathbb{R}^{n_{l}}_{+}$,
@@ -118,7 +118,7 @@ $n(n + 1)/2$-dimensional vector
 $$
 svec(X, \alpha) :=
 \begin{pmatrix}
-X_{11} &amp; \alpha X_{12} &amp; X_{22} &amp; \alpha X_{13} &amp; \cdots &amp;  X_{nn}
+X_{11} & \alpha X_{12} & X_{22} & \alpha X_{13} & \cdots &  X_{nn}
 \end{pmatrix}^{T},
 $$
 where $\alpha$ is a scaling factor for the off diagonal elements.  The
@@ -155,27 +155,27 @@ matrix
 $$
 A^{T} :=
 \begin{pmatrix}
-&amp; A^{f} &amp; \\
-&amp; A^{l} &amp; \\
-&amp; A_{1}^{q} &amp; \\
-&amp; \vdots &amp; \\
-&amp; A_{n_{q}}^{q} &amp; \\
-svec(A_{11}^{s},1) &amp; \cdots &amp; svec(A_{1m}^{s},1) \\
-\vdots &amp; &amp; \vdots \\
-svec(A_{n_{s}1}^{s},1) &amp; \cdots &amp; svec(A_{n_{s}m}^{s},1)
+& A^{f} & \\
+& A^{l} & \\
+& A_{1}^{q} & \\
+& \vdots & \\
+& A_{n_{q}}^{q} & \\
+svec(A_{11}^{s},1) & \cdots & svec(A_{1m}^{s},1) \\
+\vdots & & \vdots \\
+svec(A_{n_{s}1}^{s},1) & \cdots & svec(A_{n_{s}m}^{s},1)
 \end{pmatrix}
 $$
 
 Let the constraint cone $K$ and its dual cone $K^{*}$ be
 $$
 \begin{align}
-\mathcal{K} &amp;:=&amp;
-\mathbb{R}^{n_{f}} &amp;\times
+\mathcal{K} &:=&
+\mathbb{R}^{n_{f}} &\times
 \mathbb{R}^{n_{l}}_{+} \times
 \mathbb{L}^{q_{1}} \times \ldots \times \mathbb{L}^{q_{n_{q}}} \times
 \mathbb{S}^{s_{1}}_{+} \times \ldots \times \mathbb{S}^{s_{n_{s}}}_{+}, \\
-\mathcal{K}^{*} &amp;:=&amp;
-\{0\}^{n_{f}} &amp;\times
+\mathcal{K}^{*} &:=&
+\{0\}^{n_{f}} &\times
 \mathbb{R}^{n_{l}}_{+} \times
 \mathbb{L}^{q_{1}} \times \ldots \times \mathbb{L}^{q_{n_{q}}} \times
 \mathbb{S}^{s_{1}}_{+} \times \ldots \times \mathbb{S}^{s_{n_{s}}}_{+}.
@@ -186,19 +186,29 @@ With these abbreviations we obtain the following block form of the conic
 problem:
 $$
 \begin{array}{ll}
-\text{minimize}   &amp; c^{T} x, \\
-\text{subject to} &amp; Ax = b, \\
-                  &amp; x \in \mathcal{K},
+\text{minimize}   & c^{T} x, \\
+\text{subject to} & Ax = b, \\
+                  & x \in \mathcal{K},
 \end{array}
 $$
 with optimal value $\hat{f}_{p}$ and the corresponding dual problem
 $$
 \begin{array}{ll}
-\text{maximize}   &amp; b^{T} y, \\
-\text{subject to} &amp; z = c - (A)^{T} y \in \mathcal{K}^{*},
+\text{maximize}   & b^{T} y, \\
+\text{subject to} & z = c - (A)^{T} y \in \mathcal{K}^{*},
 \end{array}
 $$
-with optimal value $\hat{f}_{d}$.
+with optimal value $\hat{f}_{d}$.  In VSDP each conic problem is fully
+described by the four variables `(A, b, c, K)`.  The first two quantities
+represent the affine constraints $Ax = b$.  The third is the primal objective
+vector `c`, and the last describes the underlying cone.  The cone `K` is a
+structure with four fields: `K.f`, `K.l`, `K.q`, and `K.s`.  The field `K.f`
+stores the number of free variables $n_{f}$, the field `K.l` stores the
+number of nonnegative variables $n_{l}$, the field `K.q` stores the
+dimensions $q_{1}, \ldots, q_{n_{q}}$ of the second order cones, and
+similarly `K.s` stores the dimensions $s_{1}, \ldots, s_{n_{s}}$ of the
+semidefinite cones.  If a component of `K` is empty, then it is assumed that
+the corresponding cone do not occur.
 
 It is well known that for linear programming problems strong duality
 $\hat{f}_{p} = \hat{f}_{d}$ holds without any constraint qualifications.
