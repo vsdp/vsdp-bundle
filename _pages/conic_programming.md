@@ -1,5 +1,6 @@
 ---
 title: Conic Programming
+permalink: conic_programming.html
 ---
 
 # Conic Programming
