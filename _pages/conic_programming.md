@@ -132,9 +132,9 @@ z :=
 z^{f} \\ z^{l} \\ z_{1}^{q} \\ \vdots \\ z_{n_{q}}^{q} \\
 svec(Z_{1}^{s},1) \\ \vdots \\ svec(Z_{n_{s}}^{s},1) \\
 \end{pmatrix},$$</div>
-where <span>$n = n_{f} + n_{l} + \sum_{i = 1}^{n_{q}} q_{i} + \overline{n_{s}}$</span>,
-<span>$\overline{n_{s}} = \sum_{j = 1}^{n_{s}} s_{i}(s_{i} + 1)/2$</span> and <span>$A^{T}$</span>
-becomes a <span>$n \times m$</span> matrix
+where
+<span>$n = n_{f} + n_{l} + \sum_{i = 1}^{n_{q}} q_{i} + \sum_{j = 1}^{n_{s}} s_{i}(s_{i} + 1)/2$</span>
+and <span>$A^{T}$</span> becomes a <span>$n \times m$</span> matrix
 <div>$$A^{T} :=
 \begin{pmatrix}
 & A^{f} & \\
@@ -168,12 +168,12 @@ problem:
 \text{subject to} & Ax = b, \\
                   & x \in \mathcal{K},
 \end{array}$$</div>
-with optimal value <span>$\hat{f}_{p}$</span> and the corresponding dual problem
+with optimal value <span>$\hat{f_{p}}$</span> and the corresponding dual problem
 <div>$$\begin{array}{ll}
 \text{maximize}   & b^{T} y, \\
 \text{subject to} & z = c - (A)^{T} y \in \mathcal{K}^{*},
 \end{array}$$</div>
-with optimal value <span>$\hat{f}_{d}$</span>.  In VSDP each conic problem is fully
+with optimal value <span>$\hat{f_{d}}$</span>.  In VSDP each conic problem is fully
 described by the four variables `(A, b, c, K)`.  The first two quantities
 represent the affine constraints <span>$Ax = b$</span>.  The third is the primal objective
 vector `c`, and the last describes the underlying cone.  The cone `K` is a
@@ -186,9 +186,9 @@ semidefinite cones.  If a component of `K` is empty, then it is assumed that
 the corresponding cone do not occur.
 
 It is well known that for linear programming problems strong duality
-<span>$\hat{f}_{p} = \hat{f}_{d}$</span> holds without any constraint qualifications.
+<span>$\hat{f_{p}} = \hat{f_{d}}$</span> holds without any constraint qualifications.
 General conic programs satisfy only the weak duality condition
-<span>$\hat{f}_{d} \leq \hat{f}_{p}$</span>.  Strong duality requires additional
+<span>$\hat{f_{d}} \leq \hat{f_{p}}$</span>.  Strong duality requires additional
 constraint qualifications, such as *Slater's constraint qualifications* (see
 [[Vandenberghe1996]](https://vsdp.github.io/references.html#Vandenberghe1996),
 [[BenTal2001]](https://vsdp.github.io/references.html#BenTal2001)).
@@ -196,11 +196,11 @@ constraint qualifications, such as *Slater's constraint qualifications* (see
 **Strong Duality Theorem**
 
 * If the primal problem is strictly feasible (i.e. there exists a primal
-  feasible point <span>$x$</span> in the interior of <span>$K$</span>) and <span>$\hat{f}_{p}$</span> is finite,
-  then <span>$\hat{f}_{p} = \hat{f}_{d}$</span> and the dual supremum is attained.
+  feasible point <span>$x$</span> in the interior of <span>$K$</span>) and <span>$\hat{f_{p}}$</span> is finite,
+  then <span>$\hat{f_{p}} = \hat{f_{d}}$</span> and the dual supremum is attained.
 * If the dual problem is strictly feasible (i.e. there exists some <span>$y$</span> such
-  that <span>$z = c - (A)^{T} y$</span> is in the interior of <span>$K^{*}$</span>) and <span>$\hat{f}_{d}$</span>
-  is finite, then <span>$\hat{f}_{d} = \hat{f}_{p}$</span>, and the primal infimum is
+  that <span>$z = c - (A)^{T} y$</span> is in the interior of <span>$K^{*}$</span>) and <span>$\hat{f_{d}}$</span>
+  is finite, then <span>$\hat{f_{d}} = \hat{f_{p}}$</span>, and the primal infimum is
   attained.
 
 
