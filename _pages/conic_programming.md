@@ -60,14 +60,12 @@ where <span>$x^{f} \in \mathbb{R}^{n_{f}}$</span> are "free variables",
 cone (SOCP) variables", and finally <span>$X_{j}^{s} \in \mathbb{S}^{s_{j}}_{+}$</span>,
 <span>$j = 1, \ldots, n_{s}$</span> "positive semidefinite (SDP) variables".  The linear
 operator
-<span>$$</span>
-\mathcal{A}_{j}^{s}(X_{j}^{s}) :=
+<div>$$\mathcal{A}_{j}^{s}(X_{j}^{s}) :=
 \begin{pmatrix}
 \langle A_{1j}^{s}, X_{j}^{s} \rangle \\
 \vdots \\
 \langle A_{mj}^{s}, X_{j}^{s} \rangle
-\end{pmatrix}
-<span>$$</span>
+\end{pmatrix}$$</div>
 maps the symmetric matrices <span>$X_{j}^{s}$</span> to <span>$\mathbb{R}^{m}$</span>.  The adjoint
 linear operator is
 <span>$$</span>
@@ -75,16 +73,14 @@ linear operator is
 <span>$$</span>
 
 The dual problem associated with the primal standard form is
-<span>$$</span>
-\begin{array}{ll}
+<div>$$\begin{array}{ll}
 \text{maximize} & b^{T} y \\
 \text{subject to}
 & (A^{f})^{T} y + z^{f} = c^{f}, \\
 & (A^{l})^{T} y + z^{l} = c^{l}, \\
 & (A_{i}^{q})^{T} y + z_{i}^{q} = c_{i}^{q}, \\
 & (\mathcal{A}_{j}^{s})^{*} y + Z_{j}^{s} = C_{j}^{s},
-\end{array}
-<span>$$</span>
+\end{array}$$</div>
 where <span>$z^{f} \in \{0\}^{n_{f}}$</span>, <span>$z^{l} \in \mathbb{R}^{n_{l}}_{+}$</span>,
 <span>$z_{i}^{q} \in \mathbb{L}^{q_i}$</span>, <span>$i = 1, \ldots, n_{q}$</span>, and
 <span>$Z_{j}^{s} \in \mathbb{S}^{s_{j}}_{+}$</span>, <span>$j = 1, \ldots, n_{s}$</span>.
@@ -108,12 +104,10 @@ Occasionally, it is useful to represent the conic programming problem in a
 more compact form by using the symmetric vectorization operator.  This
 operator maps a symmetric matrix <span>$X \in \mathbb{S}^{n \times n}$</span> to a
 <span>$n(n + 1)/2$</span>-dimensional vector
-<span>$$</span>
-svec(X, \alpha) :=
+<div>$$svec(X, \alpha) :=
 \begin{pmatrix}
 X_{11} & \alpha X_{12} & X_{22} & \alpha X_{13} & \cdots &  X_{nn}
-\end{pmatrix}^{T},
-<span>$$</span>
+\end{pmatrix}^{T},$$</div>
 where <span>$\alpha$</span> is a scaling factor for the off diagonal elements.  The
 inverse operation is denoted by <span>$smat(x)$</span> such that <span>$smat(svec(X)) = X$</span>.
 
@@ -125,8 +119,7 @@ reduces to a simple scalar product of two vectors.  Thus all cones can be
 treated in exactly the same way.
 
 The condensed quantities <span>$c$</span>, <span>$x$</span>, and <span>$z$</span> are <span>$n \times 1$</span>-vectors:
-<span>$$</span>
-c :=
+<div>$$c :=
 \begin{pmatrix}
 c^{f} \\ c^{l} \\ c_{1}^{q} \\ \vdots \\ c_{n_{q}}^{q} \\
 svec(C_{1}^{s},1) \\ \vdots \\ svec(C_{n_{s},1}^{s}) \\
@@ -140,13 +133,11 @@ z :=
 \begin{pmatrix}
 z^{f} \\ z^{l} \\ z_{1}^{q} \\ \vdots \\ z_{n_{q}}^{q} \\
 svec(Z_{1}^{s},1) \\ \vdots \\ svec(Z_{n_{s}}^{s},1) \\
-\end{pmatrix},
-<span>$$</span>
+\end{pmatrix},$$</div>
 where <span>$n = n_{f} + n_{l} + \sum_{i = 1}^{n_{q}} q_{i}
 + \sum_{j = 1}^{n_{s}} s_{i}(s_{i} + 1)/2$</span> and <span>$A^{T}$</span> becomes a <span>$n \times m$</span>
 matrix
-<span>$$</span>
-A^{T} :=
+<div>$$A^{T} :=
 \begin{pmatrix}
 & A^{f} & \\
 & A^{l} & \\
@@ -156,12 +147,10 @@ A^{T} :=
 svec(A_{11}^{s},1) & \cdots & svec(A_{1m}^{s},1) \\
 \vdots & & \vdots \\
 svec(A_{n_{s}1}^{s},1) & \cdots & svec(A_{n_{s}m}^{s},1)
-\end{pmatrix}
-<span>$$</span>
+\end{pmatrix}$$</div>
 
 Let the constraint cone <span>$K$</span> and its dual cone <span>$K^{*}$</span> be
-<span>$$</span>
-\begin{align}
+<div>$$\begin{align}
 \mathcal{K} &:=&
 \mathbb{R}^{n_{f}} &\times
 \mathbb{R}^{n_{l}}_{+} \times
@@ -172,25 +161,20 @@ Let the constraint cone <span>$K$</span> and its dual cone <span>$K^{*}$</span> 
 \mathbb{R}^{n_{l}}_{+} \times
 \mathbb{L}^{q_{1}} \times \ldots \times \mathbb{L}^{q_{n_{q}}} \times
 \mathbb{S}^{s_{1}}_{+} \times \ldots \times \mathbb{S}^{s_{n_{s}}}_{+}.
-\end{align}
-<span>$$</span>
+\end{align}$$</div>
 
 With these abbreviations we obtain the following block form of the conic
 problem:
-<span>$$</span>
-\begin{array}{ll}
+<div>$$\begin{array}{ll}
 \text{minimize}   & c^{T} x, \\
 \text{subject to} & Ax = b, \\
                   & x \in \mathcal{K},
-\end{array}
-<span>$$</span>
+\end{array}$$</div>
 with optimal value <span>$\hat{f}_{p}$</span> and the corresponding dual problem
-<span>$$</span>
-\begin{array}{ll}
+<div>$$\begin{array}{ll}
 \text{maximize}   & b^{T} y, \\
 \text{subject to} & z = c - (A)^{T} y \in \mathcal{K}^{*},
-\end{array}
-<span>$$</span>
+\end{array}$$</div>
 with optimal value <span>$\hat{f}_{d}$</span>.  In VSDP each conic problem is fully
 described by the four variables `(A, b, c, K)`.  The first two quantities
 represent the affine constraints <span>$Ax = b$</span>.  The third is the primal objective
