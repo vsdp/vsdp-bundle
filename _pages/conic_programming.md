@@ -68,9 +68,7 @@ operator
 \end{pmatrix}$$</div>
 maps the symmetric matrices <span>$X_{j}^{s}$</span> to <span>$\mathbb{R}^{m}$</span>.  The adjoint
 linear operator is
-<span>$$</span>
-(\mathcal{A}_{j}^{s})^{*} y := \sum_{k=1}^{m} A_{kj}^{s} y_{k}.
-<span>$$</span>
+<div>$$(\mathcal{A}_{j}^{s})^{*} y := \sum_{k=1}^{m} A_{kj}^{s} y_{k}.$$</div>
 
 The dual problem associated with the primal standard form is
 <div>$$\begin{array}{ll}
@@ -134,9 +132,9 @@ z :=
 z^{f} \\ z^{l} \\ z_{1}^{q} \\ \vdots \\ z_{n_{q}}^{q} \\
 svec(Z_{1}^{s},1) \\ \vdots \\ svec(Z_{n_{s}}^{s},1) \\
 \end{pmatrix},$$</div>
-where <span>$n = n_{f} + n_{l} + \sum_{i = 1}^{n_{q}} q_{i}
-+ \sum_{j = 1}^{n_{s}} s_{i}(s_{i} + 1)/2$</span> and <span>$A^{T}$</span> becomes a <span>$n \times m$</span>
-matrix
+where <span>$n = n_{f} + n_{l} + \sum_{i = 1}^{n_{q}} q_{i} + \overline{n_{s}}$</span>,
+<span>$\overline{n_{s}} = \sum_{j = 1}^{n_{s}} s_{i}(s_{i} + 1)/2$</span> and <span>$A^{T}$</span>
+becomes a <span>$n \times m$</span> matrix
 <div>$$A^{T} :=
 \begin{pmatrix}
 & A^{f} & \\
