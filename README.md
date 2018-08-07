@@ -30,6 +30,12 @@ The latest version of VSDP provides easy access to the conic solvers:
 - [Installation](/installation)
 - [Conic Programming](/conic_programming)
   - [Linear Programming (LP)](/linear_programming)
+  - [Second Order Cone Programming (SOCP)](/second_order_cone_programming)
+  - [Semidefinite Programming (SDP)](/semidefinite_programming)
+- [A priori bounds](a_priori_bounds)
+- [Certificates of infeasibility](certificates_of_infeasibility)
+- [Free variables](free_variables)
+- [Numerical results](numerical_results)
 
 
 ## Available VSDP versions
