@@ -360,7 +360,7 @@ Dl =
 
 1. `Y` is a rigorous interval enclosure of a dual feasible near optimal
   solution and
-2. |Dl|a lower bound of of each cone in <span>$z = c - A^{*} y$</span>.  For a linear
+2. `Dl` a lower bound of of each cone in <span>$z = c - A^{*} y$</span>.  For a linear
   program this is a lower bound on each component of `z`.
 
 
@@ -369,7 +369,7 @@ rigorous interval vector `Y` contains a dual interior solution.  Here only
 some significant digits of this interval vector are displayed.  The upper
 and lower bounds of the interval `Y` can be obtained by using the `sup` and
 `inf` routines of INTLAB.  For more information about the `intval` data type
-see [[Rump1999]](https://vsdp.github.io/references.htm#Rump1999).
+see [[Rump1999]](https://vsdp.github.io/references.html#Rump1999).
 
 The information returned by `rigorous_upper_bound()` is similar:
 
@@ -404,7 +404,7 @@ Xl =
 
 1. `X` is a rigorous interval enclosure of a primal feasible near optimal
   solution and
-2. |Xl|a lower bound of of each cone in `X`.  Again, for a linear program
+2. `Xl` a lower bound of of each cone in `X`.  Again, for a linear program
   this is a lower bound on each component of `X`.
 
 
@@ -414,7 +414,7 @@ the primal problem is strictly feasible.
 Summarizing, we have obtained a primal dual interval solution pair with an
 accuracy measured by
 <div>$$\mu(a, b) = \dfrac{a-b}{\max\{1.0, (|a| + |b|)/2\}},$$</div>
-see [[Jansson2006]](https://vsdp.github.io/references.htm#Jansson2006).
+see [[Jansson2006]](https://vsdp.github.io/references.html#Jansson2006).
 
 {% highlight matlab %}
 format shorte
