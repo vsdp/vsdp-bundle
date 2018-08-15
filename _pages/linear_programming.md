@@ -149,7 +149,7 @@ it pstep dstep pinfeas dinfeas  gap      prim-obj      dual-obj    cputime
  rel. dual     "        "       "      = 0.00e+00
  norm(X), norm(y), norm(Z) = 1.5e+00, 2.2e+00, 3.0e+00
  norm(A), norm(b), norm(C) = 4.5e+00, 4.6e+00, 7.2e+00
- Total CPU time (secs)  = 0.24  
+ Total CPU time (secs)  = 0.25  
  CPU time per iteration = 0.03  
  termination code       =  0
  DIMACS: 1.1e-12  0.0e+00  2.6e-11  0.0e+00  2.3e-09  2.3e-09
@@ -521,4 +521,4 @@ obj =
 {% endhighlight %}
 
 
-Published with GNU Octave 4.4.0
+Published with GNU Octave 4.4.1

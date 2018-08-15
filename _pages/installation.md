@@ -83,7 +83,9 @@ testVSDP
 {% highlight text %}
 Test summary
 ------------
+{% endhighlight %}
 
+{% highlight text %}
 testSINDEX      PASSED  0.036834
 testSVEC_SMAT   PASSED  0.277806
 testLP          PASSED  0.923324
@@ -92,4 +94,4 @@ testSDP         PASSED  1.242036
 {% endhighlight %}
 
 
-Published with GNU Octave 4.4.0
+Published with GNU Octave 4.4.1
