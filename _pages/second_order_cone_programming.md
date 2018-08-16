@@ -1,16 +1,14 @@
 ---
-title: second_order_cone_programming
-permalink: second_order_cone_programming.html
+title: Second-order Cone Programming
+permalink: second-order_cone_programming.html
 ---
 
-# second_order_cone_programming
+# Second-order Cone Programming
 
 
 * TOC
 {:toc}
 
-
-## Second Order Cone Programming
 
 Consider a least squares problem from
 [[ElGhaoui1997]](https://vsdp.github.io/references.html#ElGhaoui1997)
@@ -186,9 +184,9 @@ y_SOCP = obj.solutions.approximate.y(3:5)
 
 {% highlight text %}
 y_SOCP =
-  -2.2802e-02
-   2.1851e-01
-   1.9571e-01
+  -0.022802
+   0.218512
+   0.195710
  
 
 {% endhighlight %}
