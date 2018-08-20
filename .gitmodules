@@ -1,3 +1,12 @@
+[submodule "solver/csdp"]
+	path = solver/csdp
+	url = https://github.com/coin-or/Csdp.git
+[submodule "solver/lp_solve"]
+	path = solver/lp_solve
+	url = https://github.com/vsdp/lp_solve.git
+[submodule "solver/sdpa"]
+	path = solver/sdpa
+	url = https://github.com/vsdp/sdpa.git
 [submodule "solver/sdpt3"]
 	path = solver/sdpt3
 	url = https://github.com/sqlp/sdpt3.git
@@ -19,9 +28,6 @@
 [submodule "benchmarks/DIMACS"]
 	path = benchmarks/DIMACS
 	url = https://github.com/vsdp/DIMACS.git
-[submodule "solver/csdp"]
-	path = solver/csdp
-	url = https://github.com/coin-or/Csdp.git
 [submodule "vsdp/2012"]
 	path = vsdp/2012
 	url = https://github.com/vsdp/vsdp-2012.git
