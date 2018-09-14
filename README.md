@@ -15,11 +15,13 @@ supported as well.
 
 ![VSDP workflow](/doc/img/vsdp_workflow.svg)
 
-The latest version of VSDP provides easy access to the conic solvers:
+The latest version of VSDP provides easy access to the
+[conic solvers](/conic_solvers.html):
 - [CSDP](https://github.com/coin-or/Csdp),
-  [GLPK](https://www.gnu.org/software/glpk/),
+  [GLPK](https://www.gnu.org/software/glpk),
   [LINPROG](https://www.mathworks.com/help/optim/ug/linprog.html),
   [lp_solve](https://lpsolve.sourceforge.io),
+  [MOSEK](https://www.mosek.com),
   [SDPA](https://sdpa.sourceforge.io),
   [SDPT3](https://github.com/sqlp/sdpt3), and
   [SeDuMi](https://github.com/sqlp/sedumi).
@@ -27,15 +29,15 @@ The latest version of VSDP provides easy access to the conic solvers:
 
 ## Getting Started
 
-- [Installation](/installation)
-- [Conic Programming](/conic_programming)
-  - [Linear Programming (LP)](/linear_programming)
-  - [Second-order Cone Programming (SOCP)](/second-order_cone_programming)
-  - [Semidefinite Programming (SDP)](/semidefinite_programming)
-- [A priori bounds](a_priori_bounds)
-- [Certificates of infeasibility](certificates_of_infeasibility)
-- [Free variables](free_variables)
-- [Numerical results](numerical_results)
+- [Installation](/installation.html)
+- [Conic Programming](/conic_programming.html)
+  - [Linear Programming (LP)](/linear_programming.html)
+  - [Second-order Cone Programming (SOCP)](/second-order_cone_programming.html)
+  - [Semidefinite Programming (SDP)](/semidefinite_programming.html)
+- [A priori bounds](a_priori_bounds.html)
+- [Certificates of infeasibility](certificates_of_infeasibility.html)
+- [Free variables](free_variables.html)
+- [Numerical results](numerical_results.html)
 
 
 ## Available VSDP versions

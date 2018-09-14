@@ -149,8 +149,8 @@ it pstep dstep pinfeas dinfeas  gap      prim-obj      dual-obj    cputime
  rel. dual     "        "       "      = 0.00e+00
  norm(X), norm(y), norm(Z) = 1.5e+00, 2.2e+00, 3.0e+00
  norm(A), norm(b), norm(C) = 4.5e+00, 4.6e+00, 7.2e+00
- Total CPU time (secs)  = 0.25  
- CPU time per iteration = 0.03  
+ Total CPU time (secs)  = 0.16  
+ CPU time per iteration = 0.02  
  termination code       =  0
  DIMACS: 1.1e-12  0.0e+00  2.6e-11  0.0e+00  2.3e-09  2.3e-09
 -------------------------------------------------------------------
@@ -194,7 +194,7 @@ obj =
         K.l = 5
  
   obj.solutions.approximate  for (P) and (D):
-      Solver 'sdpt3': Normal termination, 0.4 seconds.
+      Solver 'sdpt3': Normal termination, 0.2 seconds.
  
         c'*x = 8.000000025993693e+00
         b'*y = 7.999999987362061e+00
@@ -298,7 +298,7 @@ obj =
         K.l = 5
  
   obj.solutions.approximate  for (P) and (D):
-      Solver 'sdpt3': Normal termination, 0.4 seconds.
+      Solver 'sdpt3': Normal termination, 0.2 seconds.
  
         c'*x = 8.000000025993693e+00
         b'*y = 7.999999987362061e+00
@@ -344,11 +344,11 @@ intval Y =
 {% endhighlight %}
 
 {% highlight matlab %}
-Dl = obj.solutions.rigorous_lower_bound.z
+Zl = obj.solutions.rigorous_lower_bound.z
 {% endhighlight %}
 
 {% highlight text %}
-Dl =
+Zl =
    0.9999999873621
    0.0000000252759
    2.0000000042126
@@ -360,11 +360,11 @@ Dl =
 
 1. `Y` is a rigorous interval enclosure of a dual feasible near optimal
   solution and
-2. `Dl` a lower bound of of each cone in <span>$z = c - A^{*} y$</span>.  For a linear
+2. `Zl` a lower bound of of each cone in <span>$z = c - A^{*} y$</span>.  For a linear
   program this is a lower bound on each component of `z`.
 
 
-Since `Dl` is positive, the dual problem is strictly feasible, and the
+Since `Zl` is positive, the dual problem is strictly feasible, and the
 rigorous interval vector `Y` contains a dual interior solution.  Here only
 some significant digits of this interval vector are displayed.  The upper
 and lower bounds of the interval `Y` can be obtained by using the `sup` and
@@ -491,7 +491,7 @@ obj =
         K.l = 2
  
   obj.solutions.approximate  for (P) and (D):
-      Solver 'sdpt3': Normal termination, 0.5 seconds.
+      Solver 'sdpt3': Normal termination, 0.3 seconds.
  
         c'*x = 9.166666669227741e-01
         b'*y = 9.166666662221519e-01
