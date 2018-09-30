@@ -1,4 +1,8 @@
 function bm_setup ()
+% BM_SETUP  Sets up all required solvers for VSDP's benchmark.
+%
+%   See also vsdp.solve.
+%
 
 OLD_DIR = cd ('..');
 
