@@ -9,7 +9,13 @@ function bm_list = bm_collector (options)
 %      BENCHMARK_PATH   The path where the benchmarks can be found.
 %                       Default: The directory of this file.
 %
-%    The output 
+%    The output structure contains a list with the field:
+%
+%      lib    Benchmark library name.
+%      name   Short name for the test case.
+%      file   System dependend full path of the original test case data.
+%      setup  Neccessary code to create a VSDP object 'obj'.
+%
 
 opts = get_default_options ();
 
@@ -58,9 +64,70 @@ end
 
 
 function bm_list = get_DIMACS (bm_list)
-f = dir (fullfile ('DIMACS', 'data', '**', '*.mat.gz'));
+% Regard only files with the following file extension:
+ext = '.mat.gz';
+f = dir (fullfile ('DIMACS', 'data', '**', ['*', ext]));
 for i = length(f):-1:1
-  bml_DIMACS(i).name = f(i).name(1:end - length('.mat.gz'));
-  bml_DIMACS(i).file = fullfile (f(i).folder, f(i).name);
+  bml_DIMACS(i).lib   = 'DIMACS';
+  bml_DIMACS(i).name  = f(i).name(1:end - length(ext));
+  bml_DIMACS(i).file  = fullfile (f(i).folder, f(i).name);
+  bml_DIMACS(i).setup = '';
 end
+bm_list = [bm_list, bml_DIMACS];
+end
+
+
+function bm_list = get_ESC (bm_list)
+% Regard only files with the following file extension:
+ext = '.dat-s.gz';
+f = dir (fullfile ('ESC', 'data', ['*', ext]));
+for i = length(f):-1:1
+  bml_ESC(i).lib   = 'ESC';
+  bml_ESC(i).name  = strtok (f(i).name, "_");
+  bml_ESC(i).file  = fullfile (f(i).folder, f(i).name);
+  bml_ESC(i).setup = '';
+end
+bm_list = [bm_list, bml_ESC];
+end
+
+
+function bm_list = get_RDM (bm_list)
+% Regard only files with the following file extension:
+ext = '.dat-s.gz';
+f = dir (fullfile ('RDM', 'data', ['*', ext]));
+for i = length(f):-1:1
+  bml_RDM(i).lib   = 'RDM';
+  bml_RDM(i).name  = strtok (f(i).name, ".");
+  bml_RDM(i).file  = fullfile (f(i).folder, f(i).name);
+  bml_RDM(i).setup = '';
+end
+bm_list = [bm_list, bml_RDM];
+end
+
+
+function bm_list = get_SDPLIB (bm_list)
+% Regard only files with the following file extension:
+ext = '.dat-s';
+f = dir (fullfile ('SDPLIB', 'data', ['*', ext]));
+for i = length(f):-1:1
+  bml_SDPLIB(i).lib   = 'SDPLIB';
+  bml_SDPLIB(i).name  = f(i).name(1:end - length(ext));
+  bml_SDPLIB(i).file  = fullfile (f(i).folder, f(i).name);
+  bml_SDPLIB(i).setup = 'obj = vsdp.from_sdpa_file (%s);';
+end
+bm_list = [bm_list, bml_SDPLIB];
+end
+
+
+function bm_list = get_SPARSE_SDP (bm_list)
+% Regard only files with the following file extension:
+ext = '.dat-s.gz';
+f = dir (fullfile ('SPARSE_SDP', 'data', ['*', ext]));
+for i = length(f):-1:1
+  bml_SPARSE_SDP(i).lib   = 'SPARSE_SDP';
+  bml_SPARSE_SDP(i).name  = f(i).name(1:end - length(ext));
+  bml_SPARSE_SDP(i).file  = fullfile (f(i).folder, f(i).name);
+  bml_SPARSE_SDP(i).setup = '';
+end
+bm_list = [bm_list, bml_SPARSE_SDP];
 end
