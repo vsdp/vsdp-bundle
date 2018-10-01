@@ -1,4 +1,4 @@
-function bm_collector (options)
+function bm_list = bm_collector (options)
 % BM_COLLECTOR  Generates a list of jobs for the benchmark.
 %
 %    The input structure 'options' may contain the following fields:
@@ -38,6 +38,13 @@ if (isempty (opts.BENCHMARKS))
       'bm_collector: No benchmarks found.');
 end
 
+% Collect benchmark test cases.
+old_dir = cd (opts.BENCHMARK_PATH);
+bm_list = [];
+for i = 1:length (opts.BENCHMARKS)
+  bm_list = eval (['get_', opts.BENCHMARKS{i}, '(bm_list);']);
+end
+cd (old_dir);
 end
 
 
@@ -47,4 +54,13 @@ opts.BENCHMARKS = {'DIMACS', 'ESC', 'RDM', 'SDPLIB', 'SPARSE_SDP'};
 % The directory, where this file is located.
 opts.BENCHMARK_PATH = mfilename ('fullpath');
 opts.BENCHMARK_PATH(end - length (mfilename ()):end) = [];
+end
+
+
+function bm_list = get_DIMACS (bm_list)
+f = dir (fullfile ('DIMACS', 'data', '**', '*.mat.gz'));
+for i = length(f):-1:1
+  bml_DIMACS(i).name = f(i).name(1:end - length('.mat.gz'));
+  bml_DIMACS(i).file = fullfile (f(i).folder, f(i).name);
+end
 end
