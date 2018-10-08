@@ -146,7 +146,7 @@ for i = length(f):-1:1
   bml_SDPLIB(i).lib   = 'SDPLIB';
   bml_SDPLIB(i).name  = f(i).name(1:end - length(ext));
   bml_SDPLIB(i).file  = fullfile (f(i).folder, f(i).name);
-  bml_SDPLIB(i).setup = sprintf('obj = vsdp.from_sdpa_file (%s);\n', ...
+  bml_SDPLIB(i).setup = sprintf('obj = vsdp.from_sdpa_file (''%s'');\n', ...
     bml_SDPLIB(i).file);
 end
 bm_list = [bm_list, bml_SDPLIB];
