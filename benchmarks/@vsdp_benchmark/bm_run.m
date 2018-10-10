@@ -1,4 +1,4 @@
-function bm_run ()
+function [bm_list, options] = bm_run ()
 
 %bm_setup ()
 
