@@ -1,7 +1,7 @@
-function s = benchmark(path, filename, file, tfile, solverlist)
-% BENCHMARK  Performs a benchmark.
+function run (obj, path, filename, file, tfile)
+% RUN  Run the VSDP benchmark.
 %
-%   s = BENCHMARK(path, filename, file, tfile, solverlist)
+%   obj.run (path, filename, file, tfile)
 %      A benchmark test will be performed on problems found on path 'path'.
 %      The results (optimal values ,rigorous lower and upper bounds and times)
 %      are saved in the textfiles 'filename' reps. 'filename'_timings or
@@ -11,26 +11,9 @@ function s = benchmark(path, filename, file, tfile, solverlist)
 %      path:         path of test problems
 %      filename:     name of the file for the results
 %      file, tfile:  file handels for results if not given by 'filename'
-%      solverlist:   list of solvers to use.
-%      s:            0 if benchmark test completed, otherwise an error will be
-%                    thrown
 %
 
-% Copyright 2004-2012 Christian Jansson (jansson@tuhh.de)
-
-% preparation
-sysstr = computer;
-if isempty(strfind(sysstr,'WIN'))
-  nlstr= '\n';
-else
-  nlstr = '\r\n';
-end
-
-% list of solvers that shall be benchmarked
-if nargin<5 || ~iscell(solverlist)
-  solverlist = {'sdpt3','sedumi','sdpa','csdp'};
-end
-ml = length(solverlist);
+% Copyright 2004-2018 Christian Jansson (jansson@tuhh.de)
 
 if nargin<3 || isempty(file) || file<=0
   file = fopen(filename,'w');
@@ -63,27 +46,27 @@ root = root(idx);
 % write table head if test subdirectory reached
 if ~root(1).isdir
   % table for results
-  fprintf(file,['\\begin{center} ',nlstr]);
+  fprintf(file,'\\begin{center}\n');
   fprintf(file,'\\begin{table} {Test Problems from %s} \\\\[1ex]',path);
-  fprintf(file,[nlstr,'\\begin{tiny}',nlstr]);
+  fprintf(file,'\n\\begin{tiny}\n');
   fprintf(file,['\\begin{tabular}[b]{|l|c|c|c|c|c|c|l|} \\hline',...
-    '& & & & & & & \\\\[-2ex]',nlstr]);
+    '& & & & & & & \\\\[-2ex]\n']);
   fprintf(file,['\\textbf{Problem} & $p^*$ & $d^*$ & $\\bar{d}$ & ',...
     '$\\underline{p}$ & $\\mu(p^*,d^*)$ & $\\mu(',...
-    '\\underline{p},\\bar{d})$ & Solver \\\\ \\hline',nlstr]);
+    '\\underline{p},\\bar{d})$ & Solver \\\\ \\hline\n']);
   % table for timings
-  fprintf(tfile,['\\begin{center} ',nlstr]);
+  fprintf(tfile,'\\begin{center}\n');
   fprintf(tfile,'\\begin{table} {Timings for %s} \\\\[1ex]',path);
-  fprintf(tfile,[nlstr,'\\begin{tiny}',nlstr]);
+  fprintf(tfile,'\n\\begin{tiny}\n');
   fprintf(tfile,['\\begin{tabular}[b]{|l|c|c|c|l|} \\hline',...
     'Problem & $t_s$ & $t_u$ & $t_l$ & ',...
-    'Solver \\\\  \\hline',nlstr]);
+    'Solver \\\\  \\hline\n']);
 end
 
 for j = 1:length(root)  % start from third entry to exclude './' and '../' in mr
   if root(j).isdir
     newpath = fullfile(path,root(j).name);
-    benchmark(newpath,'',file,tfile,solverlist);
+    benchmark(newpath,'',file,tfile);
   else
     % cleaning/preparing memory
     clear A b c K x0 y0 z0 objt info;
@@ -124,10 +107,10 @@ for j = 1:length(root)  % start from third entry to exclude './' and '../' in mr
       msglen = min(length(msgstr),20);
       msgstr = msgstr(1:msglen);
       fprintf(file,['%s & \\multicolumn{6}{|l|}{',...
-        msgstr,'} & \\\\ \\hline',nlstr],...
+        msgstr,'} & \\\\ \\hline\n'],...
         probname);
       fprintf(tfile,['%s & \\multicolumn{3}{|l|}{  & ',...
-        msgstr,'} & \\\\ \\hline',nlstr],...
+        msgstr,'} & \\\\ \\hline\n'],...
         probname);
       continue;
     end
@@ -140,8 +123,8 @@ for j = 1:length(root)  % start from third entry to exclude './' and '../' in mr
     end
     probname = probname(1:min(sidx,12));
     %try to solve the problem
-    for i = 1:ml
-      opts.SOLVER = solverlist{i};
+    for i = 1:length(obj.SOLVER)
+      opts.SOLVER = obj.SOLVER{i};
       % try to solve with an approximate solver
       try
         tic; [objt,x0,y0,z0] = mysdps(A,b,c,K,[],[],[],opts); ts = toc;
@@ -152,11 +135,11 @@ for j = 1:length(root)  % start from third entry to exclude './' and '../' in mr
         msglen = min(length(msgstr),20);
         msgstr = msgstr(1:msglen);
         fprintf(file,['%s & \\multicolumn{6}{|l|}{',...
-          msgstr,'} & %s\\\\ \\hline',nlstr],...
-          probname,solverlist{i});
+          msgstr,'} & %s\\\\ \\hline\n'],...
+          probname,obj.SOLVER{i});
         fprintf(tfile,['%s & \\multicolumn{3}{|l|}{',...
-          msgstr,'} & %s\\\\ \\hline',nlstr],...
-          probname,solverlist{i});
+          msgstr,'} & %s\\\\ \\hline\n'],...
+          probname,obj.SOLVER{i});
         continue;
       end
       % try to find upper bound
@@ -168,10 +151,10 @@ for j = 1:length(root)  % start from third entry to exclude './' and '../' in mr
         msglen = min(length(msgstr),20);
         msgstr = msgstr(1:msglen);
         fprintf(file,[' & \\multicolumn{4}{|l|}{',...
-          msgstr,'} & %s\\\\ \\hline',nlstr],...
+          msgstr,'} & %s\\\\ \\hline\n'],...
           'VSDP:VSDPUP');
         fprintf(tfile,[' & \\multicolumn{2}{|l|}{',...
-          msgstr,'} & %s\\\\ \\hline',nlstr],...
+          msgstr,'} & %s\\\\ \\hline\n'],...
           'VSDP:VSDPUP');
         continue;
       end
@@ -184,20 +167,20 @@ for j = 1:length(root)  % start from third entry to exclude './' and '../' in mr
         msglen = min(length(msgstr),20);
         msgstr = msgstr(1:msglen);
         fprintf(file,[' & \\multicolumn{1}{|l|}{',...
-          msgstr,'} & %s\\\\ \\hline',nlstr],...
+          msgstr,'} & %s\\\\ \\hline\n'],...
           'VSDP:VSDPLOW');
         fprintf(tfile,[' & \\multicolumn{1}{|l|}{',...
-          msgstr,'} & %s\\\\ \\hline',nlstr],...
+          msgstr,'} & %s\\\\ \\hline\n'],...
           'VSDP:VSDPLOW');
         continue;
       end
       mup = (ps - ds)/max(1,(abs(ps) + abs(ds))/2);
       muv = (fU - fL)/max(1,(abs(fL) + abs(fU))/2);
       % write rest results
-      fprintf(file,['%1.8e & %1.8e & %s \\\\ \\hline',nlstr],...
-        mup, muv, solverlist{i});
-      fprintf(tfile,['%s & %6.3d & %6.3d & %6.3d & %s \\\\ ',...
-        '\\hline',nlstr],probname,ts,tu,tl,solverlist{i});
+      fprintf(file,'%1.8e & %1.8e & %s \\\\ \\hline\n', ...
+        mup, muv, obj.SOLVER{i});
+      fprintf(tfile,['%s & %6.3d & %6.3d & %6.3d & %s \\\\ ', ...
+        '\\hline\n'],probname,ts,tu,tl,obj.SOLVER{i});
       clear objt x0 y0 z0; pack;
     end
   end
@@ -206,17 +189,15 @@ end
 % write table closing sequences
 if ~root(1).isdir
   % end of results table
-  fprintf(file,['\\end{tabular}',nlstr]);
-  fprintf(file,['\\end{tiny}',nlstr]);
-  fprintf(file,['\\end{table}',nlstr]);
-  fprintf(file,['\\end{center}',nlstr,nlstr]);
+  fprintf(file,'\\end{tabular}\n');
+  fprintf(file,'\\end{tiny}\n');
+  fprintf(file,'\\end{table}\n');
+  fprintf(file,'\\end{center}\n\n');
   % end of timings table
-  fprintf(tfile,['\\end{tabular}',nlstr]);
-  fprintf(tfile,['\\end{tiny}',nlstr]);
-  fprintf(tfile,['\\end{table}',nlstr]);
-  fprintf(tfile,['\\end{center}',nlstr]);
+  fprintf(tfile,'\\end{tabular}\n');
+  fprintf(tfile,'\\end{tiny}\n');
+  fprintf(tfile,'\\end{table}\n');
+  fprintf(tfile,'\\end{center}\n');
 end
-
-s = 0;
 
 end

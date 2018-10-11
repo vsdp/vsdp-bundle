@@ -1,14 +1,17 @@
 function add_solver (obj, name, check_fun, setup_dir, setup_fun)
 % ADD_SOLVER  Sets up a solver for a VSDP benchmark.
 %
-%   name      The name of the solver.  This name should match 
-%   check_fun
+%   name      The name of the solver.  This name should match the definition in
+%             VSDP.
+%   check_fun Function to check if the solver is ready to use.
 %
 %   setup_dir (optional)  Directory where to setup the solver.
 %   setup_fun (optional)  Function  call  to setup the solver.
 %
 %   See also vsdp_benchmark.
 %
+
+% Copyright 2004-2018 Christian Jansson (jansson@tuhh.de)
 
 narginchk (3, 5);
 
@@ -20,9 +23,12 @@ end
 
 % Try to setup the solver.
 if (nargin > 3)
-  OLD_DIR = cd (setup_dir);
-  setup_fun ();
-  cd (OLD_DIR);
+  setup_dir = obj.check_dir (setup_dir);
+  if (~isempty (setup_dir))
+    OLD_DIR = cd (setup_dir);
+    setup_fun ();
+    cd (OLD_DIR);
+  end
 end
 
 % Check for solver to be ready.
