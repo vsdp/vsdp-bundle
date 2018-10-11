@@ -9,10 +9,12 @@ classdef vsdp_benchmark < handle
     % Default: The directory of the vsdp_benchmark class.
     BENCHMARK_DIR
     
-    % Absolute directory path where the solvers can be found.
+    % A cell array of initialized solver strings.
     %
-    % Default: The sibling directory 'solver' of BENCHMARK_DIR.
-    SOLVER_DIR
+    % The benchmark programm assumes, that all solver
+    %
+    % Default: {}.
+    SOLVER
     
     % Temporary absolute directory path for data storage.
     %
@@ -27,21 +29,35 @@ classdef vsdp_benchmark < handle
       %   Detailed explanation goes here
       %
       
-      default_dir = mfilename ('fullpath');
-      default_dir(end - 2 * length (mfilename ()) - 2:end) = [];
-      obj.BENCHMARK_DIR = default_dir;
-      obj.SOLVER_DIR    = strrep (default_dir, 'benchmarks', 'solver');
+      benchmark_dir = mfilename ('fullpath');
+      benchmark_dir(end - 2 * length (mfilename ()) - 2:end) = [];
+      obj.BENCHMARK_DIR = benchmark_dir;
       obj.TMP_DIR       = tempname ();
+      
+      % Add required solvers.
+      solver_dir = strrep (benchmark_dir, 'benchmarks', 'solver');
+      obj.add_solver ('intlab', @() (exist ('isintval', 'file') == 2), ...
+        fullfile (solver_dir, 'intlab'), @() startintlab ());
+      obj.add_solver ('vsdp',   @() (exist ('install_vsdp', 'file') == 2), ...
+        fullfile (solver_dir, '..', 'vsdp', '2018'), @() install_vsdp ());
+      
+      % Add optional solvers.
+      obj.add_solver ('sdpt3', @() (exist ('sqlp', 'file') == 2), ...
+        fullfile (solver_dir, 'sdpt3'), @() install_sdpt3 ());
+      obj.add_solver ('sedumi', @() (exist ('sedumi', 'file') == 2), ...
+        fullfile (solver_dir, 'sedumi'), @() install_sedumi ());
+      obj.add_solver ('sdpa', @() (exist ('sdpam', 'file') == 2), ...
+        fullfile (solver_dir, 'sdpa', 'mex'), @() addpath (pwd ()));
+      obj.add_solver ('csdp', @() (exist ('csdp', 'file') == 2), ...
+        fullfile (solver_dir, 'csdp', 'matlab'), @() addpath (pwd ()));
+      obj.add_solver ('mosek', @() (exist ('mosekopt', 'file') == 3), ...
+        fullfile (solver_dir, 'mosek', '8', 'toolbox', 'r2014aom'), ...
+        @() addpath (pwd ()));
     end
     
     
     function set.BENCHMARK_DIR (obj, p)
       obj.BENCHMARK_DIR = obj.check_dir (p);
-    end
-    
-    
-    function set.SOLVER_DIR (obj, p)
-      obj.SOLVER_DIR = obj.check_dir (p);
     end
     
     
