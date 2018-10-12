@@ -1,19 +1,29 @@
-function run (obj)
+function run (obj, filter_name, filter_bm, filter_solve, dry_run)
 % RUN  Run the VSDP benchmark.
 %
-%   obj.run ()
-%      A benchmark test will be performed on problems found on path 'path'.
-%      The results (optimal values ,rigorous lower and upper bounds and times)
-%      are saved in the textfiles 'filename' reps. 'filename'_timings or
-%      in the files given by handels 'file' resp. 'tfile'. Some Tex sequences
-%      for tables in Latex will be created.
+%   obj.run ()  Runs all benchmarks, specified in obj.BENCHMARK with all
+%               solvers from obj.SOLVER.  Computed are an approximate solution
+%               and rigorous lower and upper bounds.
+%
+%   obj.run (filter_name, filter_bm, filter_solve)  Optionally, the benchmark
+%               can be run for a subset of the data by applying filters, i.e.
+%               regular expressions machted with the "regexp()" function, for
+%               the test case name ('filter_name'), the benchmark library
+%               ('filter_bm'), and the solver ('filter_solve')
+%
+%   obj.run (filter_name, filter_bm, filter_solve, dry_run)  Same as before,
+%               but specify 'dry_run = true' to avoid the storage of any data.
+%               By default 'dry_run' is false.
+%
+%   See also vsdp_benchmark.
 %
 
 % Copyright 2004-2018 Christian Jansson (jansson@tuhh.de)
 
-
-file = 1;
-tfile = 1;
+% TODO: Filter
+% idx = find (cellfun (@(x) ~isempty (regexp (x, "H.*O")), ...
+%   {obj.BENCHMARK.name}));
+% obj.BENCHMARK(idx).name
 
 for j = 1:length(obj.BENCHMARK)
   fprintf ('(%3d/%3d) %s/%s\n', j, length(obj.BENCHMARK), ...
@@ -57,30 +67,43 @@ for j = 1:length(obj.BENCHMARK)
         continue;
     end
     
-    fprintf ('                   m = %d, n = %d\n', vsdp_obj.m, vsdp_obj.n);
+    % Display dimension info.
+    fprintf ('          m = %d, n = %d\n', vsdp_obj.m, vsdp_obj.n);
     
-    for i = 1:0%length(obj.SOLVER)
+    % So
+    for i = 3:length(obj.SOLVER)
+      fprintf ('  %s:\n', obj.SOLVER(i).name);
       % Make a clean copy and set the solver to be used.
       vsdp_obj = vsdp (vsdp_obj);
       vsdp_obj.options.SOLVER = obj.SOLVER(i).name;
       
-      ta = toc;
-      [ps, ds] = objt(2);
-      fprintf(file,'%s & %1.8e & %1.8e & ',obj.BENCHMARK(j).name,ps,ds);
+      % Solve problem approximately.
+      fprintf ('    Approximate solution...');
+      vsdp_obj.solve (obj.SOLVER(i).name);
+      ts = vsdp_obj.solutions.approximate.solver_info.elapsed_time;
+      [ps, ds] = deal (vsdp_obj.solutions.approximate.f_objective);
+      %TODO: save ()
+      fprintf ('done.\n');
       
+      % Compute rigorous lower bound.
+      fprintf ('    Rigorous lower bound...');
+      vsdp_obj.rigorous_lower_bound ();
+      tl = vsdp_obj.solutions.rigorous_lower_bound.solver_info.elapsed_time;
+      fL = vsdp_obj.solutions.rigorous_lower_bound.f_objective(1);
+      %TODO: save ()
+      fprintf ('done.\n');
       
-      tic; fU = vsdpup(A,b,c,K,x0,y0,z0,[],opts); tu = toc;
-      fprintf(file,'%1.8e & ',fU);
-      tic; fL = vsdplow(A,b,c,K,x0,y0,z0,[],opts); tl = toc;
-      fprintf(file,'%1.8e & ',fL);
+      % Compute rigorous upper bound.
+      fprintf ('    Rigorous upper bound...');
+      vsdp_obj.rigorous_upper_bound ();
+      tu = vsdp_obj.solutions.rigorous_upper_bound.solver_info.elapsed_time;
+      fU = vsdp_obj.solutions.rigorous_upper_bound.f_objective(2);
+      %TODO: save ()
+      fprintf ('done.\n');
+      
+      %TODO: to disp.
       mup = (ps - ds)/max(1,(abs(ps) + abs(ds))/2);
       muv = (fU - fL)/max(1,(abs(fL) + abs(fU))/2);
-      % write rest results
-      fprintf(file,'%1.8e & %1.8e & %s \\\\ \\hline\n', ...
-        mup, muv, obj.SOLVER(i).name);
-      fprintf(tfile,['%s & %6.3d & %6.3d & %6.3d & %s \\\\ ', ...
-        '\\hline\n'],obj.BENCHMARK(j).name,ta,tu,tl,obj.SOLVER(i).name);
-      clear objt x0 y0 z0; pack;
     end
   catch err
     fprintf (2, '\n\n%s\n\n', err.message);
