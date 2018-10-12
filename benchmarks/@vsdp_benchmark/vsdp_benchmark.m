@@ -25,9 +25,9 @@ classdef vsdp_benchmark < handle
     % Default: structure with fields
     %
     %   name    = {'intlab', 'vsdp', 'csdp', 'mosek', 'sdpa', 'sdpt3', 'sedumi'}
-    %   check_fun = { for each 'name' a function handle to check functionality }
+    %   check_fun = { for each 'name' a function string to check functionality }
     %   setup_dir = { for each 'name' a setup directory                        }
-    %   setup_fun = { for each 'name' a setup function handle                  }
+    %   setup_fun = { for each 'name' a setup function string                  }
     %
     SOLVER
     
@@ -75,15 +75,14 @@ classdef vsdp_benchmark < handle
     function p = check_dir (~, p)
       % CHECK_DIR  Check 'p' to be an existing directory.
       %
-      %   Return the absolute path 'p' or an emtpy array '[]'.
+      %   Return the absolute path 'p' or an emtpy char array.
       
-      P = what (p);
-      if (isdir (p) && ~isempty (P))
-        p = P.path;
+      if (exist (p, "dir") == 7)
+        p = what (p).path;  % Get absolute path.
       else
         warning ('VSDP_BENCHMARK:check_dir:noDir', ...
           'check_dir: The directory ''%s'' does not exist', p);
-        p = [];
+        p = '';
       end
     end
   end
