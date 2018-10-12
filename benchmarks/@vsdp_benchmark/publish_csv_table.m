@@ -7,9 +7,9 @@ function publish_csv_table (filename, fmt)
 %      HTML website of that tables is created in a subdirectory named 'html'
 %      relative to the location of 'filename'.
 %
-%   See also benchmark.
+%   See also vsdp_benchmark.
 
-% Copyright 2016-2018 Kai T. Ohlhus (kai.ohlhus@tuhh.de)
+% Copyright 2004-2018 Christian Jansson (jansson@tuhh.de)
 
 narginchk(2,2);
 

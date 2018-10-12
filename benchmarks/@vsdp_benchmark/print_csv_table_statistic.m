@@ -1,9 +1,9 @@
 function str = print_csv_table_statistic (filename)
 % PRINT_CSV_TABLE_STATISTIC  Prints short statistic of a benchmark CSV table.
 %
-%   See also benchmark.
+%   See also vsdp_benchmark.
 
-% Copyright 2016-2018 Kai T. Ohlhus (kai.ohlhus@tuhh.de)
+% Copyright 2004-2018 Christian Jansson (jansson@tuhh.de)
 
 str = fileread(filename);
 cstr = strsplit(str,'\n');
