@@ -16,8 +16,8 @@ file = 1;
 tfile = 1;
 
 for j = 1:length(obj.BENCHMARK)
-  fprintf ('%s/%s (%3d/%3d)\n', obj.BENCHMARK(j).lib, obj.BENCHMARK(j).name, ...
-    j, length(obj.BENCHMARK));
+  fprintf ('(%3d/%3d) %s/%s\n', j, length(obj.BENCHMARK), ...
+    obj.BENCHMARK(j).lib, obj.BENCHMARK(j).name);
   try
     [fpath, fname, fext] = fileparts (obj.BENCHMARK(j).file);
     
@@ -47,17 +47,19 @@ for j = 1:length(obj.BENCHMARK)
           vsdp_obj = vsdp (At, b, c, K);
           clear ('At', 'b', 'c', 'K');
         end
-      case 'dat-s'  % Sparse SDPA data.
-        obj = vsdp.from_sdpa_file (dfile);
-      case 'SIF'
-        obj = vsdp.from_mps_file (dfile);
+      case '.dat-s'  % Sparse SDPA data.
+        vsdp_obj = vsdp.from_sdpa_file (dfile);
+      case '.SIF'
+        vsdp_obj = vsdp.from_mps_file (dfile);
       otherwise
         warning ('VSDP_BENCHMARK:run:unsupportedData', ...
           'run: Unsupported file ''%s''.', obj.BENCHMARK(j).file);
         continue;
     end
     
-    for i = 1:length(obj.SOLVER)
+    fprintf ('                   m = %d, n = %d\n', vsdp_obj.m, vsdp_obj.n);
+    
+    for i = 1:0%length(obj.SOLVER)
       % Make a clean copy and set the solver to be used.
       vsdp_obj = vsdp (vsdp_obj);
       vsdp_obj.options.SOLVER = obj.SOLVER(i).name;

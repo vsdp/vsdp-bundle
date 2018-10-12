@@ -17,6 +17,7 @@ if (exist (bm_state_file, 'file') ~= 2)
   warning ('VSDP_BENCHMARK:restore_state:noState', ...
     'restore_state: The directory ''%s'' has no VSDP benchmark data.', ...
     obj.RESULT_DIR);
+  return;
 end
 
 % Restore the used solvers.
@@ -29,7 +30,15 @@ for i = 1:length (sol_data)
   end
 end
 
-% Restore the benchmark data.
+% Restore the benchmark data and check for missing data files.
 load (bm_state_file, 'bm_data');
 obj.BENCHMARK = bm_data;
+for i = 1:length (bm_data)
+  if (exist (bm_data(i).file, 'file') ~= 2);
+    warning ('VSDP_BENCHMARK:restore_state:missingBenchmarkFile', ...
+      'restore_state: The file ''%s'' is missing.', ...
+      bm_data(i).file);
+  end
+end
+
 end
