@@ -22,7 +22,13 @@ classdef vsdp_benchmark < handle
     %
     % The benchmark programm assumes, that all solver
     %
-    % Default: {'csdp', 'mosek', 'sdpa', 'sdpt3', 'sedumi'}.
+    % Default: structure with fields
+    %
+    %   name    = {'intlab', 'vsdp', 'csdp', 'mosek', 'sdpa', 'sdpt3', 'sedumi'}
+    %   check_fun = { for each 'name' a function handle to check functionality }
+    %   setup_dir = { for each 'name' a setup directory                        }
+    %   setup_fun = { for each 'name' a setup function handle                  }
+    %
     SOLVER
     
     % Absolute directory path for persistent data storage.

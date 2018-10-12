@@ -17,7 +17,7 @@ narginchk (3, 5);
 
 % Check for solver to be ready.
 if (check_fun ())
-  obj.SOLVER{end + 1} = name;
+  add_solver_data (obj, name, check_fun, setup_dir, setup_fun);
   return;
 end
 
@@ -33,7 +33,7 @@ end
 
 % Check for solver to be ready.
 if (check_fun ())
-  obj.SOLVER{end + 1} = name;
+  add_solver_data (obj, name, check_fun, setup_dir, setup_fun);
 elseif (strcmpi (name, 'intlab'))
   error ('VSDP_BENCHMARK:add_solver:noINTLAB', ...
     ['add_solver: INTLAB is required to run VSDP.  Get a recent version ', ...
@@ -43,4 +43,13 @@ else
     'bm_setup: The solver ''%s'' is not available.', name);
 end
 
+end
+
+function add_solver_data (obj, name, check_fun, setup_dir, setup_fun)
+solver.name = name;
+% TODO: Octave bug #43215, cannot store function handles, thus store as string.
+solver.check_fun = func2str (check_fun);
+solver.setup_dir = setup_dir;
+solver.setup_fun = func2str (setup_fun);
+obj.SOLVER = [obj.SOLVER, solver];
 end

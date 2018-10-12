@@ -60,7 +60,7 @@ for j = 1:length(obj.BENCHMARK)
     for i = 1:length(obj.SOLVER)
       % Make a clean copy and set the solver to be used.
       vsdp_obj = vsdp (vsdp_obj);
-      vsdp_obj.options.SOLVER = obj.SOLVER{i};
+      vsdp_obj.options.SOLVER = obj.SOLVER(i).name;
       
       ta = toc;
       [ps, ds] = objt(2);
@@ -75,9 +75,9 @@ for j = 1:length(obj.BENCHMARK)
       muv = (fU - fL)/max(1,(abs(fL) + abs(fU))/2);
       % write rest results
       fprintf(file,'%1.8e & %1.8e & %s \\\\ \\hline\n', ...
-        mup, muv, obj.SOLVER{i});
+        mup, muv, obj.SOLVER(i).name);
       fprintf(tfile,['%s & %6.3d & %6.3d & %6.3d & %s \\\\ ', ...
-        '\\hline\n'],obj.BENCHMARK(j).name,ta,tu,tl,obj.SOLVER{i});
+        '\\hline\n'],obj.BENCHMARK(j).name,ta,tu,tl,obj.SOLVER(i).name);
       clear objt x0 y0 z0; pack;
     end
   catch err
