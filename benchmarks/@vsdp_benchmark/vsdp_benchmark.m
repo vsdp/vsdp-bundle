@@ -13,7 +13,19 @@ classdef vsdp_benchmark < handle
     %      lib    Benchmark library name.
     %      name   Short name for the test case.
     %      file   System dependend full path of the original test case data.
-    %      setup  Neccessary code to create a VSDP object 'obj'.
+    %      m      Number of constraints.
+    %      n      Number of cone variables.
+    %      K.f    Has free variables.
+    %      K.l    Has LP   variables.
+    %      K.q    Has SOCP variables.
+    %      K.s    Has SDP  variables.
+    %      fp     Primal approximate solution.
+    %      fd     Dual   approximate solution.
+    %      ts     Time for approximate solution.
+    %      fL     Rigorous lower bound.
+    %      tL     Time for rigorous lower bound.
+    %      fU     Rigorous upper bound.
+    %      tU     Time for rigorous upper bound.
     %
     % Default: [].
     BENCHMARK

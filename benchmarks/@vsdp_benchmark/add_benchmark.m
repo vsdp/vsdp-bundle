@@ -15,6 +15,19 @@ for i = length(f):-1:1
   list(i).lib   = name;
   list(i).name  = name_fun (f(i).name);
   list(i).file  = fullfile (f(i).folder, f(i).name);
+  list(i).m = '?';
+  list(i).n = '?';
+  list(i).K.f = '?';
+  list(i).K.l = '?';
+  list(i).K.q = '?';
+  list(i).K.s = '?';
+  list(i).fp = '?';
+  list(i).fd = '?';
+  list(i).ts = '?';
+  list(i).fL = '?';
+  list(i).tL = '?';
+  list(i).fU = '?';
+  list(i).tU = '?';
 end
 obj.BENCHMARK = [obj.BENCHMARK, list];
 
