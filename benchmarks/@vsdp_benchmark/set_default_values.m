@@ -73,8 +73,5 @@ obj.add_benchmark ('SPARSE_SDP', ...
   fullfile (benchmark_dir, 'SPARSE_SDP', 'data', '*.dat-s.gz'), ...
   @(str) str(1:end - length('.dat-s.gz')));
 
-bm_data  = obj.BENCHMARK;
-sol_data = obj.SOLVER;
-save (fullfile (obj.RESULT_DIR, 'benchmark_state.mat'), ...
-  'bm_data', 'sol_data', '-v7');
+obj.save_state ();
 end

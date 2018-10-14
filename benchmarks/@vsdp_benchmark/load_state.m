@@ -1,5 +1,5 @@
-function restore_state (obj)
-% RESTORE_STATE  Restores the state of a VSDP benchmark.
+function load_state (obj)
+% LOAD_STATE  Restores the state of a VSDP benchmark.
 %
 %   In particular, this functions looks for a file 'benchmark_state.mat' in
 %   the object's RESULT_DIR, loads it's content and perfoms additionally:

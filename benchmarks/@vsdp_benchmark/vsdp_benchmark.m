@@ -60,7 +60,7 @@ classdef vsdp_benchmark < handle
         mkdir (p);
       end
       obj.RESULT_DIR = obj.check_dir (p);
-      obj.restore_state ();
+      obj.load_state ();
     end
     
     
