@@ -7,7 +7,8 @@ function obj = set_default_values (obj)
 %
 
 % Check for empty result directory (ignore default entries {'.', '..'}).
-if (length (dir (obj.RESULT_DIR)) > 2)
+if ((length (dir (obj.RESULT_DIR)) > 3) || ...
+    (length (dir (fullfile (obj.RESULT_DIR, 'data'))) > 2))
   error ('VSDP_BENCHMARK:set_default_values:resultDirNotEmpty', ...
     'set_default_values: RESULT_DIR = ''%s'' is not empty.', ...
     obj.RESULT_DIR);
