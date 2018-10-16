@@ -61,11 +61,13 @@ end
 % Information about the benchmarks.
 fprintf ('\n  Benchmark information (%3d test cases):\n\n', ...
   length (obj.BENCHMARK));
-bms = {obj.BENCHMARK.lib};
-bm_unique = unique(bms);
-for i = 1:length (bm_unique)
-  fprintf ('%16s: %3d test cases\n', bm_unique{i}, ...
-    sum (cellfun (@(x) strcmp (x, bm_unique{i}), bms)));
+if (~isempty (obj.BENCHMARK))
+  bms = {obj.BENCHMARK.lib};
+  bm_unique = unique(bms);
+  for i = 1:length (bm_unique)
+    fprintf ('%16s: %3d test cases\n', bm_unique{i}, ...
+      sum (cellfun (@(x) strcmp (x, bm_unique{i}), bms)));
+  end
 end
 fprintf ('\n\n');
 
