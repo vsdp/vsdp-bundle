@@ -1,17 +1,17 @@
-function obj = run (obj, filter_name, filter_bm, filter_solver, dry_run)
+function obj = run (obj, varargin)
 % RUN  Run the VSDP benchmark.
 %
 %   obj.run ()  Runs all benchmarks, specified in obj.BENCHMARK with all
 %               solvers from obj.SOLVER.  Computed are an approximate solution
 %               and rigorous lower and upper bounds.
 %
-%   obj.run (filter_name, filter_bm, filter_solver)  Optionally, the benchmark
+%   obj.run (filter_bm, filter_name, filter_solver)  Optionally, the benchmark
 %               can be run for a subset of the data by applying filters, i.e.
 %               regular expressions machted with the "regexp()" function, for
 %               the test case name ('filter_name'), the benchmark library
 %               ('filter_bm'), and the solver ('filter_solver')
 %
-%   obj.run (filter_name, filter_bm, filter_solver, dry_run)  Same as before,
+%   obj.run (filter_bm, filter_name, filter_solver, dry_run)  Same as before,
 %               but specify 'dry_run = true' to avoid the storage of any data.
 %               By default 'dry_run' is false.
 %
@@ -20,51 +20,20 @@ function obj = run (obj, filter_name, filter_bm, filter_solver, dry_run)
 
 % Copyright 2004-2018 Christian Jansson (jansson@tuhh.de)
 
-bm_indices = 1:length(obj.BENCHMARK);
-% Filter benchmarks.
-if ((nargin > 1) && ~isempty (filter_name))
-  bm_indices = find (cellfun (@(x) ~isempty (regexp (x, filter_name, 'once')), ...
-    {obj.BENCHMARK.name}));
-else
-  filter_name = '.*';
+[bm_indices, solver_indices] = obj.filter (varargin{:});
+if (length (obj.BENCHMARK) > length (bm_indices))
+  disp ('Run only a subset of the benchmarks:')
+  sub_entries = {obj.BENCHMARK(bm_indices).lib; obj.BENCHMARK(bm_indices).name};
+  fprintf ('  %s/%s\n', sub_entries{:});
 end
-% Filter benchmark libraries.
-if ((nargin > 2) && ~isempty (filter_bm))
-  idx = cellfun (@(x) ~isempty (regexp (x, filter_bm, 'once')), ...
-    {obj.BENCHMARK(bm_indices).lib});
-  bm_indices = bm_indices(idx);
-else
-  filter_bm = '.*';
-end
-if ((nargin > 1) && (length (obj.BENCHMARK) > length (bm_indices)))
-  if (~isempty (bm_indices))
-    disp ('Run only a subset of the benchmarks:')
-    sub_entries = {obj.BENCHMARK(bm_indices).lib; obj.BENCHMARK(bm_indices).name};
-    fprintf ('  %s/%s\n', sub_entries{:});
-  else
-    error ('VSDP_BENCHMARK:run:filterBenchmarks', ...
-      ['run: filter_name = ''%s'' and filter_bm = ''%s'' do not match ', ...
-      'any benchmark test case.'], filter_name, filter_bm);
-  end
+if ((nargin > 3) && ~isempty (solver_indices))
+  disp ('Use only the solver(s):')
+  fprintf ('  %s\n', obj.SOLVER(solver_indices).name);
 end
 
-solver_indices = 3:length(obj.SOLVER);
-% Filter solver.
-if ((nargin > 3) && ~isempty (filter_solver))
-  idx = cellfun (@(x) ~isempty (regexp (x, filter_solver, 'once')), ...
-    {obj.SOLVER(solver_indices).name});
-  solver_indices = solver_indices(idx);
-  if (~isempty (solver_indices))
-    disp ('Use only the solver(s):')
-    fprintf ('  %s\n', obj.SOLVER(solver_indices).name);
-  else
-    error ('VSDP_BENCHMARK:run:filterSolver', ...
-      'run: filter_solver = ''%s'' does not match any solver.', filter_solver);
-  end
-end
 dry_run = false;
 if (nargin > 4)
-  dry_run = logical (dry_run);
+  dry_run = logical (varargin{4});
 end
 
 % Solve selected test cases.
