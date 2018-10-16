@@ -104,6 +104,11 @@ for j = bm_indices
   for i = solver_indices
     try
       fprintf ('  %s:\n', obj.SOLVER(i).name);
+      if (~dry_run)
+        % Determine if there are already benchmarks for solver 'i'.
+        ii = get_or_set_solver (obj, j, obj.SOLVER(i).name);
+        obj.save_state ();
+      end
       
       % Specify file names.
       file_prefix = fullfile (obj.RESULT_DIR, 'data', ...
@@ -134,13 +139,14 @@ for j = bm_indices
         fprintf (' (cached) ');
       end
       ts = vsdp_obj.solutions.approximate.solver_info.elapsed_time;
-      [fp, fd] = deal (vsdp_obj.solutions.approximate.f_objective);
+      fp = vsdp_obj.solutions.approximate.f_objective(1);
+      fd = vsdp_obj.solutions.approximate.f_objective(2);
       
       % Save or verify cached results.
       if (~dry_run)
-        set_or_compare (obj, j, 'fp', fp);
-        set_or_compare (obj, j, 'fd', fd);
-        set_or_compare (obj, j, 'ts', ts);
+        set_or_compare (obj, j, 'fp', fp, ii);
+        set_or_compare (obj, j, 'fd', fd, ii);
+        set_or_compare (obj, j, 'ts', ts + 2, ii);
         obj.save_state ();
       end
       fprintf ('done.\n');
@@ -167,8 +173,8 @@ for j = bm_indices
       
       % Save or verify cached results.
       if (~dry_run)
-        set_or_compare (obj, j, 'fL', fL);
-        set_or_compare (obj, j, 'tL', tL);
+        set_or_compare (obj, j, 'fL', fL, ii);
+        set_or_compare (obj, j, 'tL', tL, ii);
         obj.save_state ();
       end
       fprintf ('done.\n');
@@ -195,8 +201,8 @@ for j = bm_indices
       
       % Save or verify cached results.
       if (~dry_run)
-        set_or_compare (obj, j, 'fU', fU);
-        set_or_compare (obj, j, 'tU', tU);
+        set_or_compare (obj, j, 'fU', fU, ii);
+        set_or_compare (obj, j, 'tU', tU, ii);
         obj.save_state ();
       end
       fprintf ('done.\n');
@@ -212,18 +218,57 @@ for j = bm_indices
 end
 end
 
-function set_or_compare (obj, idx, fname, val)
-% SET_OR_COMPARE  Set value 'val' to the BENCHMARK field 'fname' at index 'idx'.
+function set_or_compare (obj, idx, fname, val, ii)
+% SET_OR_COMPARE  Set  value 'val' to the BENCHMARK field 'fname' at index 'idx'.
 %   If the value is already set, the values are only compared and a warning is
 %   issued, if they differ.
 %
+%   Given the fifth argument 'ii', look in 'obj.BENCHMARK(idx).values(ii)'
+%   instead.
+%
 
-current_val = getfield (obj.BENCHMARK(idx), fname);
-if (current_val == '?')
-  obj.BENCHMARK(idx) = setfield (obj.BENCHMARK(idx), fname, val);
-elseif (current_val ~= val)
-  warning ('VSDP_BENCHMARK:run:fieldvalueDiffers', ...
-    'run: obj.BENCHMARK(%d).%s = ''%f'', not ''%f''.  Name = ''%s''.', ...
-    idx, fname, current_val, val, obj.BENCHMARK(idx).name);
+if (nargin > 4)
+  S = obj.BENCHMARK(idx).values(ii);
+else
+  S = obj.BENCHMARK(idx);
 end
+
+% Update struct.
+current_val = getfield (S, fname);
+if (current_val == '?')
+  S = setfield (S, fname, val);
+elseif (current_val ~= val)
+  warning ('VSDP_BENCHMARK:run:fieldValueDiffers', ...
+    'run: %s = ''%f'', not ''%f'' in ''obj.BENCHMARK(%d)'' (''%s'').', ...
+    fname, current_val, val, idx, obj.BENCHMARK(idx).name);
+end
+
+% Store modified struct.
+if (nargin > 4)
+  obj.BENCHMARK(idx).values(ii) = S;
+else
+  obj.BENCHMARK(idx) = S;
+end
+end
+
+
+function ii = get_or_set_solver (obj, idx, sname)
+% GET_OR_SET_SOLVER  Get the index of solver 'sname' in 'obj.BENCHMARK(idx)'.
+%   If the solver 'sname' is not present, add a new field to 
+%   'obj.BENCHMARK(idx).values'.
+%
+
+ii = find (cellfun (@(x) strcmp (x, sname), {obj.BENCHMARK(idx).values}));
+if (isempty (ii))
+  ii = length (obj.BENCHMARK(idx).values) + 1;
+  obj.BENCHMARK(idx).values(ii).name = sname;
+  obj.BENCHMARK(idx).values(ii).fp = '?';
+  obj.BENCHMARK(idx).values(ii).fd = '?';
+  obj.BENCHMARK(idx).values(ii).ts = '?';
+  obj.BENCHMARK(idx).values(ii).fL = '?';
+  obj.BENCHMARK(idx).values(ii).tL = '?';
+  obj.BENCHMARK(idx).values(ii).fU = '?';
+  obj.BENCHMARK(idx).values(ii).tU = '?';
+end
+
 end

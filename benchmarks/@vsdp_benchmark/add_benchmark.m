@@ -21,13 +21,7 @@ for i = length(f):-1:1
   list(i).K_l = '?';
   list(i).K_q = '?';
   list(i).K_s = '?';
-  list(i).fp = '?';
-  list(i).fd = '?';
-  list(i).ts = '?';
-  list(i).fL = '?';
-  list(i).tL = '?';
-  list(i).fU = '?';
-  list(i).tU = '?';
+  list(i).values = [];
 end
 obj.BENCHMARK = [obj.BENCHMARK, list];
 
