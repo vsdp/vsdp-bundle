@@ -1,15 +1,13 @@
-function obj = run (obj, varargin)
+function obj = run (obj, f, dry_run)
 % RUN  Run the VSDP benchmark.
 %
 %   obj.run ()  Runs all benchmarks, specified in obj.BENCHMARK with all
 %               solvers from obj.SOLVER.  Computed are an approximate solution
 %               and rigorous lower and upper bounds.
 %
-%   obj.run (filter_bm, filter_name, filter_solver)  Optionally, the benchmark
-%               can be run for a subset of the data by applying filters, i.e.
-%               regular expressions machted with the "regexp()" function, for
-%               the test case name ('filter_name'), the benchmark library
-%               ('filter_bm'), and the solver ('filter_solver')
+%   obj.run (obj.filter (...))  Optionally, the benchmark can be run for a
+%               subset of the data by applying filters, see obj.filter for
+%               details.
 %
 %   obj.run (filter_bm, filter_name, filter_solver, dry_run)  Same as before,
 %               but specify 'dry_run = true' to avoid the storage of any data.
@@ -20,26 +18,30 @@ function obj = run (obj, varargin)
 
 % Copyright 2004-2018 Christian Jansson (jansson@tuhh.de)
 
-[bm_indices, solver_indices] = obj.filter (varargin{:});
-if (length (obj.BENCHMARK) > length (bm_indices))
-  disp ('Run only a subset of the benchmarks:')
-  sub_entries = {obj.BENCHMARK(bm_indices).lib; obj.BENCHMARK(bm_indices).name};
-  fprintf ('  %s/%s\n', sub_entries{:});
-end
-if ((nargin > 3) && ~isempty (solver_indices))
+% If no filter is applied, get all available indices.
+if (nargin < 2)
+  f = obj.filter ();
+else
+  % Display some information about the reduced filtered benchmark.
+  if (length (obj.BENCHMARK) > length (f.benchmark))
+    disp ('Run only a subset of the benchmarks:')
+    sub_entries = {obj.BENCHMARK(f.benchmark).lib; ...
+      obj.BENCHMARK(f.benchmark).name};
+    fprintf ('  %s/%s\n', sub_entries{:});
+  end
   disp ('Use only the solver(s):')
-  fprintf ('  %s\n', obj.SOLVER(solver_indices).name);
+  fprintf ('  %s\n', obj.SOLVER(f.solver).name);
 end
 
-dry_run = false;
-if (nargin > 4)
-  dry_run = logical (varargin{4});
+% Save all computed values by default.
+if (nargin < 3)
+  dry_run = false;
 end
 
 % Solve selected test cases.
-for j = bm_indices
-  fprintf ('(%3d/%3d) %s/%s\n', find (j == bm_indices), length (bm_indices), ...
-    obj.BENCHMARK(j).lib, obj.BENCHMARK(j).name);
+for j = f.benchmark
+  fprintf ('(%3d/%3d) %s/%s\n', find (j == f.benchmark), ...
+    length (f.benchmark), obj.BENCHMARK(j).lib, obj.BENCHMARK(j).name);
   try
     [fpath, fname, fext] = fileparts (obj.BENCHMARK(j).file);
     
@@ -101,7 +103,7 @@ for j = bm_indices
   end
   
   % Call all selected solvers.
-  for i = solver_indices
+  for i = f.solver
     try
       fprintf ('  %s:\n', obj.SOLVER(i).name);
       if (~dry_run)
@@ -254,7 +256,7 @@ end
 
 function ii = get_or_set_solver (obj, idx, sname)
 % GET_OR_SET_SOLVER  Get the index of solver 'sname' in 'obj.BENCHMARK(idx)'.
-%   If the solver 'sname' is not present, add a new field to 
+%   If the solver 'sname' is not present, add a new field to
 %   'obj.BENCHMARK(idx).values'.
 %
 
