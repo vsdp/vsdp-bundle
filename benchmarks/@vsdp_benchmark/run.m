@@ -260,7 +260,13 @@ function ii = get_or_set_solver (obj, idx, sname)
 %   'obj.BENCHMARK(idx).values'.
 %
 
-ii = find (cellfun (@(x) strcmp (x, sname), {obj.BENCHMARK(idx).values}));
+
+if (isempty (obj.BENCHMARK(idx).values))
+  ii = [];
+else
+  ii = find (cellfun (@(x) strcmp (x, sname), ...
+    {obj.BENCHMARK(idx).values.name}));
+end
 if (isempty (ii))
   ii = length (obj.BENCHMARK(idx).values) + 1;
   obj.BENCHMARK(idx).values(ii).name = sname;
