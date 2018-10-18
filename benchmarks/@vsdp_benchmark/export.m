@@ -1,44 +1,98 @@
-function output = export (obj, fmt, filter, use_columns, out_file_name)
+function output = export (obj, fmt, out_file, filter, use_columns)
 % EXPORT  Export the data of the VSDP benchmark object 'obj'.
 %
-%   Detailed explanation goes here
+%   output = obj.export (fmt)  Export all available data to the destination
+%     format 'fmt' which is one of 'cell', 'csv', 'html', or 'latex'.  In
+%     case of 'fmt' = 'cell', the variable 'output' contains cell array with
+%     all available data.  Otherwise a formatted string in the respective
+%     format is returned.
+%
+%   obj.export (fmt, out_file)  Optionally, the output can be written to a
+%     non-existing file 'out_file'.  In case of 'fmt' = 'cell', 'out_file' is
+%     a MAT-file, otherwise a text file with the data formatted in the
+%     respective format 'fmt'.
+%
+%   obj.export (__, __, obj.filter (...))  Optionally, the benchmark data,
+%     i.e. the rows, can be filtered.  See 'obj.filter' for details.  If the
+%     argument is empty, all available data will be exported.
+%
+%   obj.export (__, __, __, use_columns)  Optionally, the exported columns
+%     can be set as a column vector of char arrays.  In general every scalar
+%     field of 'obj.BENCHMARK' and 'obj.BENCHMARK.values' can be chosen as
+%     column name for the export.  Those are:
+%
+%        use_columns = { ...
+%           'lib', 'name' 'file', 'm', 'n', 'K_f', 'K_l', 'K_q', 'K_s',
+%           'sname', 'fp', 'fd', 'ts', 'fL', 'tL', 'fU', 'tU'}';
+%
+%     In addition to the basic data, it is possible to specify extra columns
+%     based on those given above by three possible combinations.  For example:
+%
+%       1. 'tL/ts' will result in a column containing the elementwise quotient
+%          of the columns 'tL' and 'ts', even is they are not present in the
+%          export.
+%       2. 'fU-fL', like in 1., but for the elementwise difference.
+%       3. 'mu_fU_fL', computes the relative accurracy of 'fU' and 'fL', see
+%          <https://vsdp.github.io/references.html#Jansson2006>.
+%
+%     When the additional column creation fails, a warning is shown and the
+%     column will not be part of the export.
+%
+%     If 'use_columns' is a n-times-2 cell array, the second column specifies
+%     a label for that column, which will be the first row of the export.
+%
+%     If 'use_columns' is a n-times-3 cell array, the third column specifies
+%     a format string that column which can be used for 'sprintf' for example.
+%     All values except for the first row are converted to strings using this
+%     format string.
+%
+%   See also vsdp_benchmark.
+%
+
+% Copyright 2004-2018 Christian Jansson (jansson@tuhh.de)
 
 narginchk (2, 5);
 
 fmt = validatestring (fmt, {'cell', 'csv', 'html', 'latex'});
 if (nargin < 3)
-  filter = [];
+  out_file = [];
+else
+  if (exist (out_file, 'file') == 2)
+    error ('VSDP_BENCHMARK:export:outputFileExists', ...
+      'export: File ''%s'' already exists.  Choose another name.', out_file);
+  end
 end
 if (nargin < 4)
-  use_columns = [];
+  % Use all data, if no filter was applied.
+  filter = obj.filter ();
 end
 if (nargin < 5)
-  out_file = [];
+  % Use default columns with LaTeX labels.
+  use_columns = { ...
+    'lib',      'Library', '%s';
+    'name',     'Name',    '%s';
+    'file',     'File',    '%s';
+    'm',        '$m$',     '%d';
+    'n',        '$n$',     '%d';
+    'K_f',      '$K_f$',   '%d';
+    'K_l',      '$K_l$',   '%d';
+    'K_q',      '$K_q$',   '%d';
+    'K_s',      '$K_s$',   '%d';
+    'sname',    'Solver',  '%s';
+    'fp',       '$f_p$',   '%e';
+    'fd',       '$f_d$',   '%e';
+    'ts',       '$t_s$',   '%e';
+    'fL',       '$\underline{f_p}$',   '%e';
+    'tL',       '$\underline{t}$',     '%e';
+    'tL/ts',    '$\underline{t}/t_s$', '%e';
+    'fU',       '$\overline{f_d}$',    '%e';
+    'tU',       '$\overline{t}$',      '%e';
+    'tU/ts',    '$\overline{t}/t_s$',  '%e';
+    'fU-fL',    '$\overline{f_d} - \underline{f_p}$',     '%e';
+    'mu_fU_fL', '$\mu(\overline{f_d}, \underline{f_p})$', '%e'};
 end
 
-use_columns = { ...
-  'lib',   '%s', '';
-  'name',  '%s', '';
-  'file',  '%s', '';
-  'm',     '%d', '';
-  'n',     '%d', '';
-  'K_f',   '%d', '';
-  'K_l',   '%d', '';
-  'K_q',   '%d', '';
-  'K_s',   '%d', '';
-  'sname', '%s', '';
-  'fp',    '%e', '';
-  'fd',    '%e', '';
-  'ts',    '%e', '';
-  'fL',    '%e', '';
-  'tL',    '%e', '';
-  'tL/ts', '%e', '';
-  'fU',    '%e', '';
-  'tU',    '%e', '';
-  'tU/ts', '%e', '';
-  'fU-fL', '%e', '';
-  'mu_fU_fL', '%e', ''};
-output = gather_data (obj, filter, use_columns);
+cdata = gather_data (obj, filter, use_columns);
 
 switch (fmt)
   case 'cell'
@@ -47,16 +101,15 @@ switch (fmt)
   case 'latex'
 end
 
+if (nargout > 0)
+  output = cdata;
+end
+
 end
 
 
 function output = gather_data (obj, filter, use_columns)
 % GATHER_DATA  of all requested test cases.
-
-% Use all data, if no filter was applied.
-if (isempty (filter))
-  filter = obj.filter ();
-end
 
 % Gather the cached computed solutions.
 solution_values = {obj.BENCHMARK(filter.benchmark).values};
@@ -131,7 +184,7 @@ function new_row = append_row (output, col)
 
 new_row = cell (size (output, 1), 1);
 
-% Compute accurracy mu [https://vsdp.github.io/references.html#Jansson2006],
+% Compute accurracy mu <https://vsdp.github.io/references.html#Jansson2006>,
 % that is 'mu_<op1>_<op2>'.
 if (strncmp (col, 'mu_', 3))
   try
