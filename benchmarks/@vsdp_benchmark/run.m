@@ -208,10 +208,6 @@ for j = f.benchmark
         obj.save_state ();
       end
       fprintf ('done.\n');
-      
-      %TODO: to disp.
-      mup = (fp - fd)/max(1,(abs(fp) + abs(fd))/2);
-      muv = (fU - fL)/max(1,(abs(fL) + abs(fU))/2);
     catch err
       fprintf (2, '\n\n%s\n\n', err.message);
       continue;
