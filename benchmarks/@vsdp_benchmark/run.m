@@ -265,7 +265,7 @@ else
 end
 if (isempty (ii))
   ii = length (obj.BENCHMARK(idx).values) + 1;
-  obj.BENCHMARK(idx).values(ii).name = sname;
+  obj.BENCHMARK(idx).values(ii).sname = sname;
   obj.BENCHMARK(idx).values(ii).fp = '?';
   obj.BENCHMARK(idx).values(ii).fd = '?';
   obj.BENCHMARK(idx).values(ii).ts = '?';

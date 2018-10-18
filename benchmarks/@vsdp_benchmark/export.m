@@ -4,8 +4,8 @@ function output = export (obj, fmt, out_file, filter, use_columns)
 %   output = obj.export (fmt)  Export all available data to the destination
 %     format 'fmt' which is one of 'cell', 'csv', 'html', or 'latex'.  In
 %     case of 'fmt' = 'cell', the variable 'output' contains cell array with
-%     all available data.  Otherwise a formatted string in the respective
-%     format is returned.
+%     all available data with original data type.  Otherwise a formatted string
+%     in the respective format is returned.
 %
 %   obj.export (fmt, out_file)  Optionally, the output can be written to a
 %     non-existing file 'out_file'.  In case of 'fmt' = 'cell', 'out_file' is
@@ -94,11 +94,40 @@ end
 
 cdata = gather_data (obj, filter, use_columns);
 
+% Replace column heads by labels, for some formats.
+switch (fmt)
+  case {'html', 'latex'}
+    if (size (use_columns, 2) > 1)
+      cdata(1,:) = use_columns(:,2);
+    end
+end
+
+% Format cell content to string, for some formats.
+switch (fmt)
+  case {'csv', 'html', 'latex'}
+    if (size (use_columns, 2) == 3)
+      for i = 1:size(cdata, 2)
+        cdata(2:end,i) = cellfun (@(x) sprintf (use_columns{i,3}, x), ...
+          cdata(2:end,i), 'UniformOutput', false);
+      end
+    else
+      cdata = cellfun (@num2str, cdata, 'UniformOutput', false);
+    end
+end
+
+% Save 'cdata' to 'out_file' if given.
 switch (fmt)
   case 'cell'
-  case 'csv'
-  case 'html'
-  case 'latex'
+    if (~isempty (out_file))
+      save (out_file, 'cdata', '-v7');
+    end
+  case {'csv', 'html', 'latex'}
+    cdata = eval (['to_', fmt ,'(cdata);']);
+    if (~isempty (out_file))
+      f = fopen (out_file, "w");
+      fprintf (f, "%s", cdata);
+      fclose (f);
+    end
 end
 
 if (nargout > 0)
@@ -174,6 +203,7 @@ for i = 1:length(use_columns(:,1))
     final_output(:,i) = output(:,get_col_num (output, use_columns{i,1}));
   end
 end
+
 output = final_output;
 end
 
@@ -235,4 +265,73 @@ end
 function num = get_col_num (output, col)
 % GET_COL_NUM  Get the number of a column of a fixed column order table.
 num = find (strcmp (col, output (1,:)));
+end
+
+
+function str = to_csv (cdata)
+% TO_CSV  Export data to comma seperated values (CSV).
+for i = 1:size (cdata, 1)
+  cdata{i,1} = strjoin (cdata(i,:), ',');
+end
+cdata = cdata(:,1);
+str = strjoin (cdata, '\n');
+end
+
+
+function str = to_html (cdata)
+% TO_HTML  Export data to rich HTML markup (MathJax, jQuery, dataTables).
+
+thead = sprintf ('  <th>%s</th>\n', strjoin (cdata(1,:), '</th>\n  <th>'));
+thead = sprintf ('<thead>\n<tr>\n%s</tr>\n</thead>\n', thead);
+for i = 2:size (cdata, 1)
+  cdata{i,1} = sprintf ('  <td>%s</td>\n', strjoin (cdata(i,:), ...
+    '</td>\n  <td>'));
+end
+cdata = cdata(2:end,1);
+str = sprintf ('<tr>\n%s</tr>\n', strjoin (cdata, '</tr>\n<tr>\n'));
+str = sprintf ('<tbody>\n%s</tbody>\n', str);
+str = sprintf ( ...
+  '<table id="main_tab" class="display" style="width:100%%">\n%s%s</table>\n', ...
+  thead, str);
+
+header = strjoin ({ ...
+  '<!DOCTYPE html>', ...
+  '<html>', ...
+  '<head>', ...
+  '<meta charset=''UTF-8''>', ...
+  '<link rel="stylesheet"', ...
+  ' href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">', ...
+  '<link rel="stylesheet"', ...
+  ' href="https://cdn.datatables.net/select/1.2.7/css/select.dataTables.min.css">', ...
+  '<script type="text/javascript"', ...
+  ' src="https://code.jquery.com/jquery-3.3.1.js"></script>', ...
+  '<script type="text/javascript"', ...
+  ' src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js">', ...
+  '</script>', ...
+  '<script type="text/javascript"', ...
+  ' src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js">', ...
+  '</script>', ...
+  '<script type="text/x-mathjax-config">', ...
+    'MathJax.Hub.Config({', ...
+    'tex2jax: { inlineMath: [[''$'',''$''], [''\\('',''\\)'']] },', ...
+    '});', ...
+  '</script>', ...
+  '<script type="text/javascript" async ', ...
+  'src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">', ...
+  '</script>', ...
+  '</head>', ...
+  '<body>'}, '\n');
+footer = strjoin ({ ...
+  '<script type=''text/javascript''>$(document).ready( function () {', ...
+  '$(''#main_tab'').DataTable( {', ...
+  '  select: true,', ...
+  '  "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]', ...
+  '  } );', ...
+  '} );', ...
+  '</script>', ...
+  '</body>', ...
+  '</html>'}, '\n');
+
+str = sprintf ('%s\n%s%s\n', header, str, footer);
+
 end
