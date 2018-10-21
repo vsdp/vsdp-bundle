@@ -261,18 +261,18 @@ if (isempty (obj.BENCHMARK(idx).values))
   ii = [];
 else
   ii = find (cellfun (@(x) strcmp (x, sname), ...
-    {obj.BENCHMARK(idx).values.name}));
+    {obj.BENCHMARK(idx).values.sname}));
 end
 if (isempty (ii))
   ii = length (obj.BENCHMARK(idx).values) + 1;
   obj.BENCHMARK(idx).values(ii).sname = sname;
-  obj.BENCHMARK(idx).values(ii).fp = '?';
-  obj.BENCHMARK(idx).values(ii).fd = '?';
-  obj.BENCHMARK(idx).values(ii).ts = '?';
-  obj.BENCHMARK(idx).values(ii).fL = '?';
-  obj.BENCHMARK(idx).values(ii).tL = '?';
-  obj.BENCHMARK(idx).values(ii).fU = '?';
-  obj.BENCHMARK(idx).values(ii).tU = '?';
+  obj.BENCHMARK(idx).values(ii).fp = [];
+  obj.BENCHMARK(idx).values(ii).fd = [];
+  obj.BENCHMARK(idx).values(ii).ts = [];
+  obj.BENCHMARK(idx).values(ii).fL = [];
+  obj.BENCHMARK(idx).values(ii).tL = [];
+  obj.BENCHMARK(idx).values(ii).fU = [];
+  obj.BENCHMARK(idx).values(ii).tU = [];
 end
 
 end
