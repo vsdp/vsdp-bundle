@@ -38,10 +38,19 @@ if (nargin < 3)
   dry_run = false;
 end
 
+% Define helper functions for diary display.
+print_header = @(str) fprintf ('\n%s\n%s\n%s\n\n', repmat ('-', 1, 50), ...
+  str, repmat ('-', 1, 50));
+
 % Solve selected test cases.
 for j = f.benchmark
   fprintf ('(%3d/%3d) %s/%s\n', find (j == f.benchmark), ...
     length (f.benchmark), obj.BENCHMARK(j).lib, obj.BENCHMARK(j).name);
+  log_file = fullfile (obj.RESULT_DIR, 'data', ...
+    sprintf('%s_%s.log', obj.BENCHMARK(j).lib, obj.BENCHMARK(j).name));
+  diary (log_file);
+  print_header (sprintf ('Test : %s/%s\nStart: %s', ...
+    obj.BENCHMARK(j).lib, obj.BENCHMARK(j).name, datestr (now ())));
   try
     [fpath, fname, fext] = fileparts (obj.BENCHMARK(j).file);
     
@@ -87,10 +96,7 @@ for j = f.benchmark
     fprintf (2, '\n\n%s\n\n', err.message);
     continue;
   end
-  
-  % Display dimension info.
-  fprintf ('          m = %d, n = %d\n', vsdp_obj.m, vsdp_obj.n);
-  
+    
   % Save problem statistics, if not already done.
   if (~dry_run)
     set_or_compare (obj, j, 'm', vsdp_obj.m);
@@ -213,6 +219,8 @@ for j = f.benchmark
       continue;
     end
   end
+  print_header (sprintf ('End: %s', datestr (now ())));
+  diary ('off');
 end
 end
 
