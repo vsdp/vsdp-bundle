@@ -25,7 +25,7 @@ load (bm_state_file, 'sol_data');
 obj.SOLVER = [];
 for i = 1:length (sol_data)
   if (~obj.add_solver (sol_data(i).name, str2func (sol_data(i).check_fun), ...
-      sol_data(i).setup_dir, str2func (sol_data(i).setup_fun)));
+      sol_data(i).setup_dir, str2func (sol_data(i).setup_fun)))
     obj.SOLVER(end + 1) = sol_data(i);
   end
 end
@@ -34,7 +34,7 @@ end
 load (bm_state_file, 'bm_data');
 obj.BENCHMARK = bm_data;
 for i = 1:length (bm_data)
-  if (exist (bm_data(i).file, 'file') ~= 2);
+  if (exist (bm_data(i).file, 'file') ~= 2)
     warning ('VSDP_BENCHMARK:restore_state:missingBenchmarkFile', ...
       'restore_state: The file ''%s'' is missing.', ...
       bm_data(i).file);
