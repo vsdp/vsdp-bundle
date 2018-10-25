@@ -24,13 +24,14 @@ if (nargin < 2)
 else
   % Display some information about the reduced filtered benchmark.
   if (length (obj.BENCHMARK) > length (f.benchmark))
-    disp ('Run only a subset of the benchmarks:')
+    fprintf ('\nRun only a subset of the benchmarks:\n\n')
     sub_entries = {obj.BENCHMARK(f.benchmark).lib; ...
       obj.BENCHMARK(f.benchmark).name};
-    fprintf ('  %s/%s\n', sub_entries{:});
+    fprintf ('  - %s/%s\n', sub_entries{:});
   end
-  fprintf ('\nUse only the solver(s):')
-  fprintf ('  %s\n', obj.SOLVER(f.solver).name);
+  fprintf ('\nUse only the solver(s):\n\n')
+  fprintf ('  - %s\n', obj.SOLVER(f.solver).name);
+  fprintf ('\n\n')
 end
 
 % Save all computed values by default.
@@ -48,9 +49,16 @@ for j = f.benchmark
     length (f.benchmark), obj.BENCHMARK(j).lib, obj.BENCHMARK(j).name);
   log_file = fullfile (obj.RESULT_DIR, 'data', ...
     sprintf('%s_%s.log', obj.BENCHMARK(j).lib, obj.BENCHMARK(j).name));
+  
+  % Start logging.
   diary (log_file);
-  print_header (sprintf ('Test : %s/%s\nStart: %s', ...
-    obj.BENCHMARK(j).lib, obj.BENCHMARK(j).name, datestr (now ())));
+  
+  % Display comprehensive header.
+  fprintf ('\n\n');
+  print_header (sprintf ('Test : %s/%s', obj.BENCHMARK(j).lib, ...
+    obj.BENCHMARK(j).name));
+  obj.disp ('system');
+  print_header (sprintf ('Start: %s', datestr (now ())));
   try
     [fpath, fname, fext] = fileparts (obj.BENCHMARK(j).file);
     
@@ -114,7 +122,8 @@ for j = f.benchmark
   % Call all selected solvers.
   for i = f.solver
     try
-      fprintf ('  %s:\n', obj.SOLVER(i).name);
+      print_header (sprintf ('>> Solver: ''%s''  (%s)', ...
+        obj.SOLVER(i).name, datestr (now ())));
       if (~dry_run)
         % Determine if there are already benchmarks for solver 'i'.
         ii = get_or_set_solver (obj, j, obj.SOLVER(i).name);
@@ -134,7 +143,7 @@ for j = f.benchmark
       vsdp_obj.options.SOLVER = obj.SOLVER(i).name;
       
       % Compute approximate solution, if not already computed.
-      fprintf ('    Approximate solution...');
+      fprintf ('>>>> Approximate solution...');
       if (exist (app_sol_file, 'file') ~= 2)
         vsdp_obj.solve (obj.SOLVER(i).name);
         S = warning ('off', 'MATLAB:structOnObject');
@@ -163,7 +172,7 @@ for j = f.benchmark
       fprintf ('done.\n');
       
       % Compute rigorous lower bound, if not already computed.
-      fprintf ('    Rigorous lower bound...');
+      fprintf ('>>>> Rigorous lower bound...');
       if (exist (rig_lbd_file, 'file') ~= 2)
         vsdp_obj.rigorous_lower_bound ();
         S = warning ('off', 'MATLAB:structOnObject');
@@ -191,7 +200,7 @@ for j = f.benchmark
       fprintf ('done.\n');
       
       % Compute rigorous upper bound, if not already computed.
-      fprintf ('    Rigorous upper bound...');
+      fprintf ('>>>> Rigorous upper bound...');
       if (exist (rig_ubd_file, 'file') ~= 2)
         vsdp_obj.rigorous_upper_bound ();
         S = warning ('off', 'MATLAB:structOnObject');

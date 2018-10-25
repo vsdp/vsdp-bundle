@@ -1,16 +1,44 @@
-function disp (obj)
+function disp (obj, item)
 % DISP  Display short information about VSDP benchmark object.
 %
+%   obj.disp()  Display an overview about the benchmark data.
+%
+%   obj.disp(item)  With a second argument 'item' display only information
+%                   about one of 'system', 'solver', or 'benchmark'.
+%
 %   See also vsdp_benchmark.
+%
 
 % Copyright 2004-2018 Christian Jansson (jansson@tuhh.de)
 
-fprintf ('  VSDP benchmark\n');
-fprintf ('  --------------\n\n');
-fprintf ('%16s: ''%s''\n', 'RESULT_DIR', obj.RESULT_DIR);
-fprintf ('%16s: ''%s''\n\n',  'TMP_DIR', obj.TMP_DIR);
+if (nargin > 1)
+  item = validatestring (item, {'system', 'solver', 'benchmark'});
+else
+  item = 'all';
+end
 
-% Very generic system information
+switch (item)
+  case 'all'
+    fprintf ('  VSDP benchmark\n');
+    fprintf ('  --------------\n\n');
+    fprintf ('%16s: ''%s''\n', 'RESULT_DIR', obj.RESULT_DIR);
+    fprintf ('%16s: ''%s''\n\n',  'TMP_DIR', obj.TMP_DIR);
+    disp_system ();
+    fprintf ('\n');
+    disp_solver (obj);
+    fprintf ('\n');
+    disp_benchmark (obj);
+    fprintf ('\n\n');
+  otherwise
+    eval (sprintf ('disp_%s(obj)', item));
+end
+end
+
+
+function disp_system (obj)
+% Information about the system in use.
+
+% Very generic system information.
 fprintf ('  System information:\n\n');
 if (exist ('OCTAVE_VERSION', 'builtin'))
   fprintf ('    GNU Octave Version %s\n', version ());
@@ -49,17 +77,25 @@ if (isunix ())
     cpu_number = sprintf ('%d cores [unsure]', length(cpu_number));
   end
   fprintf ('%16s: ''%s''\n', 'CPU', cpu_model);
-  fprintf ('%19s%s\t%s\n\n', '', cpu_number, '(/proc/cpuinfo)');
+  fprintf ('%19s%s\t%s\n', '', cpu_number, '(/proc/cpuinfo)');
+end
 end
 
+
+function disp_solver (obj)
 % Information about the solvers.
+
 fprintf ('  Solver information:\n\n');
 for i = 1:length (obj.SOLVER)
   fprintf ('%16s: ''%s''\n', obj.SOLVER(i).name, obj.SOLVER(i).setup_dir);
 end
+end
 
+
+function disp_benchmark (obj)
 % Information about the benchmarks.
-fprintf ('\n  Benchmark information (%3d test cases):\n\n', ...
+
+fprintf ('  Benchmark information (%3d test cases):\n\n', ...
   length (obj.BENCHMARK));
 if (~isempty (obj.BENCHMARK))
   bms = {obj.BENCHMARK.lib};
@@ -69,6 +105,5 @@ if (~isempty (obj.BENCHMARK))
       sum (cellfun (@(x) strcmp (x, bm_unique{i}), bms)));
   end
 end
-fprintf ('\n\n');
 
 end
