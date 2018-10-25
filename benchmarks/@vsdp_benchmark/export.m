@@ -2,10 +2,10 @@ function output = export (obj, fmt, out_file, filter, use_columns, stat_funs)
 % EXPORT  Export the data of the VSDP benchmark object 'obj'.
 %
 %   output = obj.export (fmt)  Export all available data to the destination
-%     format 'fmt' which is one of 'cell', 'csv', 'html', or 'latex'.  In
-%     case of 'fmt' = 'cell', the variable 'output' contains cell array with
-%     all available data with original data type.  Otherwise a formatted string
-%     in the respective format is returned.
+%     format 'fmt' which is one of 'cell', 'csv', 'html', 'markdown', or
+%     'latex'.  In case of 'fmt' = 'cell', the variable 'output' contains cell
+%     array with all available data with original data type.  Otherwise a
+%     formatted string in the respective format is returned.
 %
 %   obj.export (fmt, out_file)  Optionally, the output can be written to a
 %     non-existing file 'out_file'.  In case of 'fmt' = 'cell', 'out_file' is
@@ -59,7 +59,7 @@ function output = export (obj, fmt, out_file, filter, use_columns, stat_funs)
 
 narginchk (2, 6);
 
-fmt = validatestring (fmt, {'cell', 'csv', 'html', 'latex'});
+fmt = validatestring (fmt, {'cell', 'csv', 'html', 'markdown', 'latex'});
 if (nargin < 3)
   out_file = [];
   if (nargout == 0)
@@ -114,7 +114,7 @@ end
 
 % Replace column heads by labels, for some formats.
 switch (fmt)
-  case {'html', 'latex'}
+  case {'html', 'markdown', 'latex'}
     if (size (use_columns, 2) > 1)
       cdata(1,:) = use_columns(:,2);
     end
@@ -122,7 +122,7 @@ end
 
 % Format cell content to string, for some formats.
 switch (fmt)
-  case {'csv', 'html', 'latex'}
+  case {'csv', 'html', 'markdown', 'latex'}
     if (size (use_columns, 2) == 3)
       for i = 1:size(cdata, 2)
         cdata(2:end,i) = cellfun (@(x) sprintf (use_columns{i,3}, x), ...
@@ -139,7 +139,7 @@ switch (fmt)
     if (~isempty (out_file))
       save (out_file, 'cdata', '-v7');
     end
-  case {'csv', 'html', 'latex'}
+  case {'csv', 'html', 'markdown', 'latex'}
     cdata = eval (['to_', fmt ,'(cdata);']);
     if (~isempty (out_file))
       f = fopen (out_file, "w");
@@ -315,7 +315,7 @@ end
 
 
 function str = to_html (cdata)
-% TO_HTML  Export data to rich HTML markup (MathJax, jQuery, dataTables).
+% TO_HTML  Export 'cdata' to rich HTML markup (MathJax, jQuery, dataTables).
 
 thead = sprintf ('  <th>%s</th>\n', strjoin (cdata(1,:), '</th>\n  <th>'));
 thead = sprintf ('<thead>\n<tr>\n%s</tr>\n</thead>\n', thead);
@@ -334,6 +334,7 @@ header = strjoin ({ ...
   '<!DOCTYPE html>', ...
   '<html>', ...
   '<head>', ...
+  '<title>VSDP Benchmark Results</title>', ...
   '<meta charset=''UTF-8''>', ...
   '<link rel="stylesheet"', ...
   ' href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">', ...
@@ -369,5 +370,43 @@ footer = strjoin ({ ...
   '</html>'}, '\n');
 
 str = sprintf ('%s\n%s%s\n', header, str, footer);
+end
 
+
+function str = to_markdown (cdata)
+% TO_MARKDOWN  Export data to Markdown format.
+for i = 1:size (cdata, 1)
+  cdata{i,1} = strjoin (cdata(i,:), ',');
+end
+cdata = cdata(:,1);
+str = strjoin (cdata, '\n');
+end
+
+
+function str = to_latex (cdata)
+% TO_LATEX  Export 'cdata' to LaTeX markup (longtable environment).
+
+thead = strjoin (cdata(1,:), '\n& ');
+thead = sprintf ('{%s}\n\\toprule\n%s \\\\\n\\toprule\n', ...
+  repmat('c', 1, size (cdata(1,:), 2)), thead);
+for i = 2:size (cdata, 1)
+  cdata{i,1} = sprintf ('%s \\\\', strjoin (cdata(i,:), '\n& '));
+end
+cdata = cdata(2:end,1);
+str = sprintf ('%s\n', strjoin (cdata, '\n'));
+
+header = strjoin ({ ...
+  '\documentclass{article}', ...
+  '\usepackage{booktabs}', ...
+  '\usepackage{longtable}', ...
+  '\usepackage{mathtools}', ...
+  '', ...
+  '\begin{document}', ...
+  '\begin{longtable}'}, '\n');
+footer = strjoin ({ ...
+  '\bottomrule', ...
+  '\end{longtable}', ...
+  '\end{document}'}, '\n');
+
+str = sprintf ('%s%s%s%s', header, thead, str, footer);
 end
