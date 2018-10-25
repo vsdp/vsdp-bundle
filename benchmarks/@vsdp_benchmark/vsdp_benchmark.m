@@ -87,6 +87,9 @@ classdef vsdp_benchmark < handle
       
       % Create temprorary directory.
       obj.TMP_DIR = tempname ();
+      
+      % Add directory of this class to load path.
+      addpath (fileparts (fileparts (mfilename ('fullpath'))));
     end
     
     
