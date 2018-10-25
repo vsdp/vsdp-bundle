@@ -9,11 +9,11 @@ function obj = run (obj, f, dry_run)
 %               subset of the data by applying filters, see obj.filter for
 %               details.
 %
-%   obj.run (filter_bm, filter_name, filter_solver, dry_run)  Same as before,
-%               but specify 'dry_run = true' to avoid the storage of any data.
-%               By default 'dry_run' is false.
+%   obj.run (obj.filter (...), dry_run)  Same as before, but specify
+%               'dry_run = true' to avoid the storage of any data.  By default
+%               'dry_run' is false.
 %
-%   See also vsdp_benchmark.
+%   See also vsdp_benchmark, vsdp_benchmark.filter.
 %
 
 % Copyright 2004-2018 Christian Jansson (jansson@tuhh.de)
@@ -29,7 +29,7 @@ else
       obj.BENCHMARK(f.benchmark).name};
     fprintf ('  %s/%s\n', sub_entries{:});
   end
-  disp ('Use only the solver(s):')
+  fprintf ('\nUse only the solver(s):')
   fprintf ('  %s\n', obj.SOLVER(f.solver).name);
 end
 

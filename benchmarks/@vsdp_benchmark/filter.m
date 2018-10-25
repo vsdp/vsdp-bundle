@@ -2,7 +2,7 @@ function f = filter (obj, varargin)
 % FILTER  Index subset of the VSDP benchmark object 'obj'.
 %
 %   The whole set of benchmarks is in the variable 'obj.BENCHMARK' and the
-%   whole set of solvers in the variable 'obj.SOLVER(3:end)'.
+%   whole set of solvers in the variable 'obj.SOLVER(3:end).name'.
 %
 %   f = obj.filter ()  Return indices for all benchmarks and solvers in
 %     'f.benchmark' and 'f.solver', respectively.  This is equivalent to:
