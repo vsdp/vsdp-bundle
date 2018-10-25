@@ -1,4 +1,4 @@
-function output = export (obj, fmt, out_file, filter, use_columns)
+function output = export (obj, fmt, out_file, filter, use_columns, stat_funs)
 % EXPORT  Export the data of the VSDP benchmark object 'obj'.
 %
 %   output = obj.export (fmt)  Export all available data to the destination
@@ -46,12 +46,18 @@ function output = export (obj, fmt, out_file, filter, use_columns)
 %     All values except for the first row are converted to strings using this
 %     format string.
 %
+%   obj.export (__, __, __, __, stat_funs)  Optionally, specify a cell vector
+%     of statistical function names like 'min', 'max', 'mean', ... that shound
+%     be applied for each column.  Note, that non-numerical columns might
+%     result in errors or nonsensual data.  Ensure numerical columns using the
+%     'use_columns' parameter.
+%
 %   See also vsdp_benchmark.
 %
 
 % Copyright 2004-2018 Christian Jansson (jansson@tuhh.de)
 
-narginchk (2, 5);
+narginchk (2, 6);
 
 fmt = validatestring (fmt, {'cell', 'csv', 'html', 'latex'});
 if (nargin < 3)
@@ -97,6 +103,14 @@ if (nargin < 5)
 end
 
 cdata = gather_data (obj, filter, use_columns);
+
+% Make a statistic of cdata.
+if (nargin > 5)
+  cdata = to_statistic (cdata, stat_funs);
+  % Extend header.
+  new_header = {'', '', '%s'};
+  use_columns = [new_header(1,1:size (use_columns, 2)); use_columns];
+end
 
 % Replace column heads by labels, for some formats.
 switch (fmt)
@@ -269,6 +283,24 @@ end
 function num = get_col_num (output, col)
 % GET_COL_NUM  Get the number of a column of a fixed column order table.
 num = find (strcmp (col, output (1,:)));
+end
+
+
+function cdata_out = to_statistic (cdata, stat_funs)
+% TO_STATISTIC  Generate a statistic of 'cdata'.
+
+cdata_out = cell (length (stat_funs) + 1, size (cdata, 2) + 1);
+% Copy head line.
+cdata_out(1,2:end) = cdata(1,:);
+% Add statistic function names for each row.
+cdata_out(2:end,1) = stat_funs;
+
+for i = 1:size (cdata, 2)
+  for j = 1:length (stat_funs)
+    dvec = [cdata{2:end,i}];
+    cdata_out{j + 1, i + 1} = eval (sprintf ('%s(dvec);', stat_funs{j}));
+  end
+end
 end
 
 
