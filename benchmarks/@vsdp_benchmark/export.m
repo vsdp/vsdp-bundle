@@ -56,6 +56,10 @@ narginchk (2, 5);
 fmt = validatestring (fmt, {'cell', 'csv', 'html', 'latex'});
 if (nargin < 3)
   out_file = [];
+  if (nargout == 0)
+    error ('VSDP_BENCHMARK:export:nothingToDo', ...
+      'export: Please specify an output file or variable.');
+  end
 else
   if (exist (out_file, 'file') == 2)
     error ('VSDP_BENCHMARK:export:outputFileExists', ...
