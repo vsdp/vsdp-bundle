@@ -96,15 +96,18 @@ for j = f.benchmark
     fprintf (2, '\n\n%s\n\n', err.message);
     continue;
   end
-    
+  
+  % Optimize problem structure.
+  vsdp_obj.analyze (true);
+  
   % Save problem statistics, if not already done.
   if (~dry_run)
     set_or_compare (obj, j, 'm', vsdp_obj.m);
     set_or_compare (obj, j, 'n', vsdp_obj.n);
     set_or_compare (obj, j, 'K_f', vsdp_obj.K.f > 0);
     set_or_compare (obj, j, 'K_l', vsdp_obj.K.l > 0);
-    set_or_compare (obj, j, 'K_q', isempty (vsdp_obj.K.q));
-    set_or_compare (obj, j, 'K_s', isempty (vsdp_obj.K.s));
+    set_or_compare (obj, j, 'K_q', ~isempty (vsdp_obj.K.q));
+    set_or_compare (obj, j, 'K_s', ~isempty (vsdp_obj.K.s));
     obj.save_state ();
   end
   
@@ -241,7 +244,7 @@ end
 
 % Update struct.
 current_val = getfield (S, fname);
-if (current_val == '?')
+if (isempty (current_val))
   S = setfield (S, fname, val);
 elseif (current_val ~= val)
   warning ('VSDP_BENCHMARK:run:fieldValueDiffers', ...
