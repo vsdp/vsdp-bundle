@@ -146,10 +146,8 @@ for j = f.benchmark
       fprintf ('>>>> Approximate solution...');
       if (exist (app_sol_file, 'file') ~= 2)
         vsdp_obj.solve (obj.SOLVER(i).name);
-        S = warning ('off', 'MATLAB:structOnObject');
-        app_sol = struct (vsdp_obj.solutions.approximate);
-        warning (S);
         if (~dry_run)
+          app_sol = get_solution_as_struct (vsdp_obj.solutions.approximate);
           save (app_sol_file, 'app_sol', '-v7');
         end
       else  % ... or load from file.
@@ -175,10 +173,9 @@ for j = f.benchmark
       fprintf ('>>>> Rigorous lower bound...');
       if (exist (rig_lbd_file, 'file') ~= 2)
         vsdp_obj.rigorous_lower_bound ();
-        S = warning ('off', 'MATLAB:structOnObject');
-        rig_lbd = struct (vsdp_obj.solutions.rigorous_lower_bound);
-        warning (S);
         if (~dry_run)
+          rig_lbd = get_solution_as_struct ( ...
+            vsdp_obj.solutions.rigorous_lower_bound);
           save (rig_lbd_file, 'rig_lbd', '-v7');
         end
       else  % ... or load from file.
@@ -203,10 +200,9 @@ for j = f.benchmark
       fprintf ('>>>> Rigorous upper bound...');
       if (exist (rig_ubd_file, 'file') ~= 2)
         vsdp_obj.rigorous_upper_bound ();
-        S = warning ('off', 'MATLAB:structOnObject');
-        rig_ubd = struct (vsdp_obj.solutions.rigorous_upper_bound);
-        warning (S);
         if (~dry_run)
+          rig_ubd = get_solution_as_struct ( ...
+            vsdp_obj.solutions.rigorous_upper_bound);
           save (rig_ubd_file, 'rig_ubd', '-v7');
         end
       else  % ... or load from file.
@@ -276,7 +272,6 @@ function ii = get_or_set_solver (obj, idx, sname)
 %   'obj.BENCHMARK(idx).values'.
 %
 
-
 if (isempty (obj.BENCHMARK(idx).values))
   ii = [];
 else
@@ -294,5 +289,17 @@ if (isempty (ii))
   obj.BENCHMARK(idx).values(ii).fU = [];
   obj.BENCHMARK(idx).values(ii).tU = [];
 end
+end
 
+
+function sol = get_solution_as_struct (vsdp_sol)
+% GET_SOLUTION_AS_STRUCT  Convert VSDP solution class to struct without warning.
+
+if (exist ('OCTAVE_VERSION', 'builtin'))
+  S = warning ('off', 'Octave:classdef-to-struct');
+else
+  S = warning ('off', 'MATLAB:structOnObject');
+end
+sol = struct (vsdp_sol);
+warning (S);
 end
