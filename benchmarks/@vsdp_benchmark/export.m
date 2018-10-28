@@ -67,7 +67,7 @@ if (nargin < 3)
       'export: Please specify an output file or variable.');
   end
 else
-  if (exist (out_file, 'file') == 2)
+  if (~isempty (out_file) && (exist (out_file, 'file') == 2))
     error ('VSDP_BENCHMARK:export:outputFileExists', ...
       'export: File ''%s'' already exists.  Choose another name.', out_file);
   end
@@ -206,8 +206,10 @@ solver_col = output(2:end,get_col_num(output,'sname'));
 idx = cellfun (@(x) isempty(x), solver_col);
 solver_col(idx) = {''};
 % Get indices of the intersection of filtered and present solvers.
-[~, match_idx] = intersect (solver_col, {obj.SOLVER(filter.solver).name});
-idx(match_idx) = true;
+wanted_solvers = {obj.SOLVER(filter.solver).name};
+for i = 1:length(wanted_solvers)
+  idx = idx | cellfun (@(x) isequal(x, wanted_solvers{i}), solver_col);
+end
 % Finally filter the rows.
 output([false; ~idx], :) = [];
 
@@ -243,7 +245,6 @@ if (strncmp (col, 'mu_', 3))
     acc_mu = @(a, b) (a - b) ./ max (1, (abs (a) + abs (b)) ./ 2);
     % Perform division for non-empty values.
     idx = cellfun (@(x) ~isempty(x), output(:,get_col_num (output, cols{1})));
-    new_row = cell (size (output, 1), 1);
     new_row(idx) = [{col}, num2cell(acc_mu (a, b))];
   catch
     warning ('VSDP_BENCHMARK:export:errorComputingColumn', ...
