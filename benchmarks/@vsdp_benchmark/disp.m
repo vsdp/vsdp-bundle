@@ -35,7 +35,7 @@ end
 end
 
 
-function disp_system (obj)
+function disp_system (~)
 % Information about the system in use.
 
 % Very generic system information.
