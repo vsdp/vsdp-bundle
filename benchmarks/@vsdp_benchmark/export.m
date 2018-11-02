@@ -254,6 +254,7 @@ function new_row = append_row (output, col)
 %
 
 new_row = cell (size (output, 1), 1);
+new_row{1,1} = col;
 
 % Compute accurracy mu <https://vsdp.github.io/references.html#Jansson2006>,
 % that is 'mu_<op1>_<op2>'.
