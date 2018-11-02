@@ -1,16 +1,18 @@
-function output = export (obj, fmt, out_file, filter, use_columns, stat_funs)
+function varargout = export (obj, fmts, out_files, filter, use_columns, stat_funs)
 % EXPORT  Export the data of the VSDP benchmark object 'obj'.
 %
-%   output = obj.export (fmt)  Export all available data to the destination
-%     format 'fmt' which is one of 'cell', 'csv', 'html', 'markdown', or
-%     'latex'.  In case of 'fmt' = 'cell', the variable 'output' contains cell
-%     array with all available data with original data type.  Otherwise a
-%     formatted string in the respective format is returned.
+%   [output1, ..., outputN] = obj.export (fmts)  Export all available data to
+%     'N' destination formats 'fmts'.  In the cell array of strings 'fmts',
+%     each entry can be one of 'cell', 'csv', 'html', 'markdown', or 'latex'.
+%     In case of 'fmts = {'cell'}', the first output contains cell array with
+%     all available data with original data type.  Otherwise a formatted string
+%     in the respective format is returned.
 %
-%   obj.export (fmt, out_file)  Optionally, the output can be written to a
-%     non-existing file 'out_file'.  In case of 'fmt' = 'cell', 'out_file' is
-%     a MAT-file, otherwise a text file with the data formatted in the
-%     respective format 'fmt'.
+%   obj.export (fmts, out_files)  Optionally, the output can be written to the
+%     'N' non-existing files 'out_file' which is a cell array of strings of the
+%     same length as 'fmts'.  In case of 'fmts = {'cell'}', 'out_file' is
+%     treated as MAT-file.  Otherwise a text file with the data formatted in
+%     the respective format 'fmts{i}'.
 %
 %   obj.export (__, __, obj.filter (...))  Optionally, the benchmark data,
 %     i.e. the rows, can be filtered.  See 'obj.filter' for details.  If the
@@ -50,7 +52,7 @@ function output = export (obj, fmt, out_file, filter, use_columns, stat_funs)
 %     of statistical function names like 'min', 'max', 'mean', ... that shound
 %     be applied for each column.  Note, that non-numerical columns might
 %     result in errors or nonsensual data.  Ensure numerical columns using the
-%     'use_columns' parameter.
+%     'use_columns' parameter.  Rows with infinite values are treated as empty.
 %
 %   See also vsdp_benchmark.
 %
@@ -59,17 +61,33 @@ function output = export (obj, fmt, out_file, filter, use_columns, stat_funs)
 
 narginchk (2, 6);
 
-fmt = validatestring (fmt, {'cell', 'csv', 'html', 'markdown', 'latex'});
-if (nargin < 3)
-  out_file = [];
-  if (nargout == 0)
-    error ('VSDP_BENCHMARK:export:nothingToDo', ...
-      'export: Please specify an output file or variable.');
+fmts = fmts(:);
+validateattributes (fmts, {'cell'}, {'column'});
+for i = 1:length (fmts)
+  fmts{i} = validatestring (fmts{i}, ...
+    {'cell', 'csv', 'html', 'markdown', 'latex'});
+end
+if ((nargin < 3) || isempty (out_files))
+  out_files = {};
+  if (nargout < length (fmts))
+    error ('VSDP_BENCHMARK:export:notEnoughOutputs', ...
+      'export: Please specify an output variable for all %d formats.', ...
+      length (fmts));
   end
 else
-  if (~isempty (out_file) && (exist (out_file, 'file') == 2))
-    error ('VSDP_BENCHMARK:export:outputFileExists', ...
-      'export: File ''%s'' already exists.  Choose another name.', out_file);
+  out_files = out_files(:);
+  validateattributes (fmts, {'cell'}, {'column'});
+  if (length (out_files) < length (fmts))
+    error ('VSDP_BENCHMARK:export:notEnoughOutputs', ...
+      'export: Please specify an output file for all %d formats.', ...
+      length (fmts));
+  end
+  for i = 1:length (out_files)
+    if (exist (out_files{i}, 'file') == 2)
+      error ('VSDP_BENCHMARK:export:outputFileExists', ...
+        'export: File ''%s'' already exists.  Choose another name.', ...
+        out_files{i});
+    end
   end
 end
 if (nargin < 4)
@@ -101,54 +119,58 @@ if (nargin < 5)
     'tU/ts',    '$\overline{t}/t_s$',  '%.2e';};
 end
 
-cdata = gather_data (obj, filter, use_columns);
+gatherd_data = gather_data (obj, filter, use_columns);
 
 % Make a statistic of cdata.
 if (nargin > 5)
-  cdata = to_statistic (cdata, stat_funs);
+  gatherd_data = to_statistic (gatherd_data, stat_funs);
   % Extend header.
   new_header = {'', '', '%s'};
   use_columns = [new_header(1,1:size (use_columns, 2)); use_columns];
 end
 
-% Replace column heads by labels, for some formats.
-switch (fmt)
-  case {'html', 'markdown', 'latex'}
-    if (size (use_columns, 2) > 1)
-      cdata(1,:) = use_columns(:,2);
-    end
-end
-
-% Format cell content to string, for some formats.
-switch (fmt)
-  case {'csv', 'html', 'markdown', 'latex'}
-    if (size (use_columns, 2) == 3)
-      for i = 1:size(cdata, 2)
-        cdata(2:end,i) = cellfun (@(x) sprintf (use_columns{i,3}, x), ...
-          cdata(2:end,i), 'UniformOutput', false);
+% Export to all formats.
+for i = 1:length (fmts)
+  cdata = gatherd_data;
+  % Replace column heads by labels, for some formats.
+  switch (fmts{i})
+    case {'html', 'markdown', 'latex'}
+      if (size (use_columns, 2) > 1)
+        cdata(1,:) = use_columns(:,2);
       end
-    else
-      cdata = cellfun (@num2str, cdata, 'UniformOutput', false);
-    end
-end
-
-% Save 'cdata' to 'out_file' if given.
-switch (fmt)
-  case 'cell'
-    if (~isempty (out_file))
-      save (out_file, 'cdata', '-v7');
-    end
-  case {'csv', 'html', 'markdown', 'latex'}
-    cdata = eval (['to_', fmt ,'(cdata);']);
-    if (~isempty (out_file))
-      f = fopen (out_file, "w");
-      fprintf (f, "%s", cdata);
-      fclose (f);
-    end
-end
-
-if (nargout > 0)
-  output = cdata;
+  end
+  
+  % Format cell content to string, for some formats.
+  switch (fmts{i})
+    case {'csv', 'html', 'markdown', 'latex'}
+      if (size (use_columns, 2) == 3)
+        for j = 1:size(cdata, 2)
+          cdata(2:end,j) = cellfun (@(x) sprintf (use_columns{j,3}, x), ...
+            cdata(2:end,j), 'UniformOutput', false);
+        end
+      else
+        cdata = cellfun (@num2str, cdata, 'UniformOutput', false);
+      end
+  end
+  
+  % Save 'cdata' to 'out_files{i}' if given.
+  switch (fmts{i})
+    case 'cell'
+      if (~isempty (out_files))
+        save (out_files{i}, 'cdata', '-v7');
+      end
+    case {'csv', 'html', 'markdown', 'latex'}
+      cdata = eval (['to_', fmts{i} ,'(cdata);']);
+      if (~isempty (out_files))
+        f = fopen (out_files{i}, "w");
+        fprintf (f, "%s", cdata);
+        fclose (f);
+      end
+  end
+  
+  if (i <= nargout)
+    varargout{i} = cdata;
+  end
 end
 
 end
@@ -275,7 +297,7 @@ elseif ((any (col == '/')) || (any (col == '-')))  % '<op1><op><op2>'
 else
   warning ('VSDP_BENCHMARK:export:nonExistingColumn', ...
     'export: Ignore column ''%s''.', col);
-  new_row = [];  
+  new_row = [];
 end
 end
 
@@ -298,6 +320,8 @@ cdata_out(2:end,1) = stat_funs;
 for i = 1:size (cdata, 2)
   for j = 1:length (stat_funs)
     dvec = [cdata{2:end,i}];
+    % Ignore infinite values.
+    dvec(~isfinite(dvec)) = [];
     cdata_out{j + 1, i + 1} = eval (sprintf ('%s(dvec);', stat_funs{j}));
   end
 end
@@ -354,9 +378,9 @@ header = strjoin ({ ...
   ' src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js">', ...
   '</script>', ...
   '<script type="text/x-mathjax-config">', ...
-    'MathJax.Hub.Config({', ...
-    'tex2jax: { inlineMath: [[''$'',''$''], [''\\('',''\\)'']] },', ...
-    '});', ...
+  'MathJax.Hub.Config({', ...
+  'tex2jax: { inlineMath: [[''$'',''$''], [''\\('',''\\)'']] },', ...
+  '});', ...
   '</script>', ...
   '<script type="text/javascript" async ', ...
   'src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">', ...
@@ -381,8 +405,20 @@ end
 
 function str = to_markdown (cdata)
 % TO_MARKDOWN  Export data to Markdown format.
+% Add row below.
+cdata{end+1,1} = [];
+for i = 1:size (cdata, 2)
+  % Determine max. column width.
+  col_width = max (cellfun (@length, cdata(:,i)));
+  % Strecht cells left aligned to column max. column width.
+  cdata([1,3:end],i) = cellfun ( ...
+    @(str) sprintf (['%-', num2str(col_width), 's'], ...
+    str), cdata(1:end-1,i), 'UniformOutput', false);
+  cdata{2,i} = repmat ('-', 1, col_width);
+end
+% Condatenate linewise.  Add dummy columns to get first and last bar.
 for i = 1:size (cdata, 1)
-  cdata{i,1} = strjoin (cdata(i,:), ',');
+  cdata{i,1} = strtrim (strjoin ([{''}, cdata(i,:), {''}], ' | '));
 end
 cdata = cdata(:,1);
 str = strjoin (cdata, '\n');
