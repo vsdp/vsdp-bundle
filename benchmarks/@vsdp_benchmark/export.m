@@ -239,7 +239,7 @@ output([false; ~idx], :) = [];
 final_output = cell (size (output, 1), size (use_columns, 1));
 for i = 1:length(use_columns(:,1))
   if (~any (strcmp (use_columns{i,1}, output(1,:))))
-    final_output(:,i) = append_row (output, use_columns{i,1});
+    final_output(:,i) = append_column (output, use_columns{i,1});
   else
     final_output(:,i) = output(:,get_col_num (output, use_columns{i,1}));
   end
@@ -249,56 +249,44 @@ output = final_output;
 end
 
 
-function new_row = append_row (output, col)
+function new_col = append_column (output, col)
 % APPEND_COLUMN  Compute and append a dependend column to a fixed column table.
 %
 
-new_row = cell (size (output, 1), 1);
-new_row{1,1} = col;
+new_col = cell (size (output, 1), 1);
+new_col{1,1} = col;
 
-% Compute accurracy mu <https://vsdp.github.io/references.html#Jansson2006>,
-% that is 'mu_<op1>_<op2>'.
-if (strncmp (col, 'mu_', 3))
-  try
-    % Extract operands.
+try
+  if (strncmp (col, 'mu_', 3))
+    % Compute accurracy mu <https://vsdp.github.io/references.html#Jansson2006>,
+    % that is 'mu_<op1>_<op2>'.
     cols = strsplit (col(4:end), '_');
-    a = [output{2:end,get_col_num (output, cols{1})}];
-    b = [output{2:end,get_col_num (output, cols{2})}];
-    acc_mu = @(a, b) (a - b) ./ max (1, (abs (a) + abs (b)) ./ 2);
-    % Perform division for non-empty values.
-    idx = cellfun (@(x) ~isempty(x), output(:,get_col_num (output, cols{1})));
-    new_row(idx) = [{col}, num2cell(acc_mu (a, b))];
-  catch
-    warning ('VSDP_BENCHMARK:export:errorComputingColumn', ...
-      'export: Error computing column ''%s'', ignored.', col);
-  end
-elseif ((any (col == '/')) || (any (col == '-')))  % '<op1><op><op2>'
-  % Determine operation.
-  if (any (col == '/'))
-    op = '/';
+    fop = @(a, b) (a - b) ./ max (1, (abs (a) + abs (b)) ./ 2);
+  elseif (any (col == '/'))  % '<op1>/<op2>'
+    cols = strsplit (col, '/');
     fop = @rdivide;
-  else
-    op = '-';
+  elseif (any (col == '-'))  % '<op1>-<op2>'
+    cols = strsplit (col, '-');
     fop = @minus;
+  else
+    warning ('VSDP_BENCHMARK:export:nonExistingColumn', ...
+      'export: Ignore column ''%s''.', col);
+    new_col = [];
+    return;
   end
-  % Extract operands.
-  cols = strsplit (col, op);
+  
+  % Resolve column number.
   cols{1} = get_col_num (output, cols{1});
   cols{2} = get_col_num (output, cols{2});
-  try
-    % Perform operation for non-empty values.
-    idx = cellfun (@(x) ~isempty(x), output(:,cols{1}));
-    
-    new_row(idx) = [{col}, ...
-      num2cell(fop ([output{2:end,cols{1}}], [output{2:end,cols{2}}]))];
-  catch
-    warning ('VSDP_BENCHMARK:export:errorComputingColumn', ...
-      'export: Error computing column ''%s'', ignored.', col);
-  end
-else
-  warning ('VSDP_BENCHMARK:export:nonExistingColumn', ...
-    'export: Ignore column ''%s''.', col);
-  new_row = [];
+  
+  % Perform operation for non-empty values.
+  idx = cellfun (@(x) ~isempty(x), output(2:end,[cols{1}, cols{2}]));
+  idx = [false; idx(:,1) & idx(:,2)];
+  new_col(idx) = num2cell(fop ([output{idx,cols{1}}], [output{idx,cols{2}}]));
+catch
+  warning ('VSDP_BENCHMARK:export:errorComputingColumn', ...
+    'export: Error computing column ''%s'', ignored.', col);
+  new_col = [];
 end
 end
 
