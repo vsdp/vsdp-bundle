@@ -12,8 +12,9 @@ function obj = run (obj, f, run_mode)
 %   obj.run (obj.filter (...), run_mode)  Same as before, but specify
 %               'run_mode' as one of:
 %                 - 'normal' (Default): save data and        log.
-%                 - 'dryrun':    do not save data and        log.
-%                 - 'verify':    do not save data and do not log.
+%                 - 'nosave':    do not save data and        log.
+%                 - 'nolog' :           save data and do not log.
+%                 - 'nothing':   do not save data and do not log.
 %
 %   See also vsdp_benchmark, vsdp_benchmark.filter.
 %
@@ -40,7 +41,8 @@ end
 if (nargin < 3)
   run_mode = 'normal';
 else
-  run_mode = validatestring (run_mode, {'normal', 'dryrun', 'verify'});
+  run_mode = validatestring (run_mode, ...
+    {'normal', 'nosave', 'nolog', 'nothing'});
 end
 
 % Define helper functions for diary display.
@@ -53,7 +55,7 @@ for j = f.benchmark
     length (f.benchmark), obj.BENCHMARK(j).lib, obj.BENCHMARK(j).name);
   % Start logging.
   switch (run_mode)
-    case {'normal', 'dryrun'}
+    case {'normal', 'nosave'}
       log_file = fullfile (obj.RESULT_DIR, 'data', ...
         sprintf('%s_%s.log', obj.BENCHMARK(j).lib, obj.BENCHMARK(j).name));
       diary (log_file);
@@ -115,14 +117,15 @@ for j = f.benchmark
   vsdp_obj.analyze (true);
   
   % Save problem statistics, if not already done.
-  if (strcmp (run_mode, 'normal'))
-    set_or_compare (obj, j, 'm', vsdp_obj.m);
-    set_or_compare (obj, j, 'n', vsdp_obj.n);
-    set_or_compare (obj, j, 'K_f', vsdp_obj.K.f > 0);
-    set_or_compare (obj, j, 'K_l', vsdp_obj.K.l > 0);
-    set_or_compare (obj, j, 'K_q', ~isempty (vsdp_obj.K.q));
-    set_or_compare (obj, j, 'K_s', ~isempty (vsdp_obj.K.s));
-    obj.save_state ();
+  switch (run_mode)
+    case {'normal', 'nolog'}
+      set_or_compare (obj, j, 'm', vsdp_obj.m);
+      set_or_compare (obj, j, 'n', vsdp_obj.n);
+      set_or_compare (obj, j, 'K_f', vsdp_obj.K.f > 0);
+      set_or_compare (obj, j, 'K_l', vsdp_obj.K.l > 0);
+      set_or_compare (obj, j, 'K_q', ~isempty (vsdp_obj.K.q));
+      set_or_compare (obj, j, 'K_s', ~isempty (vsdp_obj.K.s));
+      obj.save_state ();
   end
   
   % Call all selected solvers.
@@ -130,10 +133,11 @@ for j = f.benchmark
     try
       print_header (sprintf ('>> Solver: ''%s''  (%s)', ...
         obj.SOLVER(i).name, datestr (now ())));
-      if (strcmp (run_mode, 'normal'))
-        % Determine if there are already benchmarks for solver 'i'.
-        ii = get_or_set_solver (obj, j, obj.SOLVER(i).name);
-        obj.save_state ();
+      switch (run_mode)
+        case {'normal', 'nolog'}
+          % Determine if there are already benchmarks for solver 'i'.
+          ii = get_or_set_solver (obj, j, obj.SOLVER(i).name);
+          obj.save_state ();
       end
       
       % Specify file names.
@@ -152,9 +156,10 @@ for j = f.benchmark
       fprintf ('>>>> Approximate solution...');
       if (exist (app_sol_file, 'file') ~= 2)
         vsdp_obj.solve (obj.SOLVER(i).name);
-        if (strcmp (run_mode, 'normal'))
-          app_sol = get_solution_as_struct (vsdp_obj.solutions.approximate);
-          save (app_sol_file, 'app_sol', '-v7');
+        switch (run_mode)
+          case {'normal', 'nolog'}
+            app_sol = get_solution_as_struct (vsdp_obj.solutions.approximate);
+            save (app_sol_file, 'app_sol', '-v7');
         end
       else  % ... or load from file.
         load (app_sol_file, 'app_sol')
@@ -167,11 +172,12 @@ for j = f.benchmark
       fd = vsdp_obj.solutions.approximate.f_objective(2);
       
       % Save or verify cached results.
-      if (strcmp (run_mode, 'normal'))
-        set_or_compare (obj, j, 'fp', fp, ii);
-        set_or_compare (obj, j, 'fd', fd, ii);
-        set_or_compare (obj, j, 'ts', ts + 2, ii);
-        obj.save_state ();
+      switch (run_mode)
+        case {'normal', 'nolog'}
+          set_or_compare (obj, j, 'fp', fp, ii);
+          set_or_compare (obj, j, 'fd', fd, ii);
+          set_or_compare (obj, j, 'ts', ts + 2, ii);
+          obj.save_state ();
       end
       fprintf ('done.\n');
       
@@ -179,10 +185,11 @@ for j = f.benchmark
       fprintf ('>>>> Rigorous lower bound...');
       if (exist (rig_lbd_file, 'file') ~= 2)
         vsdp_obj.rigorous_lower_bound ();
-        if (strcmp (run_mode, 'normal'))
-          rig_lbd = get_solution_as_struct ( ...
-            vsdp_obj.solutions.rigorous_lower_bound);
-          save (rig_lbd_file, 'rig_lbd', '-v7');
+        switch (run_mode)
+          case {'normal', 'nolog'}
+            rig_lbd = get_solution_as_struct ( ...
+              vsdp_obj.solutions.rigorous_lower_bound);
+            save (rig_lbd_file, 'rig_lbd', '-v7');
         end
       else  % ... or load from file.
         load (rig_lbd_file, 'rig_lbd')
@@ -195,10 +202,11 @@ for j = f.benchmark
       fL = vsdp_obj.solutions.rigorous_lower_bound.f_objective(1);
       
       % Save or verify cached results.
-      if (strcmp (run_mode, 'normal'))
-        set_or_compare (obj, j, 'fL', fL, ii);
-        set_or_compare (obj, j, 'tL', tL, ii);
-        obj.save_state ();
+      switch (run_mode)
+        case {'normal', 'nolog'}
+          set_or_compare (obj, j, 'fL', fL, ii);
+          set_or_compare (obj, j, 'tL', tL, ii);
+          obj.save_state ();
       end
       fprintf ('done.\n');
       
@@ -206,10 +214,11 @@ for j = f.benchmark
       fprintf ('>>>> Rigorous upper bound...');
       if (exist (rig_ubd_file, 'file') ~= 2)
         vsdp_obj.rigorous_upper_bound ();
-        if (strcmp (run_mode, 'normal'))
-          rig_ubd = get_solution_as_struct ( ...
-            vsdp_obj.solutions.rigorous_upper_bound);
-          save (rig_ubd_file, 'rig_ubd', '-v7');
+        switch (run_mode)
+          case {'normal', 'nolog'}
+            rig_ubd = get_solution_as_struct ( ...
+              vsdp_obj.solutions.rigorous_upper_bound);
+            save (rig_ubd_file, 'rig_ubd', '-v7');
         end
       else  % ... or load from file.
         load (rig_ubd_file, 'rig_ubd')
@@ -222,10 +231,11 @@ for j = f.benchmark
       fU = vsdp_obj.solutions.rigorous_upper_bound.f_objective(2);
       
       % Save or verify cached results.
-      if (strcmp (run_mode, 'normal'))
-        set_or_compare (obj, j, 'fU', fU, ii);
-        set_or_compare (obj, j, 'tU', tU, ii);
-        obj.save_state ();
+      switch (run_mode)
+        case {'normal', 'nolog'}
+          set_or_compare (obj, j, 'fU', fU, ii);
+          set_or_compare (obj, j, 'tU', tU, ii);
+          obj.save_state ();
       end
       fprintf ('done.\n');
     catch err
