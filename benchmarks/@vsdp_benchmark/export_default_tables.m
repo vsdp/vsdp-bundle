@@ -21,6 +21,7 @@ mkdir (outdir);
 % For all benchmark libraries.
 libs = unique ({obj.BENCHMARK.lib});
 for i = 1:length (libs)
+  disp (libs{i});
   % Export huge tables for the website publication.
   fmts = {'cell', 'csv', 'html'};
   fnames = fullfile (outdir, strcat (libs{i}, {'.mat', '.csv', '.html'}));
