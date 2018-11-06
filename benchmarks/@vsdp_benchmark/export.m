@@ -90,7 +90,7 @@ else
     end
   end
 end
-if (nargin < 4)
+if ((nargin < 4) || isempty (filter))
   % Use all data, if no filter was applied.
   filter = obj.filter ();
 end
