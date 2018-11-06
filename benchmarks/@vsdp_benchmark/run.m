@@ -16,6 +16,24 @@ function obj = run (obj, f, run_mode)
 %                 - 'nolog' :           save data and do not log.
 %                 - 'nothing':   do not save data and do not log.
 %
+%   NOTE [*]: This benchmark relaxes the problems of the ESC and RDM library.
+%
+%     The original ESC/RDM problems have equality constraints of the form
+%
+%       trace(gamma) - N = 0.
+%
+%     In the ESC/RDM data those are reformulated to two inequality conditions
+%     with a small tolerance of epsilon (ESC) or epsilon = 0 (RDM):
+%
+%       trace(gamma) <=  N + epsilon
+%      -trace(gamma) <= -N + epsilon
+%
+%     Those are in the last diagonal semidefinite block of 'vsdp_obj.At'.
+%     By applying 'vsdp_obj.analyze(true);' this last diagonal semidefinite
+%     block is turned into a linear block.  Furthermore, we remove any existing
+%     tolerances 'epsilon' of that linear block by rounding and add
+%     'epsilon = 1e-7' to 'vsdp_obj.c(1:vsdp_obj.K.l)'.
+%
 %   See also vsdp_benchmark, vsdp_benchmark.filter.
 %
 
@@ -115,6 +133,12 @@ for j = f.benchmark
   
   % Optimize problem structure.
   vsdp_obj.analyze (true);
+  
+  % Relax ESC and RDM problems (see note above [*]).
+  if (strcmp (obj.BENCHMARK(j).lib, 'ESC') ...
+      || strcmp (obj.BENCHMARK(j).lib, 'RDM'))
+    vsdp_obj.c(1:vsdp_obj.K.l) = round(vsdp_obj.c(1:vsdp_obj.K.l)) + 1e-7;
+  end
   
   % Save problem statistics, if not already done.
   switch (run_mode)
