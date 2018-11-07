@@ -40,7 +40,7 @@ function obj = run (obj, f, run_mode)
 % Copyright 2004-2018 Christian Jansson (jansson@tuhh.de)
 
 % If no filter is applied, get all available indices.
-if (nargin < 2)
+if ((nargin < 2) || isempty (f))
   f = obj.filter ();
 else
   % Display some information about the reduced filtered benchmark.
