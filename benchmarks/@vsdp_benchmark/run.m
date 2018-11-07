@@ -137,7 +137,12 @@ for j = f.benchmark
   % Relax ESC and RDM problems (see note above [*]).
   if (strcmp (obj.BENCHMARK(j).lib, 'ESC') ...
       || strcmp (obj.BENCHMARK(j).lib, 'RDM'))
-    vsdp_obj.c(1:vsdp_obj.K.l) = round(vsdp_obj.c(1:vsdp_obj.K.l)) + 1e-7;
+    [K.f, K.l, K.q, K.s] = deal (vsdp_obj.K.f, vsdp_obj.K.l, vsdp_obj.K.q, ...
+      vsdp_obj.K.s);
+    c = vsdp_obj.c;
+    c(1:K.l) = round(c(1:K.l)) + 1e-7;
+    data = {vsdp_obj.At, vsdp_obj.b, c, K};
+    vsdp_obj = vsdp (data{:});    
   end
   
   % Save problem statistics, if not already done.
