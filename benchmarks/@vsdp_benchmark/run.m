@@ -142,7 +142,8 @@ for j = f.benchmark
     c = vsdp_obj.c;
     c(1:K.l) = round(c(1:K.l)) + 1e-7;
     data = {vsdp_obj.At, vsdp_obj.b, c, K};
-    vsdp_obj = vsdp (data{:});    
+    vsdp_obj = vsdp (data{:});
+    disp (' --> Relax ESC and RDM problem parameter ''c''.')
   end
   
   % Save problem statistics, if not already done.
