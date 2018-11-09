@@ -132,7 +132,7 @@ for j = f.benchmark
   end
   
   % Optimize problem structure.
-  vsdp_obj.analyze (true);
+  vsdp_obj = vsdp_obj.analyze (true);
   
   % Relax ESC and RDM problems (see note above [*]).
   if (strcmp (obj.BENCHMARK(j).lib, 'ESC') ...
