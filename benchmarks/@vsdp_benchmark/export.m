@@ -1,4 +1,4 @@
-function varargout = export (obj, fmts, out_files, filter, use_columns, stat_funs)
+function varargout = export (obj, fmts, out_files, flt, use_columns, stat_funs, cdata)
 % EXPORT  Export the data of the VSDP benchmark object 'obj'.
 %
 %   [output1, ..., outputN] = obj.export (fmts)  Export all available data to
@@ -34,7 +34,7 @@ function varargout = export (obj, fmts, out_files, filter, use_columns, stat_fun
 %          of the columns 'tL' and 'ts', even is they are not present in the
 %          export.
 %       2. 'fU-fL', like in 1., but for the elementwise difference.
-%       3. 'mu_fU_fL', computes the relative accurracy of 'fU' and 'fL', see
+%       3. 'mu_fU_fL', computes the relative accuracy of 'fU' and 'fL', see
 %          <https://vsdp.github.io/references.html#Jansson2006>.
 %
 %     When the additional column creation fails, a warning is shown and the
@@ -49,10 +49,14 @@ function varargout = export (obj, fmts, out_files, filter, use_columns, stat_fun
 %     format string.
 %
 %   obj.export (__, __, __, __, stat_funs)  Optionally, specify a cell vector
-%     of statistical function names like 'min', 'max', 'mean', ... that shound
+%     of statistical function names like 'min', 'max', 'mean', ... that should
 %     be applied for each column.  Note, that non-numerical columns might
-%     result in errors or nonsensual data.  Ensure numerical columns using the
+%     result in errors or nonsensical data.  Ensure numerical columns using the
 %     'use_columns' parameter.  Rows with infinite values are treated as empty.
+%
+%   obj.export (__, __, __, __, __, cdata)  Optionally, provide a cell array
+%     for export.  Note that filtering by obj.filter() cannot be performed on
+%     the provided cell array of data.
 %
 %   See also vsdp_benchmark.
 %
@@ -90,9 +94,9 @@ else
     end
   end
 end
-if ((nargin < 4) || isempty (filter))
+if ((nargin < 4) || isempty (flt))
   % Use all data, if no filter was applied.
-  filter = obj.filter ();
+  flt = obj.filter ();
 end
 if (nargin < 5)
   % Use default columns with LaTeX labels.
@@ -119,17 +123,22 @@ if (nargin < 5)
     'tU/ts',    '$\overline{t}/t_s$',  '%.2e';};
 end
 
-gatherd_data = gather_data (obj, filter, use_columns);
+% Gather data from benchmark, if no cell array of data is provided.
+if (nargin < 7)
+  gatherd_data = gather_data (obj, flt, use_columns);
+else
+  gatherd_data = cdata;
+end
 
-% Make a statistic of cdata.
-if (nargin > 5)
+% Make a statistic of gatherd_data.
+if ((nargin > 5) && (~isempty (stat_funs)))
   gatherd_data = to_statistic (gatherd_data, stat_funs);
   % Extend header.
   new_header = {'', '', '%s'};
   use_columns = [new_header(1,1:size (use_columns, 2)); use_columns];
 end
 
-% Export to all formats.
+% Export to all queried formats.
 for i = 1:length (fmts)
   cdata = gatherd_data;
   % Replace column heads by labels, for some formats.
@@ -139,7 +148,7 @@ for i = 1:length (fmts)
         cdata(1,:) = use_columns(:,2);
       end
   end
-  
+
   % Format cell content to string, for some formats.
   switch (fmts{i})
     case {'csv', 'html', 'markdown', 'latex'}
@@ -152,7 +161,7 @@ for i = 1:length (fmts)
         cdata = cellfun (@num2str, cdata, 'UniformOutput', false);
       end
   end
-  
+
   % Save 'cdata' to 'out_files{i}' if given.
   switch (fmts{i})
     case 'cell'
@@ -167,7 +176,7 @@ for i = 1:length (fmts)
         fclose (f);
       end
   end
-  
+
   if (i <= nargout)
     varargout{i} = cdata;
   end
@@ -234,7 +243,7 @@ end
 % Finally filter the rows.
 output([false; ~idx], :) = [];
 
-% Append additional dependend columns, created from the basis data, and strip
+% Append additional dependent columns, created from the basis data, and strip
 % not requested columns.
 final_output = cell (size (output, 1), size (use_columns, 1));
 for i = 1:length(use_columns(:,1))
@@ -250,7 +259,7 @@ end
 
 
 function new_col = append_column (output, col)
-% APPEND_COLUMN  Compute and append a dependend column to a fixed column table.
+% APPEND_COLUMN  Compute and append a dependent column to a fixed column table.
 %
 
 new_col = cell (size (output, 1), 1);
@@ -258,7 +267,7 @@ new_col{1,1} = col;
 
 try
   if (strncmp (col, 'mu_', 3))
-    % Compute accurracy mu <https://vsdp.github.io/references.html#Jansson2006>,
+    % Compute accuracy mu <https://vsdp.github.io/references.html#Jansson2006>,
     % that is 'mu_<op1>_<op2>'.
     cols = strsplit (col(4:end), '_');
     fop = @(a, b) (a - b) ./ max (1, (abs (a) + abs (b)) ./ 2);
@@ -274,11 +283,11 @@ try
     new_col = [];
     return;
   end
-  
+
   % Resolve column number.
   cols{1} = get_col_num (output, cols{1});
   cols{2} = get_col_num (output, cols{2});
-  
+
   % Perform operation for non-empty values.
   idx = cellfun (@(x) ~isempty(x), output(2:end,[cols{1}, cols{2}]));
   idx = [false; idx(:,1) & idx(:,2)];
@@ -318,7 +327,7 @@ end
 
 
 function str = to_csv (cdata)
-% TO_CSV  Export data to comma seperated values (CSV).
+% TO_CSV  Export data to comma separated values (CSV).
 for i = 1:size (cdata, 1)
   cdata{i,1} = strjoin (cdata(i,:), ',');
 end
@@ -399,13 +408,13 @@ cdata{end+1,1} = [];
 for i = 1:size (cdata, 2)
   % Determine max. column width.
   col_width = max (cellfun (@length, cdata(:,i)));
-  % Strecht cells left aligned to column max. column width.
+  % Stretch cells left aligned to column max. column width.
   cdata([1,3:end],i) = cellfun ( ...
     @(str) sprintf (['%-', num2str(col_width), 's'], ...
     str), cdata(1:end-1,i), 'UniformOutput', false);
   cdata{2,i} = repmat ('-', 1, col_width);
 end
-% Condatenate linewise.  Add dummy columns to get first and last bar.
+% Concatenate linewise.  Add dummy columns to get first and last bar.
 for i = 1:size (cdata, 1)
   cdata{i,1} = strtrim (strjoin ([{''}, cdata(i,:), {''}], ' | '));
 end
