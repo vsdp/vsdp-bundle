@@ -31,32 +31,102 @@ directory of VSDP.  As the computation is more expensive, only the results
 are reported here:
 
 {% highlight matlab %}
-vsdpinit('sdpt3');
-load(fullfile('examples','nb_L1.mat'));
-[objt,xt,yt,zt,info] = mysdps(A,b,c,K);
-objt
+load (fullfile ('..', 'test', 'nb_L1.mat'));
+obj = vsdp (A, b, c, K);
+obj.options.VERBOSE_OUTPUT = false;
+obj.solve('sdpt3')
 {% endhighlight %}
 
-{% highlight matlab %}
-objt =
- -13.012270628163670 -13.012270796164543
+{% highlight text %}
+ans =
+  VSDP conic programming problem with dimensions:
+ 
+    [n,m] = size(obj.At)
+     n    = 3176 variables
+       m  =  915 constraints
+ 
+  and cones:
+ 
+     K.l = 797
+     K.q = [ 793 cones (length = 2379) ]
+ 
+  obj.solutions.approximate:
+ 
+      Solver 'sdpt3': Normal termination, 1610.8 seconds.
+ 
+        c'*x = -1.301227061965544e+01
+        b'*y = -1.301227082198898e+01
+ 
+ 
+  Compute a rigorous lower bound:
+ 
+    'obj = obj.rigorous_lower_bound()'
+ 
+  Compute a rigorous upper bound:
+ 
+    'obj = obj.rigorous_upper_bound()'
+ 
+ 
+  Detailed information:  'obj.info()'
+ 
+ 
+
 {% endhighlight %}
 
 SDPT3 solves the problem without warnings, although it is ill-posed according
 to Renegar's definition [[Renegar1994]](/references#Renegar1994).
 
-Now we try to get rigorous bounds using the approximation of SDPT3.
+Now we try to get rigorous error bounds using the approximation of SDPT3.
 
 {% highlight matlab %}
-fL = vsdplow(A,b,c,K,xt,yt,zt)
-fU = vsdpup (A,b,c,K,xt,yt,zt)
+obj.rigorous_lower_bound () ...
+   .rigorous_upper_bound ()
 {% endhighlight %}
 
-{% highlight matlab %}
-fL =
-  -Inf
-fU =
- -13.012270341861644
+{% highlight text %}
+warning: rigorous_lower_bound: Conic solver could not find a solution for perturbed problem
+ans =
+  VSDP conic programming problem with dimensions:
+ 
+    [n,m] = size(obj.At)
+     n    = 3176 variables
+       m  =  915 constraints
+ 
+  and cones:
+ 
+     K.l = 797
+     K.q = [ 793 cones (length = 2379) ]
+ 
+  obj.solutions.approximate:
+ 
+      Solver 'sdpt3': Normal termination, 1610.8 seconds.
+ 
+        c'*x = -1.301227061965544e+01
+        b'*y = -1.301227082198898e+01
+ 
+ 
+  obj.solutions.rigorous_lower_bound:
+ 
+      Solver 'sdpt3': Unknown, 1434.9 seconds, 1 iterations.
+ 
+          fL = -Inf
+ 
+  obj.solutions.rigorous_upper_bound:
+ 
+      Solver 'sdpt3': Normal termination, 3481.1 seconds, 2 iterations.
+ 
+          fU = -1.301227061976696e+01
+ 
+ 
+  The rigorous lower bound is infinite, check dual infeasibility:
+ 
+    'obj = obj.check_dual_infeasible()'
+ 
+ 
+  Detailed information:  'obj.info()'
+ 
+ 
+
 {% endhighlight %}
 
 These results reflect that the interior of the dual feasible solution set is
@@ -65,39 +135,120 @@ dual infeasibility is zero.  If as above the distance to dual infeasibility
 is zero, then there are sequences of dual infeasible problems with input data
 converging to the input data of the original problem. Each problem of the
 sequence is dual infeasible and thus has the dual optimal solution <span>$-\infty$</span>.
-Hence, the result <span>$-\infty$</span> of `vsdplow` is exactly the limit of the optimal
-values of the dual infeasible problems and reflects the fact that the
-distance to dual infeasibility is zero.  This demonstrates that the infinite
-bound computed by VSDP is sharp, when viewed as the limit of a sequence of
-infeasible problems.  We have a similar situation if the distance to primal
-infeasibility is zero.
+Hence, the result <span>$-\infty$</span> of `rigorous_lower_bound` is exactly the limit of
+the optimal values of the dual infeasible problems and reflects the fact that
+the distance to dual infeasibility is zero.  This demonstrates that the
+infinite bound computed by VSDP is sharp, when viewed as the limit of a
+sequence of infeasible problems.  We have a similar situation if the distance
+to primal infeasibility is zero.
 
 If the free variables are not converted into restricted ones then the problem
 is well-posed and a rigorous finite lower bound can be computed.
 
 {% highlight matlab %}
-load(fullfile('examples','nb_L1free.mat'));
-[objt,xt,yt,zt,info] = mysdps(A,b,c,K);
-objt
+load (fullfile ('..', 'test', 'nb_L1free.mat'));
+obj = vsdp (A, b, c, K);
+obj.options.VERBOSE_OUTPUT = false;
+obj.solve('sdpt3')
 {% endhighlight %}
 
-{% highlight matlab %}
-objt =
- -13.012270619970032 -13.012270818869100
+{% highlight text %}
+ans =
+  VSDP conic programming problem with dimensions:
+ 
+    [n,m] = size(obj.At)
+     n    = 3174 variables
+       m  =  915 constraints
+ 
+  and cones:
+ 
+     K.f = 2
+     K.l = 793
+     K.q = [ 793 cones (length = 2379) ]
+ 
+  obj.solutions.approximate:
+ 
+      Solver 'sdpt3': Normal termination, 1567.6 seconds.
+ 
+        c'*x = -1.301227062329676e+01
+        b'*y = -1.301227081898066e+01
+ 
+ 
+  Compute a rigorous lower bound:
+ 
+    'obj = obj.rigorous_lower_bound()'
+ 
+  Compute a rigorous upper bound:
+ 
+    'obj = obj.rigorous_upper_bound()'
+ 
+ 
+  Detailed information:  'obj.info()'
+ 
+ 
+
 {% endhighlight %}
 
 By using the computed approximations we obtain the following rigorous bounds:
 
 {% highlight matlab %}
-fL = vsdplow(A,b,c,K,xt,yt,zt)
-fU = vsdpup (A,b,c,K,xt,yt,zt)
+obj.rigorous_lower_bound () ...
+   .rigorous_upper_bound ()
 {% endhighlight %}
 
-{% highlight matlab %}
-fL =
- -13.012270819014953
-fU =
- -13.012270617556419
+{% highlight text %}
+ 
+ 
+--------------------------------------------------
+  VSDP.RIGOROUS_LOWER_BOUND  (iteration 1)
+--------------------------------------------------
+  Violated cones    (dl < 0): 4
+  Max. violation     min(dl): -8.66e-13
+  Perturbation  max(epsilon): +1.30e-12
+ 
+  Solve perturbed problem using 'sdpt3'.
+--------------------------------------------------
+ 
+
+ans =
+  VSDP conic programming problem with dimensions:
+ 
+    [n,m] = size(obj.At)
+     n    = 3174 variables
+       m  =  915 constraints
+ 
+  and cones:
+ 
+     K.f = 2
+     K.l = 793
+     K.q = [ 793 cones (length = 2379) ]
+ 
+  obj.solutions.approximate:
+ 
+      Solver 'sdpt3': Normal termination, 1567.6 seconds.
+ 
+        c'*x = -1.301227062329676e+01
+        b'*y = -1.301227081898066e+01
+ 
+ 
+  obj.solutions.rigorous_lower_bound:
+ 
+      Solver 'sdpt3': Normal termination, 1579.5 seconds, 1 iterations.
+ 
+          fL = -1.301227081883969e+01
+ 
+  obj.solutions.rigorous_upper_bound:
+ 
+      Normal termination, 6.9 seconds, 0 iterations.
+ 
+          fU = -1.301227062100146e+01
+ 
+ 
+ 
+  Detailed information:  'obj.info()'
+ 
+ 
+
 {% endhighlight %}
 
 Therefore, without splitting the free variables, we get rigorous finite lower
