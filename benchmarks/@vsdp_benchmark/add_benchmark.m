@@ -23,6 +23,12 @@ for i = length(f):-1:1
   list(i).K_s = [];
   list(i).values = [];
 end
+
+% Check for redundant names.
+if (length ({list.name}) > length (unique ({list.name})))
+  warning ('VSDP_BENCHMARK:add_benchmark:notUniqueNames', ...
+    'add_benchmark: Names in library ''%s'' are not unique.', name);
+end
 obj.BENCHMARK = [obj.BENCHMARK, list];
 
 end
