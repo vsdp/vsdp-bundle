@@ -54,7 +54,7 @@ K.l = 5;
 {% endhighlight %}
 
 To create a VSDP object of the linear program data above, we call the VSDP
-class constructor and do not suppress the output.
+class constructor and do not suppress the output by a semicolon `;`.
 
 {% highlight matlab %}
 obj = vsdp (A, b, c, K)
@@ -62,49 +62,29 @@ obj = vsdp (A, b, c, K)
 
 {% highlight text %}
 obj =
-  VSDP conic programming problem in primal (P) dual (D) form:
+  VSDP conic programming problem with dimensions:
  
-       (P)  min   c'*x          (D)  max  b'*y
-            s.t. At'*x = b           s.t. z := c - At*y
-                     x in K               z in K^*
+    [n,m] = size(obj.At)
+     n    = 5 variables
+       m  = 2 constraints
  
-  with dimensions  [n,m] = size(At)
-                    n    = 5 variables
-                      m  = 2 constraints
+  and cones:
  
-        K.l = 5
+     K.l = 5
  
-  obj.solutions.approximate  for (P) and (D):
+  Compute an approximate solution:
  
-      None.  Compute with 'obj = obj.solve()'
+    'obj = obj.solve()'
  
-  obj.solutions.rigorous_lower_bound  fL <= c'*x   for (P):
  
-      None.  Compute with 'obj = obj.rigorous_lower_bound()'
- 
-  obj.solutions.rigorous_upper_bound  b'*y <= fU   for (D):
- 
-      None.  Compute with 'obj = obj.rigorous_upper_bound()'
- 
-  obj.solutions.certificate_primal_infeasibility:
- 
-      None.  Check with 'obj = obj.check_primal_infeasible()'
- 
-  obj.solutions.certificate_dual_infeasibility:
- 
-      None.  Check with 'obj = obj.check_dual_infeasible()'
- 
- For more information type:  obj.info()
+  Detailed information:  'obj.info()'
  
  
 
 {% endhighlight %}
 
-The output seems quite verbose in the beginning, but it contains all relevant
-information about the possibilities of VSDP, including the commands, that
-can be run to compute rigorous bounds or certificates for infeasibility.
-After these computations, the results are displayed as short summary in the
-same context.
+The output contains all relevant information about the conic problem and
+includes the command `obj.solve()` to proceed.
 
 By calling the `solve` method on the VSDP object `obj`, we can compute an
 approximate solution `x`, `y`, `z`, for example by using SDPT3.  When calling
@@ -149,8 +129,8 @@ it pstep dstep pinfeas dinfeas  gap      prim-obj      dual-obj    cputime
  rel. dual     "        "       "      = 0.00e+00
  norm(X), norm(y), norm(Z) = 1.5e+00, 2.2e+00, 3.0e+00
  norm(A), norm(b), norm(C) = 4.5e+00, 4.6e+00, 7.2e+00
- Total CPU time (secs)  = 0.16  
- CPU time per iteration = 0.02  
+ Total CPU time (secs)  = 0.33  
+ CPU time per iteration = 0.04  
  termination code       =  0
  DIMACS: 1.1e-12  0.0e+00  2.6e-11  0.0e+00  2.3e-09  2.3e-09
 -------------------------------------------------------------------
@@ -181,47 +161,41 @@ obj
 
 {% highlight text %}
 obj =
-  VSDP conic programming problem in primal (P) dual (D) form:
+  VSDP conic programming problem with dimensions:
  
-       (P)  min   c'*x          (D)  max  b'*y
-            s.t. At'*x = b           s.t. z := c - At*y
-                     x in K               z in K^*
+    [n,m] = size(obj.At)
+     n    = 5 variables
+       m  = 2 constraints
  
-  with dimensions  [n,m] = size(At)
-                    n    = 5 variables
-                      m  = 2 constraints
+  and cones:
  
-        K.l = 5
+     K.l = 5
  
-  obj.solutions.approximate  for (P) and (D):
-      Solver 'sdpt3': Normal termination, 0.2 seconds.
+  obj.solutions.approximate:
+ 
+      Solver 'sdpt3': Normal termination, 0.5 seconds.
  
         c'*x = 8.000000025993693e+00
         b'*y = 7.999999987362061e+00
  
-  obj.solutions.rigorous_lower_bound  fL <= c'*x   for (P):
  
-      None.  Compute with 'obj = obj.rigorous_lower_bound()'
+  Compute a rigorous lower bound:
  
-  obj.solutions.rigorous_upper_bound  b'*y <= fU   for (D):
+    'obj = obj.rigorous_lower_bound()'
  
-      None.  Compute with 'obj = obj.rigorous_upper_bound()'
+  Compute a rigorous upper bound:
  
-  obj.solutions.certificate_primal_infeasibility:
+    'obj = obj.rigorous_upper_bound()'
  
-      None.  Check with 'obj = obj.check_primal_infeasible()'
  
-  obj.solutions.certificate_dual_infeasibility:
- 
-      None.  Check with 'obj = obj.check_dual_infeasible()'
- 
- For more information type:  obj.info()
+  Detailed information:  'obj.info()'
  
  
 
 {% endhighlight %}
 
-On success, one can obtain the approximate `x` and `y` solutions.
+On success, one can obtain the approximate `x` and `y` solutions for further
+processing.
 
 {% highlight matlab %}
 format short
@@ -285,43 +259,39 @@ obj
 
 {% highlight text %}
 obj =
-  VSDP conic programming problem in primal (P) dual (D) form:
+  VSDP conic programming problem with dimensions:
  
-       (P)  min   c'*x          (D)  max  b'*y
-            s.t. At'*x = b           s.t. z := c - At*y
-                     x in K               z in K^*
+    [n,m] = size(obj.At)
+     n    = 5 variables
+       m  = 2 constraints
  
-  with dimensions  [n,m] = size(At)
-                    n    = 5 variables
-                      m  = 2 constraints
+  and cones:
  
-        K.l = 5
+     K.l = 5
  
-  obj.solutions.approximate  for (P) and (D):
-      Solver 'sdpt3': Normal termination, 0.2 seconds.
+  obj.solutions.approximate:
+ 
+      Solver 'sdpt3': Normal termination, 0.5 seconds.
  
         c'*x = 8.000000025993693e+00
         b'*y = 7.999999987362061e+00
  
-  obj.solutions.rigorous_lower_bound  fL <= c'*x   for (P):
+ 
+  obj.solutions.rigorous_lower_bound:
+ 
       Normal termination, 0.0 seconds, 0 iterations.
  
           fL = 7.999999987362061e+00
  
-  obj.solutions.rigorous_upper_bound  b'*y <= fU   for (D):
+  obj.solutions.rigorous_upper_bound:
+ 
       Normal termination, 0.0 seconds, 0 iterations.
  
           fU = 8.000000025997929e+00
  
-  obj.solutions.certificate_primal_infeasibility:
  
-      None.  Check with 'obj = obj.check_primal_infeasible()'
  
-  obj.solutions.certificate_dual_infeasibility:
- 
-      None.  Check with 'obj = obj.check_dual_infeasible()'
- 
- For more information type:  obj.info()
+  Detailed information:  'obj.info()'
  
  
 
@@ -329,6 +299,12 @@ obj =
 
 Despite the rigorous lower bound `fL`, the solution object
 `obj.solutions.rigorous_lower_bound` contain more information:
+
+1. `Y` is a rigorous interval enclosure of a dual feasible near optimal
+  solution and
+2. `Zl` a lower bound of of each cone in <span>$z = c - A^{*} y$</span>.  For a linear
+  program this is a lower bound on each component of `z`.
+
 
 {% highlight matlab %}
 format short
@@ -358,12 +334,6 @@ Zl =
 
 {% endhighlight %}
 
-1. `Y` is a rigorous interval enclosure of a dual feasible near optimal
-  solution and
-2. `Zl` a lower bound of of each cone in <span>$z = c - A^{*} y$</span>.  For a linear
-  program this is a lower bound on each component of `z`.
-
-
 Since `Zl` is positive, the dual problem is strictly feasible, and the
 rigorous interval vector `Y` contains a dual interior solution.  Here only
 some significant digits of this interval vector are displayed.  The upper
@@ -372,6 +342,12 @@ and lower bounds of the interval `Y` can be obtained by using the `sup` and
 see [[Rump1999]](https://vsdp.github.io/references.html#Rump1999).
 
 The information returned by `rigorous_upper_bound()` is similar:
+
+1. `X` is a rigorous interval enclosure of a primal feasible near optimal
+  solution and
+2. `Xl` a lower bound of of each cone in `X`.  Again, for a linear program
+  this is a lower bound on each component of `X`.
+
 
 {% highlight matlab %}
 X = obj.solutions.rigorous_upper_bound.x
@@ -402,12 +378,6 @@ Xl =
 
 {% endhighlight %}
 
-1. `X` is a rigorous interval enclosure of a primal feasible near optimal
-  solution and
-2. `Xl` a lower bound of of each cone in `X`.  Again, for a linear program
-  this is a lower bound on each component of `X`.
-
-
 Since `Xl` is a positive vector, `X` is contained in the positive orthant and
 the primal problem is strictly feasible.
 
@@ -425,6 +395,9 @@ mu = (fU - fL) / max (1, (abs (fU) + abs(fL)) / 2)
 mu =    4.8295e-09
 
 {% endhighlight %}
+
+This means, that the computed rigorous upper and lower error bounds have
+an accuracy of eight to nine decimal digits.
 
 ## Second example with free variables
 
@@ -466,7 +439,9 @@ The whole VSDP computation can be done in a few lines of code:
 {% highlight matlab %}
 obj = vsdp (A, b, c, K);
 obj.options.VERBOSE_OUTPUT = false;
-obj.solve ('sdpt3').rigorous_lower_bound ().rigorous_upper_bound ();
+obj.solve ('sdpt3') ...
+   .rigorous_lower_bound () ...
+   .rigorous_upper_bound ();
 {% endhighlight %}
 
 Yielding
@@ -477,44 +452,40 @@ obj
 
 {% highlight text %}
 obj =
-  VSDP conic programming problem in primal (P) dual (D) form:
+  VSDP conic programming problem with dimensions:
  
-       (P)  min   c'*x          (D)  max  b'*y
-            s.t. At'*x = b           s.t. z := c - At*y
-                     x in K               z in K^*
+    [n,m] = size(obj.At)
+     n    = 3 variables
+       m  = 2 constraints
  
-  with dimensions  [n,m] = size(At)
-                    n    = 3 variables
-                      m  = 2 constraints
+  and cones:
  
-        K.f = 1
-        K.l = 2
+     K.f = 1
+     K.l = 2
  
-  obj.solutions.approximate  for (P) and (D):
-      Solver 'sdpt3': Normal termination, 0.3 seconds.
+  obj.solutions.approximate:
+ 
+      Solver 'sdpt3': Normal termination, 0.7 seconds.
  
         c'*x = 9.166666669227741e-01
         b'*y = 9.166666662221519e-01
  
-  obj.solutions.rigorous_lower_bound  fL <= c'*x   for (P):
+ 
+  obj.solutions.rigorous_lower_bound:
+ 
       Normal termination, 0.0 seconds, 0 iterations.
  
           fL = 9.166666662221494e-01
  
-  obj.solutions.rigorous_upper_bound  b'*y <= fU   for (D):
+  obj.solutions.rigorous_upper_bound:
+ 
       Normal termination, 0.0 seconds, 0 iterations.
  
           fU = 9.166666669227849e-01
  
-  obj.solutions.certificate_primal_infeasibility:
  
-      None.  Check with 'obj = obj.check_primal_infeasible()'
  
-  obj.solutions.certificate_dual_infeasibility:
- 
-      None.  Check with 'obj = obj.check_dual_infeasible()'
- 
- For more information type:  obj.info()
+  Detailed information:  'obj.info()'
  
  
 

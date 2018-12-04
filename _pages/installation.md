@@ -60,7 +60,7 @@ If all requirements are fulfilled, just call from the MATLAB or GNU Octave
 command prompt inside the VSDP directory
 
 {% highlight matlab %}
-install_vsdp
+install_vsdp;
 {% endhighlight %}
 
 and all necessary paths are set and VSDP is fully functional.  To test the
@@ -79,7 +79,7 @@ Totals:
 or from GNU Octave via
 
 {% highlight matlab %}
-testVSDP
+testVSDP;
 {% endhighlight %}
 
 {% highlight text %}
@@ -88,11 +88,11 @@ Test summary
 {% endhighlight %}
 
 {% highlight text %}
-testSINDEX      PASSED  0.036834
-testSVEC_SMAT   PASSED  0.277806
-testLP          PASSED  0.923324
-testSOCP        PASSED  0.918687
-testSDP         PASSED  1.242036
+testSINDEX      PASSED  0.154996
+testSVEC_SMAT   PASSED  0.586169
+testLP          PASSED  2.755141
+testSOCP        PASSED  2.352764
+testSDP         PASSED  7.624235
 {% endhighlight %}
 
 

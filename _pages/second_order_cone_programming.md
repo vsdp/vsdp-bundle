@@ -122,9 +122,9 @@ error bounds by using `rigorous_lower_bound` and `rigorous_upper_bound`:
 {% highlight matlab %}
 obj = vsdp (At, b, c, K);
 obj.options.VERBOSE_OUTPUT = false;
-obj.solve('sdpt3');
-obj.rigorous_lower_bound();
-obj.rigorous_upper_bound();
+obj.solve('sedumi') ...
+   .rigorous_lower_bound() ...
+   .rigorous_upper_bound();
 {% endhighlight %}
 
 Finally, we get an overview about all the performed computations:
@@ -134,43 +134,39 @@ disp (obj)
 {% endhighlight %}
 
 {% highlight text %}
-  VSDP conic programming problem in primal (P) dual (D) form:
+  VSDP conic programming problem with dimensions:
  
-       (P)  min   c'*x          (D)  max  b'*y
-            s.t. At'*x = b           s.t. z := c - At*y
-                     x in K               z in K^*
+    [n,m] = size(obj.At)
+     n    = 10 variables
+       m  =  5 constraints
  
-  with dimensions  [n,m] = size(At)
-                    n    = 10 variables
-                      m  =  5 constraints
+  and cones:
  
-        K.q = [ 5, 5 ]
+     K.q = [ 5, 5 ]
  
-  obj.solutions.approximate  for (P) and (D):
-      Solver 'sdpt3': Normal termination, 0.2 seconds.
+  obj.solutions.approximate:
  
-        c'*x = -2.592163283710322e+00
-        b'*y = -2.592163295328542e+00
+      Solver 'sedumi': Normal termination, 0.3 seconds.
  
-  obj.solutions.rigorous_lower_bound  fL <= c'*x   for (P):
-      Solver 'sdpt3': Normal termination, 0.3 seconds, 1 iterations.
+        c'*x = -2.592163303838275e+00
+        b'*y = -2.592163303002506e+00
  
-          fL = -2.592163306131730e+00
  
-  obj.solutions.rigorous_upper_bound  b'*y <= fU   for (D):
-      Normal termination, 0.0 seconds, 0 iterations.
+  obj.solutions.rigorous_lower_bound:
  
-          fU = -2.592163283338614e+00
+      Solver 'sedumi': Normal termination, 0.4 seconds, 1 iterations.
  
-  obj.solutions.certificate_primal_infeasibility:
+          fL = -2.592163303536950e+00
  
-      None.  Check with 'obj = obj.check_primal_infeasible()'
+  obj.solutions.rigorous_upper_bound:
  
-  obj.solutions.certificate_dual_infeasibility:
+      Solver 'sedumi': Normal termination, 0.4 seconds, 1 iterations.
  
-      None.  Check with 'obj = obj.check_dual_infeasible()'
+          fU = -2.592163296674863e+00
  
- For more information type:  obj.info()
+ 
+ 
+  Detailed information:  'obj.info()'
  
 
 {% endhighlight %}
@@ -184,14 +180,15 @@ y_SOCP = obj.solutions.approximate.y(3:5)
 
 {% highlight text %}
 y_SOCP =
-  -2.2802e-02
-   2.1851e-01
-   1.9571e-01
+  -2.2817e-02
+   2.1853e-01
+   1.9572e-01
  
 
 {% endhighlight %}
 
-and compare it to a naive least squares solution `y_LS`
+and compare it to a naive least squares solution `y_LS`, which takes extreme
+values in this example
 
 {% highlight matlab %}
 y_LS = A_data \ b_data
@@ -206,6 +203,9 @@ y_LS =
 
 {% endhighlight %}
 
+Displaying the norms of the results side-by-side reveals, that `y_SOCP`
+is better suited for numerical computations.
+
 {% highlight matlab %}
 [                  norm(y_SOCP)                    norm(y_LS);
  norm(b_data - A_data * y_SOCP)  norm(b_data - A_data * y_LS)]
@@ -213,7 +213,7 @@ y_LS =
 
 {% highlight text %}
 ans =
-   2.9423e-01   1.3918e+15
+   2.9425e-01   1.3918e+15
    2.2979e+00   2.5125e+00
  
 
@@ -241,56 +241,52 @@ Note that the order of the cone variables matters for `At` and `c`:
 {% highlight matlab %}
 obj = vsdp (At, b, c, K);
 obj.options.VERBOSE_OUTPUT = false;
-obj.solve('sdpt3');
-obj.rigorous_lower_bound();
-obj.rigorous_upper_bound();
+obj.solve('sedumi') ...
+   .rigorous_lower_bound() ...
+   .rigorous_upper_bound();
 {% endhighlight %}
 
-Then we obtain
+Finally, one obtains
 
 {% highlight matlab %}
 disp (obj)
 {% endhighlight %}
 
 {% highlight text %}
-  VSDP conic programming problem in primal (P) dual (D) form:
+  VSDP conic programming problem with dimensions:
  
-       (P)  min   c'*x          (D)  max  b'*y
-            s.t. At'*x = b           s.t. z := c - At*y
-                     x in K               z in K^*
+    [n,m] = size(obj.At)
+     n    = 11 variables
+       m  =  5 constraints
  
-  with dimensions  [n,m] = size(At)
-                    n    = 11 variables
-                      m  =  5 constraints
+  and cones:
  
-        K.l = 1
-        K.q = [ 5, 5 ]
+     K.l = 1
+     K.q = [ 5, 5 ]
  
-  obj.solutions.approximate  for (P) and (D):
-      Solver 'sdpt3': Normal termination, 0.4 seconds.
+  obj.solutions.approximate:
  
-        c'*x = -2.592163295427526e+00
-        b'*y = -2.592163303991311e+00
+      Solver 'sedumi': Normal termination, 0.4 seconds.
  
-  obj.solutions.rigorous_lower_bound  fL <= c'*x   for (P):
+        c'*x = -2.592163292321565e+00
+        b'*y = -2.592163288331029e+00
+ 
+ 
+  obj.solutions.rigorous_lower_bound:
+ 
+      Solver 'sedumi': Normal termination, 0.4 seconds, 1 iterations.
+ 
+          fL = -2.592163308073371e+00
+ 
+  obj.solutions.rigorous_upper_bound:
+ 
       Normal termination, 0.0 seconds, 0 iterations.
  
-          fL = -2.592163303991312e+00
+          fU = -2.592163292330896e+00
  
-  obj.solutions.rigorous_upper_bound  b'*y <= fU   for (D):
-      Normal termination, 0.0 seconds, 0 iterations.
  
-          fU = -2.592163295431078e+00
  
-  obj.solutions.certificate_primal_infeasibility:
- 
-      None.  Check with 'obj = obj.check_primal_infeasible()'
- 
-  obj.solutions.certificate_dual_infeasibility:
- 
-      None.  Check with 'obj = obj.check_dual_infeasible()'
- 
- For more information type:  obj.info()
+  Detailed information:  'obj.info()'
  
 
 {% endhighlight %}

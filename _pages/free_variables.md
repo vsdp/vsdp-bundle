@@ -1,9 +1,9 @@
 ---
-title: Handling Free Variables
-permalink: handling_free_variables.html
+title: Free Variables
+permalink: free_variables.html
 ---
 
-# Handling Free Variables
+# Free Variables
 
 
 Free variables occur often in practice.  Handling free variables in interior
@@ -15,6 +15,10 @@ convert a problem with free variables into one with restricted variables by
 representing the free variables as a difference of two nonnegative variables.
 This approach increases the problem size and introduces ill-posedness, which
 may lead to numerical difficulties.
+
+* TOC
+{:toc}
+
 
 For an example we consider the test problem _nb_L1_ from the DIMACS test
 library [[Pataki2002]](/references#Pataki2002).  The problem
@@ -120,10 +124,6 @@ constraints.  A solution for the *qssp180* instance is due to the large
 number of equality system with 130141 equality constraints and 261365
 variables has to be solved rigorously.  In the next version of VSDP the
 accuracy for such large problems will be improved.
-
-* TOC
-{:toc}
-
 
 
 Published with GNU Octave 4.4.1

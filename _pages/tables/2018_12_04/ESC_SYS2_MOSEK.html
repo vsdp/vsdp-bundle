@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>VSDP Benchmark Results</title>
+<meta charset='UTF-8'>
+<link rel="stylesheet"
+ href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+<link rel="stylesheet"
+ href="https://cdn.datatables.net/select/1.2.7/css/select.dataTables.min.css">
+<link rel="stylesheet"
+ href="https://cdn.datatables.net/fixedheader/3.1.5/css/fixedHeader.dataTables.min.css">
+<script type="text/javascript"
+ src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script type="text/javascript"
+ src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js">
+</script>
+<script type="text/javascript"
+ src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js">
+</script>
+<script type="text/javascript"
+ src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js">
+</script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] },
+});
+</script>
+<script type="text/javascript" async 
+src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+</head>
+<body>
+<table id="main_tab" class="display" style="width:100%">
+<thead>
+<tr>
+  <th>Name</th>
+  <th>$m$</th>
+  <th>$n$</th>
+  <th>Solver</th>
+  <th>$\underline{f_p}$</th>
+  <th>$\overline{f_d}$</th>
+  <th>$\mu(\overline{f_d}, \underline{f_p})$</th>
+  <th>$t_s$</th>
+  <th>$\underline{t}/t_s$</th>
+  <th>$\overline{t}/t_s$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>AlH</td>
+  <td>7230</td>
+  <td>2569260</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>2.45682122e+02</td>
+  <td>NaN</td>
+  <td>5527.00</td>
+  <td>1.43e+00</td>
+  <td>1.92e+00</td>
+</tr>
+<tr>
+  <td>B2</td>
+  <td>7230</td>
+  <td>2569260</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>7254.70</td>
+  <td>5.22e-03</td>
+  <td>9.35e-01</td>
+</tr>
+<tr>
+  <td>BF</td>
+  <td>7230</td>
+  <td>2569260</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>1.42474495e+02</td>
+  <td>NaN</td>
+  <td>5492.66</td>
+  <td>1.26e+00</td>
+  <td>1.05e+00</td>
+</tr>
+<tr>
+  <td>BH+</td>
+  <td>948</td>
+  <td>116692</td>
+  <td>mosek</td>
+  <td>2.69796595e+01</td>
+  <td>2.69797056e+01</td>
+  <td>1.71e-06</td>
+  <td>24.58</td>
+  <td>3.15e+00</td>
+  <td>9.21e-01</td>
+</tr>
+<tr>
+  <td>BH2</td>
+  <td>1743</td>
+  <td>296271</td>
+  <td>mosek</td>
+  <td>3.04301086e+01</td>
+  <td>3.04301452e+01</td>
+  <td>1.20e-06</td>
+  <td>152.29</td>
+  <td>2.81e+00</td>
+  <td>1.85e+00</td>
+</tr>
+<tr>
+  <td>BH</td>
+  <td>948</td>
+  <td>116692</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>2.72063607e+01</td>
+  <td>NaN</td>
+  <td>29.94</td>
+  <td>1.15e+00</td>
+  <td>8.51e-01</td>
+</tr>
+<tr>
+  <td>BO</td>
+  <td>7230</td>
+  <td>2569260</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>1.16832008e+02</td>
+  <td>NaN</td>
+  <td>6518.00</td>
+  <td>1.08e+00</td>
+  <td>2.04e+00</td>
+</tr>
+<tr>
+  <td>BeF</td>
+  <td>7230</td>
+  <td>2569260</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>1.27638494e+02</td>
+  <td>NaN</td>
+  <td>5652.37</td>
+  <td>1.65e+00</td>
+  <td>1.05e+00</td>
+</tr>
+<tr>
+  <td>BeH</td>
+  <td>948</td>
+  <td>116692</td>
+  <td>mosek</td>
+  <td>1.66935625e+01</td>
+  <td>1.66935969e+01</td>
+  <td>2.06e-06</td>
+  <td>27.37</td>
+  <td>1.89e+00</td>
+  <td>9.76e-01</td>
+</tr>
+<tr>
+  <td>BeO</td>
+  <td>7230</td>
+  <td>2569260</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>1.01925258e+02</td>
+  <td>NaN</td>
+  <td>6226.19</td>
+  <td>1.27e+00</td>
+  <td>1.04e+00</td>
+</tr>
+<tr>
+  <td>C2+</td>
+  <td>7230</td>
+  <td>2569260</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>8110.61</td>
+  <td>1.08e+00</td>
+  <td>2.01e+00</td>
+</tr>
+<tr>
+  <td>C2-</td>
+  <td>7230</td>
+  <td>2569260</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>7389.23</td>
+  <td>1.06e+00</td>
+  <td>9.24e-01</td>
+</tr>
+<tr>
+  <td>C2</td>
+  <td>7230</td>
+  <td>2569260</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>9.07706970e+01</td>
+  <td>NaN</td>
+  <td>7242.81</td>
+  <td>1.44e+00</td>
+  <td>9.97e-01</td>
+</tr>
+<tr>
+  <td>CF</td>
+  <td>7230</td>
+  <td>2569260</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>9.07706970e+01</td>
+  <td>NaN</td>
+  <td>7141.12</td>
+  <td>1.41e+00</td>
+  <td>9.95e-01</td>
+</tr>
+<tr>
+  <td>CH+</td>
+  <td>948</td>
+  <td>116692</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>4.06928227e+01</td>
+  <td>NaN</td>
+  <td>28.77</td>
+  <td>1.31e+00</td>
+  <td>9.44e-01</td>
+</tr>
+<tr>
+  <td>CH-</td>
+  <td>948</td>
+  <td>116692</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>4.09071082e+01</td>
+  <td>NaN</td>
+  <td>24.15</td>
+  <td>1.79e+00</td>
+  <td>9.26e-01</td>
+</tr>
+<tr>
+  <td>CH2</td>
+  <td>1743</td>
+  <td>296271</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>4.48538302e+01</td>
+  <td>NaN</td>
+  <td>142.54</td>
+  <td>1.45e+00</td>
+  <td>2.00e+00</td>
+</tr>
+<tr>
+  <td>CH2</td>
+  <td>1743</td>
+  <td>296271</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>4.48538302e+01</td>
+  <td>NaN</td>
+  <td>142.54</td>
+  <td>1.45e+00</td>
+  <td>2.00e+00</td>
+</tr>
+<tr>
+  <td>CH</td>
+  <td>948</td>
+  <td>116692</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>4.10222441e+01</td>
+  <td>NaN</td>
+  <td>30.23</td>
+  <td>3.88e+00</td>
+  <td>9.74e-01</td>
+</tr>
+<tr>
+  <td>CO+</td>
+  <td>7230</td>
+  <td>2569260</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>1.34816050e+02</td>
+  <td>NaN</td>
+  <td>7643.87</td>
+  <td>1.04e+00</td>
+  <td>2.93e+00</td>
+</tr>
+<tr>
+  <td>CO</td>
+  <td>7230</td>
+  <td>2569260</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>1.34956472e+02</td>
+  <td>NaN</td>
+  <td>6195.79</td>
+  <td>6.70e-03</td>
+  <td>9.99e-01</td>
+</tr>
+<tr>
+  <td>H2O+</td>
+  <td>1743</td>
+  <td>296271</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>8.42164821e+01</td>
+  <td>NaN</td>
+  <td>138.66</td>
+  <td>3.10e+00</td>
+  <td>9.70e-01</td>
+</tr>
+<tr>
+  <td>H2O</td>
+  <td>1743</td>
+  <td>296271</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>8.49237320e+01</td>
+  <td>NaN</td>
+  <td>129.27</td>
+  <td>1.43e+00</td>
+  <td>1.01e+00</td>
+</tr>
+<tr>
+  <td>H3O+</td>
+  <td>2964</td>
+  <td>664922</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>9.01066310e+01</td>
+  <td>NaN</td>
+  <td>603.25</td>
+  <td>1.41e+00</td>
+  <td>1.03e+00</td>
+</tr>
+<tr>
+  <td>HF+</td>
+  <td>948</td>
+  <td>116692</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>1.03885738e+02</td>
+  <td>NaN</td>
+  <td>23.42</td>
+  <td>2.29e+00</td>
+  <td>9.35e-01</td>
+</tr>
+<tr>
+  <td>HF</td>
+  <td>948</td>
+  <td>116692</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>1.04720508e+02</td>
+  <td>NaN</td>
+  <td>20.88</td>
+  <td>2.12e+00</td>
+  <td>9.04e-01</td>
+</tr>
+<tr>
+  <td>HS+</td>
+  <td>7230</td>
+  <td>2569260</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>4.02659191e+02</td>
+  <td>NaN</td>
+  <td>5907.68</td>
+  <td>1.76e+00</td>
+  <td>1.00e+00</td>
+</tr>
+<tr>
+  <td>Li2</td>
+  <td>7230</td>
+  <td>2569260</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>1.66194996e+01</td>
+  <td>NaN</td>
+  <td>7041.65</td>
+  <td>1.43e+00</td>
+  <td>1.00e+00</td>
+</tr>
+<tr>
+  <td>LiF</td>
+  <td>7230</td>
+  <td>2569260</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>1.15580207e+02</td>
+  <td>NaN</td>
+  <td>6223.43</td>
+  <td>1.34e+00</td>
+  <td>9.87e-01</td>
+</tr>
+<tr>
+  <td>LiH</td>
+  <td>948</td>
+  <td>116692</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>8.96722165e+00</td>
+  <td>NaN</td>
+  <td>27.92</td>
+  <td>2.54e+00</td>
+  <td>1.88e+00</td>
+</tr>
+<tr>
+  <td>N2+</td>
+  <td>7230</td>
+  <td>2569260</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>1.31450049e+02</td>
+  <td>NaN</td>
+  <td>7595.40</td>
+  <td>1.04e+00</td>
+  <td>1.98e+00</td>
+</tr>
+<tr>
+  <td>N2</td>
+  <td>7230</td>
+  <td>2569260</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>1.32323723e+02</td>
+  <td>NaN</td>
+  <td>5854.11</td>
+  <td>1.48e+00</td>
+  <td>1.01e+00</td>
+</tr>
+<tr>
+  <td>NF</td>
+  <td>7230</td>
+  <td>2569260</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>1.78560670e+02</td>
+  <td>NaN</td>
+  <td>6460.59</td>
+  <td>6.53e-03</td>
+  <td>9.97e-01</td>
+</tr>
+<tr>
+  <td>NH+</td>
+  <td>948</td>
+  <td>116692</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>5.78594161e+01</td>
+  <td>NaN</td>
+  <td>28.82</td>
+  <td>1.17e+00</td>
+  <td>9.47e-01</td>
+</tr>
+<tr>
+  <td>NH-</td>
+  <td>948</td>
+  <td>116692</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>5.80546670e+01</td>
+  <td>NaN</td>
+  <td>31.52</td>
+  <td>1.18e+00</td>
+  <td>1.56e+00</td>
+</tr>
+<tr>
+  <td>NH2</td>
+  <td>1743</td>
+  <td>296271</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>6.29798536e+01</td>
+  <td>NaN</td>
+  <td>148.75</td>
+  <td>1.27e+00</td>
+  <td>1.86e+00</td>
+</tr>
+<tr>
+  <td>NH3</td>
+  <td>2964</td>
+  <td>664922</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>6.79249100e+01</td>
+  <td>NaN</td>
+  <td>667.86</td>
+  <td>1.53e+00</td>
+  <td>9.90e-01</td>
+</tr>
+<tr>
+  <td>NH</td>
+  <td>948</td>
+  <td>116692</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>5.83910282e+01</td>
+  <td>NaN</td>
+  <td>23.98</td>
+  <td>1.82e+00</td>
+  <td>1.83e+00</td>
+</tr>
+<tr>
+  <td>NO-</td>
+  <td>7230</td>
+  <td>2569260</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>1.51981305e+02</td>
+  <td>NaN</td>
+  <td>6609.04</td>
+  <td>1.33e+00</td>
+  <td>1.95e+00</td>
+</tr>
+<tr>
+  <td>NaH</td>
+  <td>7230</td>
+  <td>2569260</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>1.64822339e+02</td>
+  <td>NaN</td>
+  <td>6004.38</td>
+  <td>1.64e+00</td>
+  <td>2.02e+00</td>
+</tr>
+<tr>
+  <td>O2+</td>
+  <td>7230</td>
+  <td>2569260</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>1.79131802e+02</td>
+  <td>NaN</td>
+  <td>7333.47</td>
+  <td>1.01e+00</td>
+  <td>9.67e-01</td>
+</tr>
+<tr>
+  <td>O2</td>
+  <td>7230</td>
+  <td>2569260</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>1.77211615e+02</td>
+  <td>NaN</td>
+  <td>6801.63</td>
+  <td>2.05e+00</td>
+  <td>1.00e+00</td>
+</tr>
+<tr>
+  <td>OH+</td>
+  <td>948</td>
+  <td>116692</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>7.88863955e+01</td>
+  <td>NaN</td>
+  <td>23.20</td>
+  <td>1.56e+00</td>
+  <td>1.86e+00</td>
+</tr>
+<tr>
+  <td>OH-</td>
+  <td>948</td>
+  <td>116692</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>7.91680877e+01</td>
+  <td>NaN</td>
+  <td>20.03</td>
+  <td>2.16e+00</td>
+  <td>1.85e+00</td>
+</tr>
+<tr>
+  <td>OH</td>
+  <td>948</td>
+  <td>116692</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>7.94671270e+01</td>
+  <td>NaN</td>
+  <td>23.43</td>
+  <td>1.72e+00</td>
+  <td>8.90e-01</td>
+</tr>
+<tr>
+  <td>SiH-</td>
+  <td>7230</td>
+  <td>2569260</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>2.93158126e+02</td>
+  <td>NaN</td>
+  <td>5969.29</td>
+  <td>1.30e+00</td>
+  <td>9.96e-01</td>
+</tr>
+<tr>
+  <td>SiH</td>
+  <td>7230</td>
+  <td>2569260</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>2.93252833e+02</td>
+  <td>NaN</td>
+  <td>6542.85</td>
+  <td>3.19e+00</td>
+  <td>2.00e+00</td>
+</tr>
+</tbody>
+</table>
+<script type='text/javascript'>$(document).ready( function () {
+$('#main_tab').DataTable( {
+  select: true,
+  fixedHeader: true,
+  "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+  } );
+} );
+</script>
+</body>
+</html>

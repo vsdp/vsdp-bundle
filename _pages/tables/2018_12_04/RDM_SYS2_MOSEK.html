@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>VSDP Benchmark Results</title>
+<meta charset='UTF-8'>
+<link rel="stylesheet"
+ href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+<link rel="stylesheet"
+ href="https://cdn.datatables.net/select/1.2.7/css/select.dataTables.min.css">
+<link rel="stylesheet"
+ href="https://cdn.datatables.net/fixedheader/3.1.5/css/fixedHeader.dataTables.min.css">
+<script type="text/javascript"
+ src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script type="text/javascript"
+ src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js">
+</script>
+<script type="text/javascript"
+ src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js">
+</script>
+<script type="text/javascript"
+ src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js">
+</script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] },
+});
+</script>
+<script type="text/javascript" async 
+src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+</head>
+<body>
+<table id="main_tab" class="display" style="width:100%">
+<thead>
+<tr>
+  <th>Name</th>
+  <th>$m$</th>
+  <th>$n$</th>
+  <th>Solver</th>
+  <th>$\underline{f_p}$</th>
+  <th>$\overline{f_d}$</th>
+  <th>$\mu(\overline{f_d}, \underline{f_p})$</th>
+  <th>$t_s$</th>
+  <th>$\underline{t}/t_s$</th>
+  <th>$\overline{t}/t_s$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>C</td>
+  <td>7230</td>
+  <td>2598370</td>
+  <td>mosek</td>
+  <td>3.77365815e+01</td>
+  <td>3.77366551e+01</td>
+  <td>1.95e-06</td>
+  <td>6461.24</td>
+  <td>1.92e+00</td>
+  <td>9.48e-01</td>
+</tr>
+<tr>
+  <td>CH</td>
+  <td>15018</td>
+  <td>7811142</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>4.11729243e+01</td>
+  <td>NaN</td>
+  <td>50515.03</td>
+  <td>1.23e+00</td>
+  <td>1.14e+00</td>
+</tr>
+<tr>
+  <td>F-</td>
+  <td>20709</td>
+  <td>12665715</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>9.95978118e+01</td>
+  <td>NaN</td>
+  <td>115676.27</td>
+  <td>1.49e+00</td>
+  <td>8.92e-01</td>
+</tr>
+<tr>
+  <td>H2O</td>
+  <td>27888</td>
+  <td>19814462</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>8.53451561e+01</td>
+  <td>NaN</td>
+  <td>256286.43</td>
+  <td>1.14e+00</td>
+  <td>9.98e-01</td>
+</tr>
+<tr>
+  <td>HF</td>
+  <td>15018</td>
+  <td>7811142</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>1.05355627e+02</td>
+  <td>NaN</td>
+  <td>44935.73</td>
+  <td>1.32e+00</td>
+  <td>1.05e+00</td>
+</tr>
+<tr>
+  <td>NH</td>
+  <td>15018</td>
+  <td>7811142</td>
+  <td>mosek</td>
+  <td>5.85469509e+01</td>
+  <td>5.85469697e+01</td>
+  <td>3.21e-07</td>
+  <td>47208.22</td>
+  <td>1.99e+00</td>
+  <td>1.00e+00</td>
+</tr>
+<tr>
+  <td>Ne</td>
+  <td>7230</td>
+  <td>2598370</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>1.28639115e+02</td>
+  <td>NaN</td>
+  <td>5720.28</td>
+  <td>1.26e+00</td>
+  <td>1.01e+00</td>
+</tr>
+<tr>
+  <td>O2+</td>
+  <td>7230</td>
+  <td>2598370</td>
+  <td>mosek</td>
+  <td>-Inf</td>
+  <td>1.79131752e+02</td>
+  <td>NaN</td>
+  <td>6067.10</td>
+  <td>1.56e+00</td>
+  <td>1.00e+00</td>
+</tr>
+</tbody>
+</table>
+<script type='text/javascript'>$(document).ready( function () {
+$('#main_tab').DataTable( {
+  select: true,
+  fixedHeader: true,
+  "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+  } );
+} );
+</script>
+</body>
+</html>

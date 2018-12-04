@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>VSDP Benchmark Results</title>
+<meta charset='UTF-8'>
+<link rel="stylesheet"
+ href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+<link rel="stylesheet"
+ href="https://cdn.datatables.net/select/1.2.7/css/select.dataTables.min.css">
+<link rel="stylesheet"
+ href="https://cdn.datatables.net/fixedheader/3.1.5/css/fixedHeader.dataTables.min.css">
+<script type="text/javascript"
+ src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script type="text/javascript"
+ src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js">
+</script>
+<script type="text/javascript"
+ src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js">
+</script>
+<script type="text/javascript"
+ src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js">
+</script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] },
+});
+</script>
+<script type="text/javascript" async 
+src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+</head>
+<body>
+<table id="main_tab" class="display" style="width:100%">
+<thead>
+<tr>
+  <th>Name</th>
+  <th>$m$</th>
+  <th>$n$</th>
+  <th>Solver</th>
+  <th>$\underline{f_p}$</th>
+  <th>$\overline{f_d}$</th>
+  <th>$\mu(\overline{f_d}, \underline{f_p})$</th>
+  <th>$t_s$</th>
+  <th>$\underline{t}/t_s$</th>
+  <th>$\overline{t}/t_s$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>buck1</td>
+  <td>36</td>
+  <td>661</td>
+  <td>csdp</td>
+  <td>-1.46419154e+02</td>
+  <td>-1.46419151e+02</td>
+  <td>2.11e-08</td>
+  <td>2.11</td>
+  <td>1.09e-01</td>
+  <td>1.20e-01</td>
+</tr>
+<tr>
+  <td>buck1</td>
+  <td>36</td>
+  <td>661</td>
+  <td>sdpt3</td>
+  <td>-1.46419152e+02</td>
+  <td>-1.46419151e+02</td>
+  <td>5.97e-09</td>
+  <td>3.69</td>
+  <td>7.27e-03</td>
+  <td>4.55e-01</td>
+</tr>
+<tr>
+  <td>buck1</td>
+  <td>36</td>
+  <td>661</td>
+  <td>sedumi</td>
+  <td>-1.46419153e+02</td>
+  <td>-1.46419137e+02</td>
+  <td>1.11e-07</td>
+  <td>2.97</td>
+  <td>2.58e-01</td>
+  <td>2.66e-01</td>
+</tr>
+<tr>
+  <td>buck1</td>
+  <td>36</td>
+  <td>661</td>
+  <td>sdpa</td>
+  <td>-1.46463101e+02</td>
+  <td>-1.08743498e+02</td>
+  <td>2.96e-01</td>
+  <td>2.33</td>
+  <td>6.70e-01</td>
+  <td>1.90e-01</td>
+</tr>
+<tr>
+  <td>buck2</td>
+  <td>144</td>
+  <td>9553</td>
+  <td>csdp</td>
+  <td>-Inf</td>
+  <td>-2.92368279e+02</td>
+  <td>NaN</td>
+  <td>3.33</td>
+  <td>6.71e-01</td>
+  <td>4.34e-01</td>
+</tr>
+<tr>
+  <td>buck2</td>
+  <td>144</td>
+  <td>9553</td>
+  <td>sdpt3</td>
+  <td>-Inf</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>3.72</td>
+  <td>4.54e-01</td>
+  <td>9.67e-01</td>
+</tr>
+<tr>
+  <td>buck2</td>
+  <td>144</td>
+  <td>9553</td>
+  <td>sedumi</td>
+  <td>-2.92368298e+02</td>
+  <td>-2.92368278e+02</td>
+  <td>6.66e-08</td>
+  <td>5.11</td>
+  <td>6.25e-01</td>
+  <td>6.27e-01</td>
+</tr>
+<tr>
+  <td>buck2</td>
+  <td>144</td>
+  <td>9553</td>
+  <td>sdpa</td>
+  <td>-2.92379146e+02</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>6.20</td>
+  <td>1.38e+00</td>
+  <td>7.15e+00</td>
+</tr>
+<tr>
+  <td>buck3</td>
+  <td>544</td>
+  <td>103585</td>
+  <td>csdp</td>
+  <td>-Inf</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>90.64</td>
+  <td>7.97e-01</td>
+  <td>1.02e+00</td>
+</tr>
+<tr>
+  <td>buck3</td>
+  <td>544</td>
+  <td>103585</td>
+  <td>sdpt3</td>
+  <td>-6.07606066e+02</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>10.69</td>
+  <td>1.81e-02</td>
+  <td>8.22e-01</td>
+</tr>
+<tr>
+  <td>buck3</td>
+  <td>544</td>
+  <td>103585</td>
+  <td>sedumi</td>
+  <td>-6.07618029e+02</td>
+  <td>-6.07588378e+02</td>
+  <td>4.88e-05</td>
+  <td>58.85</td>
+  <td>9.44e-01</td>
+  <td>9.33e-01</td>
+</tr>
+<tr>
+  <td>buck3</td>
+  <td>544</td>
+  <td>103585</td>
+  <td>sdpa</td>
+  <td>-6.07692528e+02</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>50.92</td>
+  <td>9.67e-01</td>
+  <td>9.10e+00</td>
+</tr>
+<tr>
+  <td>buck4</td>
+  <td>1200</td>
+  <td>454129</td>
+  <td>csdp</td>
+  <td>-Inf</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>533.45</td>
+  <td>1.21e+00</td>
+  <td>1.61e+00</td>
+</tr>
+<tr>
+  <td>buck4</td>
+  <td>1200</td>
+  <td>454129</td>
+  <td>sdpt3</td>
+  <td>-Inf</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>35.03</td>
+  <td>1.03e+00</td>
+  <td>9.76e-01</td>
+</tr>
+<tr>
+  <td>buck4</td>
+  <td>1200</td>
+  <td>454129</td>
+  <td>sedumi</td>
+  <td>-4.86142099e+02</td>
+  <td>-4.86141892e+02</td>
+  <td>4.26e-07</td>
+  <td>408.05</td>
+  <td>9.95e-01</td>
+  <td>1.98e+00</td>
+</tr>
+<tr>
+  <td>buck4</td>
+  <td>1200</td>
+  <td>454129</td>
+  <td>sdpa</td>
+  <td>-4.87916912e+02</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>272.54</td>
+  <td>1.01e+00</td>
+  <td>7.50e+00</td>
+</tr>
+<tr>
+  <td>buck5</td>
+  <td>3280</td>
+  <td>3104401</td>
+  <td>csdp</td>
+  <td>-Inf</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>2946.63</td>
+  <td>1.01e+00</td>
+  <td>9.73e-01</td>
+</tr>
+<tr>
+  <td>buck5</td>
+  <td>3280</td>
+  <td>3104401</td>
+  <td>sdpt3</td>
+  <td>-4.36260868e+02</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>279.32</td>
+  <td>6.84e-02</td>
+  <td>1.05e+00</td>
+</tr>
+<tr>
+  <td>buck5</td>
+  <td>3280</td>
+  <td>3104401</td>
+  <td>sedumi</td>
+  <td>-4.36282226e+02</td>
+  <td>-4.36225832e+02</td>
+  <td>1.29e-04</td>
+  <td>9139.33</td>
+  <td>1.08e+00</td>
+  <td>1.26e+00</td>
+</tr>
+<tr>
+  <td>buck5</td>
+  <td>3280</td>
+  <td>3104401</td>
+  <td>sdpa</td>
+  <td>-4.36292364e+02</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>2888.26</td>
+  <td>4.02e+00</td>
+  <td>4.95e+00</td>
+</tr>
+<tr>
+  <td>mater-1</td>
+  <td>103</td>
+  <td>1322</td>
+  <td>csdp</td>
+  <td>1.43465438e+02</td>
+  <td>1.43465440e+02</td>
+  <td>1.41e-08</td>
+  <td>2.72</td>
+  <td>4.31e-01</td>
+  <td>8.02e-02</td>
+</tr>
+<tr>
+  <td>mater-1</td>
+  <td>103</td>
+  <td>1322</td>
+  <td>sdpt3</td>
+  <td>1.43465438e+02</td>
+  <td>1.43465441e+02</td>
+  <td>2.17e-08</td>
+  <td>24.05</td>
+  <td>8.39e-03</td>
+  <td>9.36e-01</td>
+</tr>
+<tr>
+  <td>mater-1</td>
+  <td>103</td>
+  <td>1322</td>
+  <td>sedumi</td>
+  <td>1.43465438e+02</td>
+  <td>1.43465443e+02</td>
+  <td>3.51e-08</td>
+  <td>5.40</td>
+  <td>3.75e-02</td>
+  <td>7.14e-01</td>
+</tr>
+<tr>
+  <td>mater-1</td>
+  <td>103</td>
+  <td>1322</td>
+  <td>sdpa</td>
+  <td>-Inf</td>
+  <td>1.61800000e+02</td>
+  <td>NaN</td>
+  <td>3.20</td>
+  <td>4.96e+00</td>
+  <td>2.35e+00</td>
+</tr>
+<tr>
+  <td>mater-2</td>
+  <td>423</td>
+  <td>6074</td>
+  <td>csdp</td>
+  <td>1.41591866e+02</td>
+  <td>1.41591867e+02</td>
+  <td>8.80e-09</td>
+  <td>12.70</td>
+  <td>9.98e-01</td>
+  <td>7.54e-02</td>
+</tr>
+<tr>
+  <td>mater-2</td>
+  <td>423</td>
+  <td>6074</td>
+  <td>sdpt3</td>
+  <td>1.41591866e+02</td>
+  <td>1.41591867e+02</td>
+  <td>5.95e-09</td>
+  <td>473.87</td>
+  <td>1.94e-03</td>
+  <td>1.01e+00</td>
+</tr>
+<tr>
+  <td>mater-2</td>
+  <td>423</td>
+  <td>6074</td>
+  <td>sedumi</td>
+  <td>1.41591866e+02</td>
+  <td>1.41591884e+02</td>
+  <td>1.25e-07</td>
+  <td>53.95</td>
+  <td>1.92e+00</td>
+  <td>9.75e-01</td>
+</tr>
+<tr>
+  <td>mater-2</td>
+  <td>423</td>
+  <td>6074</td>
+  <td>sdpa</td>
+  <td>-Inf</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>14.64</td>
+  <td>1.03e+01</td>
+  <td>1.03e+01</td>
+</tr>
+<tr>
+  <td>mater-3</td>
+  <td>1439</td>
+  <td>21518</td>
+  <td>csdp</td>
+  <td>1.33916256e+02</td>
+  <td>1.33916257e+02</td>
+  <td>9.14e-09</td>
+  <td>129.83</td>
+  <td>1.04e+00</td>
+  <td>4.12e+00</td>
+</tr>
+<tr>
+  <td>mater-3</td>
+  <td>1439</td>
+  <td>21518</td>
+  <td>sdpt3</td>
+  <td>1.33916256e+02</td>
+  <td></td>
+  <td></td>
+  <td>7643.57</td>
+  <td>4.29e-04</td>
+  <td></td>
+</tr>
+<tr>
+  <td>mater-3</td>
+  <td>1439</td>
+  <td>21518</td>
+  <td>sdpa</td>
+  <td>-Inf</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>127.17</td>
+  <td>1.12e+01</td>
+  <td>1.12e+01</td>
+</tr>
+<tr>
+  <td>mater-3</td>
+  <td>1439</td>
+  <td>21518</td>
+  <td>sedumi</td>
+  <td>1.33916248e+02</td>
+  <td>1.33921585e+02</td>
+  <td>3.99e-05</td>
+  <td>181.80</td>
+  <td>2.24e+00</td>
+  <td>5.05e+00</td>
+</tr>
+<tr>
+  <td>mater-4</td>
+  <td>4807</td>
+  <td>74978</td>
+  <td>csdp</td>
+  <td>1.34262716e+02</td>
+  <td>1.34262719e+02</td>
+  <td>2.53e-08</td>
+  <td>1724.95</td>
+  <td>1.01e+00</td>
+  <td>9.08e+00</td>
+</tr>
+<tr>
+  <td>mater-4</td>
+  <td>4807</td>
+  <td>74978</td>
+  <td>sedumi</td>
+  <td>1.34262680e+02</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>1172.27</td>
+  <td>1.79e+00</td>
+  <td>9.68e+00</td>
+</tr>
+<tr>
+  <td>mater-4</td>
+  <td>4807</td>
+  <td>74978</td>
+  <td>sdpa</td>
+  <td>-Inf</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>1369.65</td>
+  <td>1.11e+01</td>
+  <td>1.12e+01</td>
+</tr>
+<tr>
+  <td>mater-4</td>
+  <td>4807</td>
+  <td>74978</td>
+  <td>sdpt3</td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>mater-5</td>
+  <td>10143</td>
+  <td>160910</td>
+  <td>csdp</td>
+  <td>1.33801640e+02</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>10214.04</td>
+  <td>1.00e+00</td>
+  <td>1.11e+01</td>
+</tr>
+<tr>
+  <td>mater-5</td>
+  <td>10143</td>
+  <td>160910</td>
+  <td>sdpa</td>
+  <td>-Inf</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>6125.98</td>
+  <td>1.10e+01</td>
+  <td>1.11e+01</td>
+</tr>
+<tr>
+  <td>mater-5</td>
+  <td>10143</td>
+  <td>160910</td>
+  <td>sedumi</td>
+  <td>1.33801595e+02</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>2327.03</td>
+  <td>1.03e-02</td>
+  <td>9.87e+00</td>
+</tr>
+<tr>
+  <td>mater-6</td>
+  <td>20463</td>
+  <td>327758</td>
+  <td>sedumi</td>
+  <td>1.33538497e+02</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>3957.47</td>
+  <td>1.23e-02</td>
+  <td>1.19e+01</td>
+</tr>
+<tr>
+  <td>mater-6</td>
+  <td>20463</td>
+  <td>327758</td>
+  <td>csdp</td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>shmup1</td>
+  <td>16</td>
+  <td>1713</td>
+  <td>csdp</td>
+  <td>-1.88414994e+02</td>
+  <td>-1.88414829e+02</td>
+  <td>8.71e-07</td>
+  <td>2.23</td>
+  <td>3.13e-01</td>
+  <td>1.64e-01</td>
+</tr>
+<tr>
+  <td>shmup1</td>
+  <td>16</td>
+  <td>1713</td>
+  <td>sdpa</td>
+  <td>-1.88442186e+02</td>
+  <td>3.38210532e+02</td>
+  <td>2.00e+00</td>
+  <td>2.78</td>
+  <td>3.10e-01</td>
+  <td>3.23e-01</td>
+</tr>
+<tr>
+  <td>shmup1</td>
+  <td>16</td>
+  <td>1713</td>
+  <td>sdpt3</td>
+  <td>-1.88414833e+02</td>
+  <td>-1.88414829e+02</td>
+  <td>1.90e-08</td>
+  <td>3.15</td>
+  <td>8.66e-03</td>
+  <td>1.32e-02</td>
+</tr>
+<tr>
+  <td>shmup1</td>
+  <td>16</td>
+  <td>1713</td>
+  <td>sedumi</td>
+  <td>-1.88414841e+02</td>
+  <td>-1.88414792e+02</td>
+  <td>2.59e-07</td>
+  <td>2.99</td>
+  <td>3.55e-01</td>
+  <td>3.66e-01</td>
+</tr>
+<tr>
+  <td>shmup2</td>
+  <td>200</td>
+  <td>194881</td>
+  <td>csdp</td>
+  <td>-Inf</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>303.90</td>
+  <td>1.02e+00</td>
+  <td>8.39e-01</td>
+</tr>
+<tr>
+  <td>shmup2</td>
+  <td>200</td>
+  <td>194881</td>
+  <td>sdpa</td>
+  <td>-3.46250825e+03</td>
+  <td>1.13648130e+07</td>
+  <td>2.00e+00</td>
+  <td>102.30</td>
+  <td>9.78e-01</td>
+  <td>1.68e+00</td>
+</tr>
+<tr>
+  <td>shmup2</td>
+  <td>200</td>
+  <td>194881</td>
+  <td>sdpt3</td>
+  <td>-3.46242684e+03</td>
+  <td>-3.46242638e+03</td>
+  <td>1.33e-07</td>
+  <td>16.62</td>
+  <td>9.05e-01</td>
+  <td>9.33e-01</td>
+</tr>
+<tr>
+  <td>shmup2</td>
+  <td>200</td>
+  <td>194881</td>
+  <td>sedumi</td>
+  <td>-3.46242903e+03</td>
+  <td>-3.46242300e+03</td>
+  <td>1.74e-06</td>
+  <td>108.38</td>
+  <td>9.90e-01</td>
+  <td>3.59e-03</td>
+</tr>
+<tr>
+  <td>shmup3</td>
+  <td>420</td>
+  <td>812641</td>
+  <td>csdp</td>
+  <td>-Inf</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>2920.09</td>
+  <td>1.09e+00</td>
+  <td>8.92e-01</td>
+</tr>
+<tr>
+  <td>shmup3</td>
+  <td>420</td>
+  <td>812641</td>
+  <td>sdpa</td>
+  <td>-2.09888728e+03</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>518.71</td>
+  <td>1.02e+00</td>
+  <td>7.05e+00</td>
+</tr>
+<tr>
+  <td>shmup3</td>
+  <td>420</td>
+  <td>812641</td>
+  <td>sdpt3</td>
+  <td>-2.09883789e+03</td>
+  <td>-2.09883701e+03</td>
+  <td>4.20e-07</td>
+  <td>67.89</td>
+  <td>1.04e+00</td>
+  <td>2.03e+00</td>
+</tr>
+<tr>
+  <td>shmup3</td>
+  <td>420</td>
+  <td>812641</td>
+  <td>sedumi</td>
+  <td>-2.09884115e+03</td>
+  <td>-2.09883208e+03</td>
+  <td>4.32e-06</td>
+  <td>953.10</td>
+  <td>9.96e-01</td>
+  <td>1.00e+00</td>
+</tr>
+<tr>
+  <td>shmup4</td>
+  <td>800</td>
+  <td>2827361</td>
+  <td>csdp</td>
+  <td>-Inf</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>2811.31</td>
+  <td>8.67e-01</td>
+  <td>9.18e-01</td>
+</tr>
+<tr>
+  <td>shmup4</td>
+  <td>800</td>
+  <td>2827361</td>
+  <td>sdpa</td>
+  <td>-7.99259858e+03</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>2449.14</td>
+  <td>6.48e-03</td>
+  <td>5.34e+00</td>
+</tr>
+<tr>
+  <td>shmup4</td>
+  <td>800</td>
+  <td>2827361</td>
+  <td>sdpt3</td>
+  <td>-7.99255159e+03</td>
+  <td>-7.99254450e+03</td>
+  <td>8.87e-07</td>
+  <td>383.56</td>
+  <td>1.08e+00</td>
+  <td>1.06e+00</td>
+</tr>
+<tr>
+  <td>shmup4</td>
+  <td>800</td>
+  <td>2827361</td>
+  <td>sedumi</td>
+  <td>-7.99286652e+03</td>
+  <td>-7.99206908e+03</td>
+  <td>9.98e-05</td>
+  <td>8868.13</td>
+  <td>1.00e+00</td>
+  <td>1.43e-03</td>
+</tr>
+<tr>
+  <td>shmup5</td>
+  <td>1800</td>
+  <td>13849441</td>
+  <td>csdp</td>
+  <td>-Inf</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>27044.60</td>
+  <td>9.60e-01</td>
+  <td>7.75e-01</td>
+</tr>
+<tr>
+  <td>shmup5</td>
+  <td>1800</td>
+  <td>13849441</td>
+  <td>sdpa</td>
+  <td>-2.38591439e+04</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>23344.31</td>
+  <td>9.99e-01</td>
+  <td>2.89e+00</td>
+</tr>
+<tr>
+  <td>shmup5</td>
+  <td>1800</td>
+  <td>13849441</td>
+  <td>sdpt3</td>
+  <td>-Inf</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>2373.37</td>
+  <td>1.07e+00</td>
+  <td>1.16e+00</td>
+</tr>
+<tr>
+  <td>shmup5</td>
+  <td>1800</td>
+  <td>13849441</td>
+  <td>sedumi</td>
+  <td>-Inf</td>
+  <td>9.82586021e+05</td>
+  <td>NaN</td>
+  <td>93961.42</td>
+  <td>2.20e-01</td>
+  <td>9.97e-01</td>
+</tr>
+<tr>
+  <td>trto1</td>
+  <td>36</td>
+  <td>361</td>
+  <td>csdp</td>
+  <td>-1.10450000e+03</td>
+  <td>-1.10450000e+03</td>
+  <td>5.96e-09</td>
+  <td>2.06</td>
+  <td>7.62e-02</td>
+  <td>8.86e-02</td>
+</tr>
+<tr>
+  <td>trto1</td>
+  <td>36</td>
+  <td>361</td>
+  <td>sdpa</td>
+  <td>-1.10450002e+03</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>2.19</td>
+  <td>7.09e-03</td>
+  <td>1.19e+00</td>
+</tr>
+<tr>
+  <td>trto1</td>
+  <td>36</td>
+  <td>361</td>
+  <td>sdpt3</td>
+  <td>-1.10450000e+03</td>
+  <td>-1.10450000e+03</td>
+  <td>2.79e-09</td>
+  <td>2.78</td>
+  <td>5.62e-03</td>
+  <td>1.03e-02</td>
+</tr>
+<tr>
+  <td>trto1</td>
+  <td>36</td>
+  <td>361</td>
+  <td>sedumi</td>
+  <td>-1.10450000e+03</td>
+  <td>-1.10449998e+03</td>
+  <td>1.66e-08</td>
+  <td>2.54</td>
+  <td>2.40e-01</td>
+  <td>2.38e-01</td>
+</tr>
+<tr>
+  <td>trto2</td>
+  <td>144</td>
+  <td>4897</td>
+  <td>csdp</td>
+  <td>-Inf</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>3.18</td>
+  <td>3.64e-01</td>
+  <td>3.87e-01</td>
+</tr>
+<tr>
+  <td>trto2</td>
+  <td>144</td>
+  <td>4897</td>
+  <td>sdpa</td>
+  <td>-1.28001541e+04</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>4.16</td>
+  <td>5.36e-01</td>
+  <td>5.61e+00</td>
+</tr>
+<tr>
+  <td>trto2</td>
+  <td>144</td>
+  <td>4897</td>
+  <td>sdpt3</td>
+  <td>-Inf</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>3.10</td>
+  <td>3.60e-01</td>
+  <td>3.72e-01</td>
+</tr>
+<tr>
+  <td>trto2</td>
+  <td>144</td>
+  <td>4897</td>
+  <td>sedumi</td>
+  <td>-1.28000002e+04</td>
+  <td>-1.27999983e+04</td>
+  <td>1.44e-07</td>
+  <td>6.19</td>
+  <td>5.82e-01</td>
+  <td>5.01e-01</td>
+</tr>
+<tr>
+  <td>trto3</td>
+  <td>544</td>
+  <td>52225</td>
+  <td>csdp</td>
+  <td>-Inf</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>29.51</td>
+  <td>9.44e-01</td>
+  <td>8.92e-01</td>
+</tr>
+<tr>
+  <td>trto3</td>
+  <td>544</td>
+  <td>52225</td>
+  <td>sdpa</td>
+  <td>-1.28000881e+04</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>26.02</td>
+  <td>3.60e-03</td>
+  <td>8.95e+00</td>
+</tr>
+<tr>
+  <td>trto3</td>
+  <td>544</td>
+  <td>52225</td>
+  <td>sdpt3</td>
+  <td>-Inf</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>6.04</td>
+  <td>7.03e-01</td>
+  <td>6.71e-01</td>
+</tr>
+<tr>
+  <td>trto3</td>
+  <td>544</td>
+  <td>52225</td>
+  <td>sedumi</td>
+  <td>-1.28000012e+04</td>
+  <td>-1.27999994e+04</td>
+  <td>1.44e-07</td>
+  <td>23.28</td>
+  <td>9.23e-01</td>
+  <td>1.86e+00</td>
+</tr>
+<tr>
+  <td>trto4</td>
+  <td>1200</td>
+  <td>228001</td>
+  <td>csdp</td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td>216.19</td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>trto4</td>
+  <td>1200</td>
+  <td>228001</td>
+  <td>sdpa</td>
+  <td>-1.27659183e+04</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>122.46</td>
+  <td>9.98e-01</td>
+  <td>8.32e+00</td>
+</tr>
+<tr>
+  <td>trto4</td>
+  <td>1200</td>
+  <td>228001</td>
+  <td>sdpt3</td>
+  <td>-Inf</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>18.17</td>
+  <td>9.65e-01</td>
+  <td>9.42e-01</td>
+</tr>
+<tr>
+  <td>trto4</td>
+  <td>1200</td>
+  <td>228001</td>
+  <td>sedumi</td>
+  <td>-1.27658361e+04</td>
+  <td>-1.27658084e+04</td>
+  <td>2.17e-06</td>
+  <td>191.32</td>
+  <td>1.87e+00</td>
+  <td>9.67e-01</td>
+</tr>
+<tr>
+  <td>trto5</td>
+  <td>3280</td>
+  <td>1554721</td>
+  <td>csdp</td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td>1145.81</td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>trto5</td>
+  <td>3280</td>
+  <td>1554721</td>
+  <td>sdpa</td>
+  <td>-1.28030459e+04</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>1164.09</td>
+  <td>8.21e-03</td>
+  <td>6.03e+00</td>
+</tr>
+<tr>
+  <td>trto5</td>
+  <td>3280</td>
+  <td>1554721</td>
+  <td>sdpt3</td>
+  <td>-Inf</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>110.98</td>
+  <td>1.07e+00</td>
+  <td>1.07e+00</td>
+</tr>
+<tr>
+  <td>trto5</td>
+  <td>3280</td>
+  <td>1554721</td>
+  <td>sedumi</td>
+  <td>-1.28012372e+04</td>
+  <td>-1.27953340e+04</td>
+  <td>4.61e-04</td>
+  <td>4222.75</td>
+  <td>9.51e-01</td>
+  <td>9.81e-01</td>
+</tr>
+<tr>
+  <td>vibra1</td>
+  <td>36</td>
+  <td>661</td>
+  <td>csdp</td>
+  <td>-4.08190126e+01</td>
+  <td>-4.08190122e+01</td>
+  <td>9.89e-09</td>
+  <td>2.32</td>
+  <td>1.30e-01</td>
+  <td>7.12e-02</td>
+</tr>
+<tr>
+  <td>vibra1</td>
+  <td>36</td>
+  <td>661</td>
+  <td>sdpa</td>
+  <td>-4.08215245e+01</td>
+  <td>-3.18502966e+01</td>
+  <td>2.47e-01</td>
+  <td>2.42</td>
+  <td>1.13e+00</td>
+  <td>3.68e-01</td>
+</tr>
+<tr>
+  <td>vibra1</td>
+  <td>36</td>
+  <td>661</td>
+  <td>sdpt3</td>
+  <td>-4.08190124e+01</td>
+  <td>-4.08190123e+01</td>
+  <td>3.64e-09</td>
+  <td>3.35</td>
+  <td>7.80e-03</td>
+  <td>1.17e-02</td>
+</tr>
+<tr>
+  <td>vibra1</td>
+  <td>36</td>
+  <td>661</td>
+  <td>sedumi</td>
+  <td>-4.08190134e+01</td>
+  <td>-4.08190114e+01</td>
+  <td>4.82e-08</td>
+  <td>3.14</td>
+  <td>3.00e-01</td>
+  <td>3.07e-01</td>
+</tr>
+<tr>
+  <td>vibra2</td>
+  <td>144</td>
+  <td>9553</td>
+  <td>csdp</td>
+  <td>-Inf</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>4.58</td>
+  <td>5.54e-01</td>
+  <td>5.53e-01</td>
+</tr>
+<tr>
+  <td>vibra2</td>
+  <td>144</td>
+  <td>9553</td>
+  <td>sdpa</td>
+  <td>-1.66020976e+02</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>6.32</td>
+  <td>5.59e-03</td>
+  <td>7.09e+00</td>
+</tr>
+<tr>
+  <td>vibra2</td>
+  <td>144</td>
+  <td>9553</td>
+  <td>sdpt3</td>
+  <td>-1.66015365e+02</td>
+  <td>-1.66015334e+02</td>
+  <td>1.86e-07</td>
+  <td>3.89</td>
+  <td>9.15e-03</td>
+  <td>1.23e-02</td>
+</tr>
+<tr>
+  <td>vibra2</td>
+  <td>144</td>
+  <td>9553</td>
+  <td>sedumi</td>
+  <td>-1.66015392e+02</td>
+  <td>-1.66015313e+02</td>
+  <td>4.74e-07</td>
+  <td>4.76</td>
+  <td>5.98e-01</td>
+  <td>6.00e-01</td>
+</tr>
+<tr>
+  <td>vibra3</td>
+  <td>544</td>
+  <td>103585</td>
+  <td>csdp</td>
+  <td>-Inf</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>83.57</td>
+  <td>9.07e-01</td>
+  <td>9.08e-01</td>
+</tr>
+<tr>
+  <td>vibra3</td>
+  <td>544</td>
+  <td>103585</td>
+  <td>sdpa</td>
+  <td>-1.72622505e+02</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>52.69</td>
+  <td>9.72e-01</td>
+  <td>8.76e+00</td>
+</tr>
+<tr>
+  <td>vibra3</td>
+  <td>544</td>
+  <td>103585</td>
+  <td>sdpt3</td>
+  <td>-1.72613200e+02</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>10.67</td>
+  <td>1.63e-02</td>
+  <td>8.28e-01</td>
+</tr>
+<tr>
+  <td>vibra3</td>
+  <td>544</td>
+  <td>103585</td>
+  <td>sedumi</td>
+  <td>-1.72613184e+02</td>
+  <td>-1.72612828e+02</td>
+  <td>2.06e-06</td>
+  <td>50.28</td>
+  <td>9.70e-01</td>
+  <td>4.01e-03</td>
+</tr>
+<tr>
+  <td>vibra4</td>
+  <td>1200</td>
+  <td>454129</td>
+  <td>csdp</td>
+  <td>-Inf</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>534.00</td>
+  <td>9.66e-01</td>
+  <td>9.85e-01</td>
+</tr>
+<tr>
+  <td>vibra4</td>
+  <td>1200</td>
+  <td>454129</td>
+  <td>sdpa</td>
+  <td>-1.65616977e+02</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>265.01</td>
+  <td>2.00e+00</td>
+  <td>7.66e+00</td>
+</tr>
+<tr>
+  <td>vibra4</td>
+  <td>1200</td>
+  <td>454129</td>
+  <td>sdpt3</td>
+  <td>-Inf</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>43.34</td>
+  <td>9.87e-01</td>
+  <td>9.93e-01</td>
+</tr>
+<tr>
+  <td>vibra4</td>
+  <td>1200</td>
+  <td>454129</td>
+  <td>sedumi</td>
+  <td>-1.65614858e+02</td>
+  <td>-1.65611152e+02</td>
+  <td>2.24e-05</td>
+  <td>393.06</td>
+  <td>9.98e-01</td>
+  <td>3.01e-03</td>
+</tr>
+<tr>
+  <td>vibra5</td>
+  <td>3280</td>
+  <td>3104401</td>
+  <td>csdp</td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td>2148.64</td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>vibra5</td>
+  <td>3280</td>
+  <td>3104401</td>
+  <td>sdpa</td>
+  <td>-1.65906989e+02</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>3145.55</td>
+  <td>6.05e-03</td>
+  <td>4.49e+00</td>
+</tr>
+<tr>
+  <td>vibra5</td>
+  <td>3280</td>
+  <td>3104401</td>
+  <td>sdpt3</td>
+  <td>-1.65904445e+02</td>
+  <td>Inf</td>
+  <td>NaN</td>
+  <td>438.75</td>
+  <td>4.35e-02</td>
+  <td>1.04e+00</td>
+</tr>
+<tr>
+  <td>vibra5</td>
+  <td>3280</td>
+  <td>3104401</td>
+  <td>sedumi</td>
+  <td>-1.65907001e+02</td>
+  <td>-1.65900259e+02</td>
+  <td>4.06e-05</td>
+  <td>11183.51</td>
+  <td>9.80e-01</td>
+  <td>9.93e-01</td>
+</tr>
+</tbody>
+</table>
+<script type='text/javascript'>$(document).ready( function () {
+$('#main_tab').DataTable( {
+  select: true,
+  fixedHeader: true,
+  "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+  } );
+} );
+</script>
+</body>
+</html>

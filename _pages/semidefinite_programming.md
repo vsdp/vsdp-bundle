@@ -116,9 +116,9 @@ error bounds by using `rigorous_lower_bound` and `rigorous_upper_bound`:
 {% highlight matlab %}
 obj = vsdp (At, b, c, K);
 obj.options.VERBOSE_OUTPUT = false;
-obj.solve('sdpt3');
-obj.rigorous_lower_bound();
-obj.rigorous_upper_bound();
+obj.solve('sdpt3') ...
+   .rigorous_lower_bound() ...
+   .rigorous_upper_bound();
 {% endhighlight %}
 
 Finally, we get an overview about all the performed computations:
@@ -128,43 +128,39 @@ disp (obj)
 {% endhighlight %}
 
 {% highlight text %}
-  VSDP conic programming problem in primal (P) dual (D) form:
+  VSDP conic programming problem with dimensions:
  
-       (P)  min   c'*x          (D)  max  b'*y
-            s.t. At'*x = b           s.t. z := c - At*y
-                     x in K               z in K^*
+    [n,m] = size(obj.At)
+     n    = 12 variables
+       m  =  2 constraints
  
-  with dimensions  [n,m] = size(At)
-                    n    = 12 variables
-                      m  =  2 constraints
+  and cones:
  
-        K.s = [ 2, 3, 2 ]
+     K.s = [ 2, 3, 2 ]
  
-  obj.solutions.approximate  for (P) and (D):
-      Solver 'sdpt3': Normal termination, 0.4 seconds.
+  obj.solutions.approximate:
+ 
+      Solver 'sdpt3': Normal termination, 0.9 seconds.
  
         c'*x = -2.749999966056186e+00
         b'*y = -2.750000014595577e+00
  
-  obj.solutions.rigorous_lower_bound  fL <= c'*x   for (P):
-      Normal termination, 0.0 seconds, 0 iterations.
+ 
+  obj.solutions.rigorous_lower_bound:
+ 
+      Normal termination, 0.1 seconds, 0 iterations.
  
           fL = -2.750000014595577e+00
  
-  obj.solutions.rigorous_upper_bound  b'*y <= fU   for (D):
-      Normal termination, 0.0 seconds, 0 iterations.
+  obj.solutions.rigorous_upper_bound:
+ 
+      Normal termination, 0.1 seconds, 0 iterations.
  
           fU = -2.749999966061940e+00
  
-  obj.solutions.certificate_primal_infeasibility:
  
-      None.  Check with 'obj = obj.check_primal_infeasible()'
  
-  obj.solutions.certificate_dual_infeasibility:
- 
-      None.  Check with 'obj = obj.check_dual_infeasible()'
- 
- For more information type:  obj.info()
+  Detailed information:  'obj.info()'
  
 
 {% endhighlight %}
@@ -241,10 +237,8 @@ intval Y =
 {% endhighlight %}
 
 Since all `Zl >= 0` it is proven that all matrices <span>$Z_{j}$</span> are in the
-interior of the cone
-<span>$\mathbb{S}^{2}_{+} \times \mathbb{S}^{3}_{+} \times \mathbb{S}^{2}_{+}$</span>
-and `Y` is a rigorous enclosure of a dual strict feasible (near optimal)
-solution.
+interior of the cone <span>$\mathcal{K}$</span> and `Y` is a rigorous enclosure of a dual
+strict feasible (near optimal) solution.
 
 Analogous computations are performed for the rigorous upper bound.  Here
 lower bounds on the smallest eigenvalue of the primal solution are computed
@@ -278,7 +272,7 @@ Now we consider the following example
 \text{minimize} & \langle C(\delta), X \rangle \\
 \text{subject to}
 & \langle A_{1}, X \rangle = 1, \\
-& \langle A_{2}, X \rangle = \epsilon, \\
+& \langle A_{2}, X \rangle = \varepsilon, \\
 & \langle A_{3}, X \rangle = 0, \\
 & \langle A_{4}, X \rangle = 0, \\
 & X \in \mathbb{S}^{3}_{+},
@@ -287,7 +281,7 @@ Now we consider the following example
 with Lagragian dual
 
 <div>$$\begin{array}{ll}
-\text{maximize} & y_{1} + \epsilon y_{2} \\
+\text{maximize} & y_{1} + \varepsilon y_{2} \\
 \text{subject to}
 & Z(\delta) := C(\delta) - \sum_{i = 1}^{4} A_{i} y_{i}
   \in \mathbb{S}^{3}_{+}, \\
@@ -324,11 +318,11 @@ K.s = 3;
 
 The linear constraints of the primal problem form imply
 
-<div>$$X(\epsilon) = \begin{pmatrix}
-\epsilon & -1 & 0 \\ -1 & X_{22} & 0 \\ 0 & 0 & X_{33}
+<div>$$X(\varepsilon) = \begin{pmatrix}
+\varepsilon & -1 & 0 \\ -1 & X_{22} & 0 \\ 0 & 0 & X_{33}
 \end{pmatrix} \in \mathbb{S}^{3}_{+}$$</div>
 
-iff <span>$X_{22} \geq 0$</span>, <span>$X_{33} \geq 0$</span>, and <span>$\epsilon X_{22} - 1 \geq 0$</span>.
+iff <span>$X_{22} \geq 0$</span>, <span>$X_{33} \geq 0$</span>, and <span>$\varepsilon X_{22} - 1 \geq 0$</span>.
 The conic constraint of the dual form is
 
 <div>$$Z(\delta) = \begin{pmatrix}
@@ -338,12 +332,14 @@ The conic constraint of the dual form is
 
 Hence, for
 
-* <span>$\epsilon \leq 0$</span>: the problem is primal infeasible <span>$\hat{f_{p}} = +\infty$</span>.
-* <span>$\delta   \leq 0$</span>: the problem is dual   infeasible <span>$\hat{f_{d}} = -\infty$</span>.
-* <span>$\epsilon = \delta = 0$</span>: the problem is ill-posed and there is a duality
+* <span>$\varepsilon \leq 0$</span>: the problem is primal infeasible
+  <span>$\hat{f_{p}} = +\infty$</span>.
+* <span>$\delta      \leq 0$</span>: the problem is dual   infeasible
+  <span>$\hat{f_{d}} = -\infty$</span>.
+* <span>$\varepsilon = \delta = 0$</span>: the problem is ill-posed and there is a duality
   gap with <span>$\hat{f_{p}} = +\infty$</span> and <span>$\hat{f_{d}} = -1$</span>.
-* <span>$\epsilon > 0$</span> and <span>$\delta > 0$</span>: the problem is feasible with
-  <span>$\hat{f_{p}} = \hat{f_{d}} = -1 + \delta / \epsilon$</span>.
+* <span>$\varepsilon > 0$</span> and <span>$\delta > 0$</span>: the problem is feasible with
+  <span>$\hat{f_{p}} = \hat{f_{d}} = -1 + \delta / \varepsilon$</span>.
 
 
 We start with the last feasible case and expect
@@ -357,9 +353,9 @@ EPSILON = 10^(-4);
 {% highlight matlab %}
 obj = vsdp (At, b(EPSILON), c(DELTA), K);
 obj.options.VERBOSE_OUTPUT = false;
-obj.solve('sdpt3');
-obj.rigorous_lower_bound();
-obj.rigorous_upper_bound();
+obj.solve('sdpt3') ...
+   .rigorous_lower_bound() ...
+   .rigorous_upper_bound();
 {% endhighlight %}
 
 {% highlight matlab %}
@@ -367,99 +363,82 @@ disp (obj)
 {% endhighlight %}
 
 {% highlight text %}
-  VSDP conic programming problem in primal (P) dual (D) form:
+  VSDP conic programming problem with dimensions:
  
-       (P)  min   c'*x          (D)  max  b'*y
-            s.t. At'*x = b           s.t. z := c - At*y
-                     x in K               z in K^*
+    [n,m] = size(obj.At)
+     n    = 6 variables
+       m  = 4 constraints
  
-  with dimensions  [n,m] = size(At)
-                    n    = 6 variables
-                      m  = 4 constraints
+  and cones:
  
-        K.s = [ 3 ]
+     K.s = [ 3 ]
  
-  obj.solutions.approximate  for (P) and (D):
-      Solver 'sdpt3': Normal termination, 0.6 seconds.
+  obj.solutions.approximate:
+ 
+      Solver 'sdpt3': Normal termination, 1.5 seconds.
  
         c'*x = 9.000000066540730e+00
         b'*y = 8.999999966558313e+00
  
-  obj.solutions.rigorous_lower_bound  fL <= c'*x   for (P):
-      Solver 'sdpt3': Normal termination, 0.6 seconds, 1 iterations.
+ 
+  obj.solutions.rigorous_lower_bound:
+ 
+      Solver 'sdpt3': Normal termination, 1.6 seconds, 1 iterations.
  
           fL = 8.999996901810034e+00
  
-  obj.solutions.rigorous_upper_bound  b'*y <= fU   for (D):
-      Solver 'sdpt3': Normal termination, 0.7 seconds, 1 iterations.
+  obj.solutions.rigorous_upper_bound:
+ 
+      Solver 'sdpt3': Normal termination, 1.6 seconds, 1 iterations.
  
           fU = 9.000001108216551e+00
  
-  obj.solutions.certificate_primal_infeasibility:
  
-      None.  Check with 'obj = obj.check_primal_infeasible()'
  
-  obj.solutions.certificate_dual_infeasibility:
- 
-      None.  Check with 'obj = obj.check_dual_infeasible()'
- 
- For more information type:  obj.info()
+  Detailed information:  'obj.info()'
  
 
 {% endhighlight %}
 
-Nothing bad happened, as expected.
+Everything as expected, we obtain finite rigorous lower and upper bounds
+`fL` and `fU`.
 
 Now we change the setting for primal infeasiblilty, what SDPT3 detects as
 well:
 
 {% highlight matlab %}
-DELTA   = -10^(-3);
+DELTA   =  10^(-3);
 EPSILON = -10^(-4);
 obj = vsdp (At, b(EPSILON), c(DELTA), K);
 obj.options.VERBOSE_OUTPUT = false;
 obj.solve('sdpt3');
-obj.check_primal_infeasible();
-disp (obj)
+obj.solutions.approximate
 {% endhighlight %}
 
 {% highlight text %}
-  VSDP conic programming problem in primal (P) dual (D) form:
+ans =
+      Solver 'sdpt3': Primal infeasible, 1.6 seconds.
  
-       (P)  min   c'*x          (D)  max  b'*y
-            s.t. At'*x = b           s.t. z := c - At*y
-                     x in K               z in K^*
+        c'*x = 1.680543452802656e+08
+        b'*y = 1.000000000000000e+00
  
-  with dimensions  [n,m] = size(At)
-                    n    = 6 variables
-                      m  = 4 constraints
  
-        K.s = [ 3 ]
+
+{% endhighlight %}
+
+We can make sure by computing a rigorous lower bound
+
+{% highlight matlab %}
+obj.rigorous_lower_bound();
+obj.solutions.rigorous_lower_bound
+{% endhighlight %}
+
+{% highlight text %}
+ans =
+      Normal termination, 0.0 seconds, 0 iterations.
  
-  obj.solutions.approximate  for (P) and (D):
-      Solver 'sdpt3': Primal infeasible, 0.6 seconds.
+          fL = 1.000000000000000e+00
  
-        c'*x = -1.148631841490051e+10
-        b'*y = 9.999999999999999e-01
- 
-  obj.solutions.rigorous_lower_bound  fL <= c'*x   for (P):
- 
-      None.  Compute with 'obj = obj.rigorous_lower_bound()'
- 
-  obj.solutions.rigorous_upper_bound  b'*y <= fU   for (D):
- 
-      None.  Compute with 'obj = obj.rigorous_upper_bound()'
- 
-  obj.solutions.certificate_primal_infeasibility:
-      Normal termination, 0.0 seconds.
- 
-      NO certificate of primal infeasibility was found.
- 
-  obj.solutions.certificate_dual_infeasibility:
- 
-      None.  Check with 'obj = obj.check_dual_infeasible()'
- 
- For more information type:  obj.info()
  
 
 {% endhighlight %}
@@ -474,19 +453,18 @@ guarantee on the quality of the computed solution.
 For instance, if we apply SeDuMi to the same problem we obtain:
 
 {% highlight matlab %}
-vsdpinit('sedumi');
-[objt,xt,yt,zt,info] = mysdps(A,b,c,K);
-objt, xt, yt, info  % zt:  hidden for brevity
+obj.solve('sedumi');
+obj.solutions.approximate
 {% endhighlight %}
 
 {% highlight text %}
-error: 'vsdpinit' undefined near line 1 column 1
-	in:
-
-
-vsdpinit('sedumi');
-[objt,xt,yt,zt,info] = mysdps(A,b,c,K);
-objt, xt, yt, info  % zt:  hidden for brevity
+ans =
+      Solver 'sedumi': Primal infeasible, 0.6 seconds.
+ 
+        c'*x = 0.000000000000000e+00
+        b'*y = 1.000000000000000e+00
+ 
+ 
 
 {% endhighlight %}
 
@@ -496,19 +474,18 @@ is not satisfied. In other words, the algorithm is not backward stable for
 this example.  The CSDP-solver gives similar results:
 
 {% highlight matlab %}
-vsdpinit('sdpt3'); %TODO: csdp
-[objt,xt,yt,zt,info] = mysdps(A,b,c,K);
-objt, xt, yt, info  % zt:  hidden for brevity
+obj.solve('csdp');
+obj.solutions.approximate
 {% endhighlight %}
 
 {% highlight text %}
-error: 'vsdpinit' undefined near line 1 column 1
-	in:
-
-
-vsdpinit('sdpt3'); %TODO: csdp
-[objt,xt,yt,zt,info] = mysdps(A,b,c,K);
-objt, xt, yt, info  % zt:  hidden for brevity
+ans =
+      Solver 'csdp': Primal infeasible, 0.0 seconds.
+ 
+        c'*x = 1.150983674058844e+05
+        b'*y = 9.999999999999999e-01
+ 
+ 
 
 {% endhighlight %}
 
@@ -516,46 +493,54 @@ A good deal worse are the results that can be derived with older versions of
 these solvers, including SDPT3 and SDPA
 [[Jansson2006]](/references#Jansson2006).
 
-Reliable results can be obtained by the functions `vsdplow` and `vsdpup`.
-Firstly, we consider `vsdplow` and the approximate solver SDPT3.
+Reliable results can be obtained by the functions `rigorous_lower_bound` and
+`rigorous_upper_bound`.  Firstly, we consider `vsdplow` and the approximate
+solver SDPT3.
 
 {% highlight matlab %}
-vsdpinit('sdpt3');
-[objt,xt,yt,zt,info] = mysdps(A,b,c,K);
-[fL,y,dl] = vsdplow(A,b,c,K,xt,yt,zt)
+obj.solve('sdpt3').rigorous_lower_bound();
+y = obj.solutions.rigorous_lower_bound.y
 {% endhighlight %}
 
 {% highlight text %}
-error: 'vsdpinit' undefined near line 1 column 1
-	in:
-
-
-vsdpinit('sdpt3');
-[objt,xt,yt,zt,info] = mysdps(A,b,c,K);
-[fL,y,dl] = vsdplow(A,b,c,K,xt,yt,zt)
+intval y = 
+[  1.1949e-007,  1.1950e-007] 
+[ -1.0000e+004, -9.9999e+003] 
+[  5.6780e-015,  5.6781e-015] 
+[  3.3915e-026,  3.3916e-026] 
 
 {% endhighlight %}
 
-the vector `y` is a rigorous interior dual <span>$??$</span>-optimal solution where we shall
-see that <span>$?? \approx 2.27 \times 10^{-8}$</span>.  The positivity of `dl` verifies
-that `y` contains a dual strictly feasible solution.  In particular, strong
-duality holds.  By using SeDuMi similar rigorous results are obtained.  But
-for the SDPA-solver we get
-
 {% highlight matlab %}
-vsdpinit('sdpa');
-[objt,xt,yt,zt,info] = mysdps(A,b,c,K);
-[fL,y,dl] = vsdplow(A,b,c,K,xt,yt,zt)
+dl = obj.solutions.rigorous_lower_bound.z
 {% endhighlight %}
 
 {% highlight text %}
-error: 'vsdpinit' undefined near line 1 column 1
-	in:
+dl =    0.0000e+00
 
+{% endhighlight %}
 
-vsdpinit('sdpa');
-[objt,xt,yt,zt,info] = mysdps(A,b,c,K);
-[fL,y,dl] = vsdplow(A,b,c,K,xt,yt,zt)
+the vector `y` is a rigorous interior dual <span>$\varepsilon$</span>-optimal solution
+where we shall see that <span>$\varepsilon \approx 2.27 \times 10^{-8}$</span>.
+The positivity of `dl` verifies that `y` contains a dual strictly feasible
+solution.  In particular, strong duality holds.  By using SeDuMi similar
+rigorous results are obtained.  But for the SDPA-solver we get
+
+{% highlight matlab %}
+obj.solve('sdpa').rigorous_lower_bound();
+disp (obj.solutions.rigorous_lower_bound)
+{% endhighlight %}
+
+{% highlight text %}
+Transposing A to match b 
+Number of constraints: 4 
+Number of SDP blocks: 1 
+Number of LP vars: 0 
+warning: rigorous_lower_bound: Conic solver could not find a solution for perturbed problem
+      Solver 'sdpt3': Unknown, 1.6 seconds, 1 iterations.
+ 
+          fL = -Inf
+ 
 
 {% endhighlight %}
 
@@ -565,38 +550,33 @@ on the computed approximate solution and therefore on the used approximate
 conic solver.
 
 Similarly, a verified upper bound and a rigorous enclosure of a primal
-<span>$??$</span>-optimal solution can be computed by using the `vsdpup` function
-together with SDPT3:
+<span>$varepsilon$</span>-optimal solution can be computed by using the
+`rigorous_upper_bound` function together with SDPT3:
 
 {% highlight matlab %}
-vsdpinit('sdpt3');
-[objt,xt,yt,zt,info] = mysdps(A,b,c,K);
-[fU,x,lb] = vsdpup(A,b,c,K,xt,yt,zt)
+obj.solve('sdpt3').rigorous_upper_bound();
+disp (obj.solutions.rigorous_upper_bound)
 {% endhighlight %}
 
 {% highlight text %}
-error: 'vsdpinit' undefined near line 1 column 1
-	in:
-
-
-vsdpinit('sdpt3');
-[objt,xt,yt,zt,info] = mysdps(A,b,c,K);
-[fU,x,lb] = vsdpup(A,b,c,K,xt,yt,zt)
+warning: rigorous_upper_bound: Conic solver could not find a solution for perturbed problem
+      Solver 'sdpt3': Unknown, 1.5 seconds, 1 iterations.
+ 
+          fU = Inf
+ 
 
 {% endhighlight %}
 
 The output `fU` is close to the dual optimal value <span>$\hat{f}_{d} = -0.5$</span>.
-The interval vector `x` contains a primal strictly feasible solution, see
-\eqref{OptSolSDPExp}, and the variable `lb` is a lower bound for the smallest
-eigenvalue of `x`.  Because `lb` is positive, Slater's condition is fulfilled
-and strong duality is verified once more.
+The interval vector `x` contains a primal strictly feasible solution and
+the variable `lb` is a lower bound for the smallest eigenvalue of `x`.
+Because `lb` is positive, Slater's condition is fulfilled and strong duality
+is verified once more.
 
 Summarizing, by using SDPT3 for the considered example with parameter
-<span>$?? = 10^{-4}$</span>, VSDP verified strong duality with rigorous bounds for the
-optimal value
-<span>$$</span>
--0.500000007 \leq \hat{f}_{p} = \hat{f}_{d} \leq -0.499999994.
-<span>$$</span>
+<span>$\varepsilon = 10^{-4}$</span>, VSDP verified strong duality with rigorous bounds
+for the optimal value
+<div>$$-0.500000007 \leq \hat{f}_{p} = \hat{f}_{d} \leq -0.499999994.$$</div>
 
 The rigorous upper and lower error bounds of the optimal value show only
 modest overestimation.  Strictly primal and dual feasible solutions are
