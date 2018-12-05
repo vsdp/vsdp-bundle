@@ -1,4 +1,4 @@
-function obj = run (obj, f, run_mode)
+function obj = run (obj, f, options)
 % RUN  Run the VSDP benchmark.
 %
 %   obj.run ()  Runs all benchmarks, specified in obj.BENCHMARK with all
@@ -9,12 +9,15 @@ function obj = run (obj, f, run_mode)
 %               subset of the data by applying filters, see obj.filter for
 %               details.
 %
-%   obj.run (obj.filter (...), run_mode)  Same as before, but specify
-%               'run_mode' as one of:
-%                 - 'normal' (Default): save data and        log.
-%                 - 'nosave':    do not save data and        log.
-%                 - 'nolog' :           save data and do not log.
-%                 - 'nothing':   do not save data and do not log.
+%   obj.run (obj.filter (...), options)  Same as before, but specify a
+%               structure 'options' with fields:
+%                 - 'log' : true (Default)  Write to log file.
+%                 - 'save': true (Default)  Save computed results.
+%                 - 'compute': true (Default)  Compute any missing values.
+%                 - 'rebuild_index': false (Default) Overwrite any cached
+%                                  values.  This option is useful to build an
+%                                  index for existing data.  If 'false'
+%                                  warnings will be thrown if values differ.
 %
 %   NOTE [*]: This benchmark relaxes the problems of the ESC and RDM library.
 %
@@ -55,12 +58,10 @@ else
   fprintf ('\n\n')
 end
 
-% Save all computed values and log by default.
-if (nargin < 3)
-  run_mode = 'normal';
+if (nargin > 2)
+  options = check_options (options);
 else
-  run_mode = validatestring (run_mode, ...
-    {'normal', 'nosave', 'nolog', 'nothing'});
+  options = check_options ([]);
 end
 
 % Define helper functions for diary display.
@@ -72,11 +73,10 @@ for j = f.benchmark
   fprintf ('(%3d/%3d) %s/%s\n', find (j == f.benchmark), ...
     length (f.benchmark), obj.BENCHMARK(j).lib, obj.BENCHMARK(j).name);
   % Start logging.
-  switch (run_mode)
-    case {'normal', 'nosave'}
-      log_file = fullfile (obj.RESULT_DIR, 'data', ...
-        sprintf('%s_%s.log', obj.BENCHMARK(j).lib, obj.BENCHMARK(j).name));
-      diary (log_file);
+  if (options.log)
+    log_file = fullfile (obj.RESULT_DIR, 'data', ...
+      sprintf('%s_%s.log', obj.BENCHMARK(j).lib, obj.BENCHMARK(j).name));
+    diary (log_file);
   end
   
   % Display comprehensive header.
@@ -147,28 +147,22 @@ for j = f.benchmark
   end
   
   % Save problem statistics, if not already done.
-  switch (run_mode)
-    case {'normal', 'nolog'}
-      set_or_compare (obj, j, 'm', vsdp_obj.m);
-      set_or_compare (obj, j, 'n', vsdp_obj.n);
-      set_or_compare (obj, j, 'K_f', vsdp_obj.K.f > 0);
-      set_or_compare (obj, j, 'K_l', vsdp_obj.K.l > 0);
-      set_or_compare (obj, j, 'K_q', ~isempty (vsdp_obj.K.q));
-      set_or_compare (obj, j, 'K_s', ~isempty (vsdp_obj.K.s));
-      obj.save_state ();
-  end
+  set_or_compare (options, obj, j, 'm', vsdp_obj.m);
+  set_or_compare (options, obj, j, 'n', vsdp_obj.n);
+  set_or_compare (options, obj, j, 'K_f', vsdp_obj.K.f > 0);
+  set_or_compare (options, obj, j, 'K_l', vsdp_obj.K.l > 0);
+  set_or_compare (options, obj, j, 'K_q', ~isempty (vsdp_obj.K.q));
+  set_or_compare (options, obj, j, 'K_s', ~isempty (vsdp_obj.K.s));
+  obj.save_state ();
   
   % Call all selected solvers.
   for i = f.solver
     try
       print_header (sprintf ('>> Solver: ''%s''  (%s)', ...
         obj.SOLVER(i).name, datestr (now ())));
-      switch (run_mode)
-        case {'normal', 'nolog'}
-          % Determine if there are already benchmarks for solver 'i'.
-          ii = get_or_set_solver (obj, j, obj.SOLVER(i).name);
-          obj.save_state ();
-      end
+      % Determine if there are already benchmarks for solver 'i'.
+      ii = get_or_set_solver (obj, j, obj.SOLVER(i).name);
+      obj.save_state ();
       
       % Specify file names.
       file_prefix = fullfile (obj.RESULT_DIR, 'data', ...
@@ -185,11 +179,14 @@ for j = f.benchmark
       % Compute approximate solution, if not already computed.
       fprintf ('>>>> Approximate solution...');
       if (exist (app_sol_file, 'file') ~= 2)
-        vsdp_obj.solve (obj.SOLVER(i).name);
-        switch (run_mode)
-          case {'normal', 'nolog'}
-            app_sol = get_solution_as_struct (vsdp_obj.solutions.approximate);
-            save (app_sol_file, 'app_sol', '-v7');
+        if (options.compute)
+          vsdp_obj.solve (obj.SOLVER(i).name);
+        else
+          fprintf (' (skipped) ');
+        end
+        if (options.save)
+          app_sol = get_solution_as_struct (vsdp_obj.solutions.approximate);
+          save (app_sol_file, 'app_sol', '-v7');
         end
       else  % ... or load from file.
         load (app_sol_file, 'app_sol')
@@ -197,29 +194,32 @@ for j = f.benchmark
           app_sol.z, app_sol.f_objective, app_sol.solver_info);
         fprintf (' (cached) ');
       end
-      ts = vsdp_obj.solutions.approximate.solver_info.elapsed_time;
-      fp = vsdp_obj.solutions.approximate.f_objective(1);
-      fd = vsdp_obj.solutions.approximate.f_objective(2);
       
-      % Save or verify cached results.
-      switch (run_mode)
-        case {'normal', 'nolog'}
-          set_or_compare (obj, j, 'fp', fp, ii);
-          set_or_compare (obj, j, 'fd', fd, ii);
-          set_or_compare (obj, j, 'ts', ts + 2, ii);
-          obj.save_state ();
+      if (~isempty (vsdp_obj.solutions.approximate))
+        ts = vsdp_obj.solutions.approximate.solver_info.elapsed_time;
+        fp = vsdp_obj.solutions.approximate.f_objective(1);
+        fd = vsdp_obj.solutions.approximate.f_objective(2);
+        
+        % Save or verify cached results.
+        set_or_compare (options, obj, j, 'fp', fp, ii);
+        set_or_compare (options, obj, j, 'fd', fd, ii);
+        set_or_compare (options, obj, j, 'ts', ts + 2, ii);
+        obj.save_state ();
+        fprintf ('done.\n');
       end
-      fprintf ('done.\n');
       
       % Compute rigorous lower bound, if not already computed.
       fprintf ('>>>> Rigorous lower bound...');
       if (exist (rig_lbd_file, 'file') ~= 2)
-        vsdp_obj.rigorous_lower_bound ();
-        switch (run_mode)
-          case {'normal', 'nolog'}
-            rig_lbd = get_solution_as_struct ( ...
-              vsdp_obj.solutions.rigorous_lower_bound);
-            save (rig_lbd_file, 'rig_lbd', '-v7');
+        if (options.compute)
+          vsdp_obj.rigorous_lower_bound ();
+        else
+          fprintf (' (skipped) ');
+        end
+        if (options.save)
+          rig_lbd = get_solution_as_struct ( ...
+            vsdp_obj.solutions.rigorous_lower_bound);
+          save (rig_lbd_file, 'rig_lbd', '-v7');
         end
       else  % ... or load from file.
         load (rig_lbd_file, 'rig_lbd')
@@ -228,27 +228,29 @@ for j = f.benchmark
         fprintf (' (cached) ');
       end
       
-      tL = vsdp_obj.solutions.rigorous_lower_bound.solver_info.elapsed_time;
-      fL = vsdp_obj.solutions.rigorous_lower_bound.f_objective(1);
-      
-      % Save or verify cached results.
-      switch (run_mode)
-        case {'normal', 'nolog'}
-          set_or_compare (obj, j, 'fL', fL, ii);
-          set_or_compare (obj, j, 'tL', tL, ii);
-          obj.save_state ();
+      if (~isempty (vsdp_obj.solutions.rigorous_lower_bound))
+        tL = vsdp_obj.solutions.rigorous_lower_bound.solver_info.elapsed_time;
+        fL = vsdp_obj.solutions.rigorous_lower_bound.f_objective(1);
+        
+        % Save or verify cached results.
+        set_or_compare (options, obj, j, 'fL', fL, ii);
+        set_or_compare (options, obj, j, 'tL', tL, ii);
+        obj.save_state ();
       end
       fprintf ('done.\n');
       
       % Compute rigorous upper bound, if not already computed.
       fprintf ('>>>> Rigorous upper bound...');
       if (exist (rig_ubd_file, 'file') ~= 2)
-        vsdp_obj.rigorous_upper_bound ();
-        switch (run_mode)
-          case {'normal', 'nolog'}
-            rig_ubd = get_solution_as_struct ( ...
-              vsdp_obj.solutions.rigorous_upper_bound);
-            save (rig_ubd_file, 'rig_ubd', '-v7');
+        if (options.compute)
+          vsdp_obj.rigorous_upper_bound ();
+        else
+          fprintf (' (skipped) ');
+        end
+        if (options.save)
+          rig_ubd = get_solution_as_struct ( ...
+            vsdp_obj.solutions.rigorous_upper_bound);
+          save (rig_ubd_file, 'rig_ubd', '-v7');
         end
       else  % ... or load from file.
         load (rig_ubd_file, 'rig_ubd')
@@ -257,15 +259,14 @@ for j = f.benchmark
         fprintf (' (cached) ');
       end
       
-      tU = vsdp_obj.solutions.rigorous_upper_bound.solver_info.elapsed_time;
-      fU = vsdp_obj.solutions.rigorous_upper_bound.f_objective(2);
-      
-      % Save or verify cached results.
-      switch (run_mode)
-        case {'normal', 'nolog'}
-          set_or_compare (obj, j, 'fU', fU, ii);
-          set_or_compare (obj, j, 'tU', tU, ii);
-          obj.save_state ();
+      if (~isempty (vsdp_obj.solutions.rigorous_upper_bound))
+        tU = vsdp_obj.solutions.rigorous_upper_bound.solver_info.elapsed_time;
+        fU = vsdp_obj.solutions.rigorous_upper_bound.f_objective(2);
+        
+        % Save or verify cached results.
+        set_or_compare (options, obj, j, 'fU', fU, ii);
+        set_or_compare (options, obj, j, 'tU', tU, ii);
+        obj.save_state ();
       end
       fprintf ('done.\n');
     catch err
@@ -278,16 +279,16 @@ for j = f.benchmark
 end
 end
 
-function set_or_compare (obj, idx, fname, val, ii)
+function set_or_compare (options, obj, idx, fname, val, ii)
 % SET_OR_COMPARE  Set  value 'val' to the BENCHMARK field 'fname' at index 'idx'.
-%   If the value is already set, the values are only compared and a warning is
-%   issued, if they differ.
+%   If the value is already set and 'options.rebuild_index' is 'false', the
+%   values are only compared and a warning is issued, if they differ.
 %
 %   Given the fifth argument 'ii', look in 'obj.BENCHMARK(idx).values(ii)'
 %   instead.
 %
 
-if (nargin > 4)
+if (nargin > 5)
   S = obj.BENCHMARK(idx).values(ii);
 else
   S = obj.BENCHMARK(idx);
@@ -295,7 +296,7 @@ end
 
 % Update struct.
 current_val = getfield (S, fname);
-if (isempty (current_val))
+if (isempty (current_val) || options.rebuild_index)
   S = setfield (S, fname, val);
 elseif (current_val ~= val)
   warning ('VSDP_BENCHMARK:run:fieldValueDiffers', ...
@@ -304,7 +305,7 @@ elseif (current_val ~= val)
 end
 
 % Store modified struct.
-if (nargin > 4)
+if (nargin > 5)
   obj.BENCHMARK(idx).values(ii) = S;
 else
   obj.BENCHMARK(idx) = S;
@@ -348,4 +349,28 @@ else
 end
 sol = struct (vsdp_sol);
 warning (S);
+end
+
+
+function opts = check_options (options)
+% CHECK_OPTIONS  Check given structure options or return default values.
+opts.log = true;
+opts.save = true;
+opts.compute = true;
+opts.rebuild_index = false;
+
+if (~isempty (options))
+  if (isfield (options, 'log'))
+    opts.log = options.log;
+  end
+  if (isfield (options, 'save'))
+    opts.save = options.save;
+  end
+  if (isfield (options, 'compute'))
+    opts.compute = options.compute;
+  end
+  if (isfield (options, 'rebuild_index'))
+    opts.rebuild_index = options.rebuild_index;
+  end
+end
 end
