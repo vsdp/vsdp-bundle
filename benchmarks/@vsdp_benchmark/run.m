@@ -205,8 +205,8 @@ for j = f.benchmark
         set_or_compare (options, obj, j, 'fd', fd, ii);
         set_or_compare (options, obj, j, 'ts', ts + 2, ii);
         obj.save_state ();
-        fprintf ('done.\n');
       end
+      fprintf ('done.\n');
       
       % Compute rigorous lower bound, if not already computed.
       fprintf ('>>>> Rigorous lower bound...');
@@ -275,7 +275,9 @@ for j = f.benchmark
     end
   end
   print_header (sprintf ('End: %s', datestr (now ())));
-  diary ('off');
+  if (options.log)
+    diary ('off');
+  end
 end
 end
 

@@ -63,7 +63,7 @@ function varargout = export (obj, fmts, out_files, flt, use_columns, stat_funs, 
 
 % Copyright 2004-2018 Christian Jansson (jansson@tuhh.de)
 
-narginchk (2, 6);
+narginchk (2, 7);
 
 fmts = fmts(:);
 validateattributes (fmts, {'cell'}, {'column'});
