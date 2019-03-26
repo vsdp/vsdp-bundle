@@ -48,9 +48,9 @@ The latest version of VSDP provides easy access to the
       documentation.
   - [VSDP 2012](https://github.com/vsdp/vsdp-2012)
     - Improvements: additional support of second-order cones, linear cones, and
-      free variables.
+      free variables, vectorized internal structure.
   - [VSDP 2006](https://github.com/vsdp/vsdp-2006)
-    - Supports semidefinite cones only, focus on education.
+    - Support for large scale semidefinite problems, comprehensible code.
 
 ## Contributors
 

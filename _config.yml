@@ -1,7 +1,8 @@
 github: [metadata]
-zip_url: https://example.com/foo.zip
-tar_url: https://example.com/foo.tar.gz
-repository: vsdp/vsdp.github.io
+custom:
+  zip_url: https://github.com/vsdp/vsdp-2018/archive/master.zip
+  tar_url: https://github.com/vsdp/vsdp-2018/archive/master.tar.gz
+  repository_url: https://github.com/vsdp/vsdp-2018/
 encoding: UTF-8
 kramdown:
   input: GFM
