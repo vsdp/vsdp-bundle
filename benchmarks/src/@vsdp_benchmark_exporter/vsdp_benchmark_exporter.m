@@ -7,13 +7,12 @@ classdef vsdp_benchmark_exporter
   % Copyright 2018-2019 Kai T. Ohlhus (kai.ohlhus@tuhh.de)
   
   properties
-    use_columns
+    cdata_view
   end
   
   properties (GetAccess = public, SetAccess = protected)
     data_dir
     cdata
-    cdata_view
   end
   
   properties (Access = protected)
