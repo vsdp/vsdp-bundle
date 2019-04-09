@@ -1,5 +1,5 @@
 classdef vsdp_benchmark_exporter < handle
-  % VSDP_BENCHMARK_EXPORTER  
+  % VSDP_BENCHMARK_EXPORTER
   %
   %   Detailed explanation goes here
   %
@@ -8,8 +8,12 @@ classdef vsdp_benchmark_exporter < handle
   
   properties (GetAccess = public, SetAccess = protected)
     data_dir
-    tmp_dir
     cdata
+    cdata_view
+  end
+  
+  properties (Access = protected)
+    tmp_dir
   end
   
   methods
@@ -39,6 +43,26 @@ classdef vsdp_benchmark_exporter < handle
       else
         obj.create_cache ();
       end
+    end
+    
+    function disp (obj)
+      fprintf (' VSDP Benchmark\n\n');
+      fprintf ('  Data directory:\n    %s\n\n', obj.data_dir);
+      
+      if (~isempty (obj.cdata_view))
+        cview = obj.cdata_view;
+      else
+        cview = obj.cdata;
+      end
+      
+      if (any (size (cview) > [10, 3]))
+        truncation_msg = ' (truncated)';
+      else
+        truncation_msg = '';
+      end
+      
+      fprintf ('  Current view%s:\n\n', truncation_msg);
+      disp (cview(1:min(10,size(cview,1)),1:min(3,size(cview,2))));
     end
     
     function str = cache_file_name (obj)
@@ -95,7 +119,7 @@ classdef vsdp_benchmark_exporter < handle
     function gather_data (obj)
       len = size (obj.cdata, 1);
       for i = 1:len
-        fprintf ('  (%3d/%3d) %-10s %-10s %-10s\n', i, len, obj.cdata{i,:});
+        fprintf ('  (%3d/%3d) %-10s %-10s %-10s\n', i, len, obj.cdata{i,1:3});
         vsdp_obj = obj.get_vsdp_obj (obj.cdata{i,1:3});
         obj.get_vsdp_solutions (obj.cdata(i,1:3), vsdp_obj);
         obj.cdata(i,4:5) = {vsdp_obj.m, vsdp_obj.n};
@@ -112,12 +136,16 @@ classdef vsdp_benchmark_exporter < handle
             vsdp_obj.solutions.rigorous_lower_bound.f_objective(1), ...
             vsdp_obj.solutions.rigorous_lower_bound.solver_info.elapsed_time};
         end
-        if (~isempty (vsdp_obj.solutions.approximate))
+        if (~isempty (vsdp_obj.solutions.rigorous_upper_bound))
           obj.cdata(i,15:16) = { ...
-            vsdp_obj.solutions.rigorous_lower_bound.f_objective(2), ...
-            vsdp_obj.solutions.rigorous_lower_bound.solver_info.elapsed_time};
+            vsdp_obj.solutions.rigorous_upper_bound.f_objective(2), ...
+            vsdp_obj.solutions.rigorous_upper_bound.solver_info.elapsed_time};
         end
       end
+      % Add header line.
+      obj.cdata = [{'lib', 'name' 'sname', 'm', 'n', ...
+        'K_f', 'K_l', 'K_q', 'K_s', 'fp', 'fd', 'ts', 'fL', 'tL', ...
+        'fU', 'tU'}; obj.cdata];
     end
     
     function obj = get_vsdp_obj (obj, lib, name, solver)
