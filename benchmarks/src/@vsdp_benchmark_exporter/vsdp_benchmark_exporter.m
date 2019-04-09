@@ -1,5 +1,5 @@
-classdef exporter
-  % EXPORTER
+classdef vsdp_benchmark_exporter
+  % VSDP_BENCHMARK_EXPORTER
   %
   %   Helper class to export benchmarks.
   %
@@ -21,14 +21,14 @@ classdef exporter
   end
   
   methods
-    function obj = exporter (data_dir, use_cache)
+    function obj = vsdp_benchmark_exporter (data_dir, use_cache)
       % EXPORTER Constructor.
       %
-      %    obj = vsdp_benchmark.exporter (data_dir)  Reads all the benchmarks
+      %    obj = vsdp_benchmark_exporter (data_dir)  Reads all the benchmarks
       %                                in data_dir and creates a cache in the
       %                                directory above.
       %
-      %    obj = vsdp_benchmark.exporter (data_dir, false)  Same as above, but
+      %    obj = vsdp_benchmark_exporter (data_dir, false)  Same as above, but
       %                                does not use any cache.
       
       if (~exist (data_dir, 'dir'))
