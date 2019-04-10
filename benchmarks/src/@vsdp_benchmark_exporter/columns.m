@@ -3,7 +3,7 @@ function obj = columns (obj, names)
 
 % Copyright 2018-2019 Kai T. Ohlhus (kai.ohlhus@tuhh.de)
 
-if (isnumeric (names))
+if (isnumeric (names) || islogical (names))
   obj.cdata_view = obj.cdata_view(:,names);
 elseif (iscell (names))
   names = names(:)';

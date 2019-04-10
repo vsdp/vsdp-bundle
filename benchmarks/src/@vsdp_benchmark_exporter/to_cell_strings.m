@@ -45,7 +45,7 @@ if (nargin == 2)
     end
     
     % Match header.
-    idx = ones (size (obj.cdata_view(1,:)));
+    idx = zeros (size (obj.cdata_view(1,:)));
     for i = 1:length(obj.cdata_view(1,:))
       idx(i) = find (strcmp (use_columns(:,1), obj.cdata_view(1,i)));
     end
@@ -57,7 +57,7 @@ end
 
 % Convert data to strings.
 if (size (use_columns, 2) > 1)
-  for j = 1:size(obj.cdata, 2)
+  for j = 1:size(obj.cdata_view, 2)
     obj.cdata_view(2:end,j) = cellfun (...
       @(x) sprintf (use_columns{j,2}, x), obj.cdata_view(2:end,j), ...
       'UniformOutput', false);

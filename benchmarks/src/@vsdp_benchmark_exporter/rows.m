@@ -7,7 +7,7 @@ function obj = rows (obj, op)
 
 % Copyright 2018-2019 Kai T. Ohlhus (kai.ohlhus@tuhh.de)
 
-if (isnumeric (op))
+if (isnumeric (op) || islogical (op))
   obj.cdata_view = obj.cdata_view(op,:);
 elseif (ischar (op))
   op = strsplit (op, '=');
