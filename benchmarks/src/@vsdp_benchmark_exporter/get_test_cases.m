@@ -9,7 +9,7 @@ file_list = dir ([obj.data_dir, filesep(), '*.mat']);
 idx = {file_list.name}';
 
 % Strip solution type appendix.
-idx = cellfun (@(x) strsplit (x, {'_rigorous_', '_approximate_'}), ...
+idx = cellfun (@(x) strsplit (x, {'__rigorous_', '__approximate_'}), ...
   idx, 'UniformOutput', false);
 idx = cellfun (@(x) x(1), idx, 'UniformOutput', false);
 cdata = vertcat (idx{:});
@@ -19,11 +19,6 @@ cdata = vertcat (idx{:});
 cdata = cdata(sort(idx),:);
 
 % Split into benchmark, test case, and solver.
-cdata = cellfun (@(x) strsplit (x, '_'), cdata, 'UniformOutput', false);
-
-% Treat names with underscore in it.
-idx = cellfun (@(x) length (x) > 3, cdata);
-cdata(idx) = cellfun (@(x) [x(1), strjoin(x(2:3), '_') x(4)], ...
-  cdata(idx), 'UniformOutput', false);
+cdata = cellfun (@(x) strsplit (x, '__'), cdata, 'UniformOutput', false);
 cdata = vertcat (cdata{:});
 end

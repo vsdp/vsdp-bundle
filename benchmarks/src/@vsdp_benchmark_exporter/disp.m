@@ -6,6 +6,15 @@ function disp (obj)
 fprintf ('\n VSDP Benchmark Export\n\n');
 fprintf ('  Data directory:\n    %s\n\n', obj.data_dir);
 
+if (any (strcmp (obj.cdata_view(1,:), 'lib')))
+  benchmarks = unique (obj.columns ({'lib'}).cdata_view(2:end));
+  fprintf ('  Benchmarks: %s\n\n', strjoin (benchmarks, ', '));
+end
+if (any (strcmp (obj.cdata_view(1,:), 'sname')))
+  solver = unique (obj.columns ({'sname'}).cdata_view(2:end));
+  fprintf ('  Solver:     %s\n\n', strjoin (solver, ', '));
+end
+
 [m, n] = size (obj.cdata_view);
 
 if (any ([m, n] > [10, 4]))

@@ -57,9 +57,9 @@ classdef vsdp_benchmark_exporter
       %
       
       obj.cdata = obj.get_test_cases ();
-      obj.get_data ();
-      obj.save_cache ();
+      obj = obj.get_data ();
       obj = obj.reset_view ();
+      obj.save_cache ();
     end
     
     function save_cache (obj)

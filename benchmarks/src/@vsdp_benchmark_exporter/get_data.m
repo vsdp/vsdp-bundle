@@ -48,7 +48,7 @@ elseif (strcmp (lib, last_lib) && strcmp (name, last_name))
 else
   switch (lib)
     case 'DIMACS'
-      src_file = dir (fullfile (lib, 'data', '**', '*.mat.gz'));
+      src_file = dir (fullfile (lib, 'data', '**',[name, '.mat.gz']));
       if (length (src_file) > 1)
         error ('VSDP:vsdp_benchmark_exporter', ...
           'vsdp_benchmark_exporter: ''%s'' and ''%s'' is not unique.', ...
@@ -102,7 +102,7 @@ function get_vsdp_solutions (obj, lib_name_solver, vsdp_obj)
 % Try to add approximate solution.
 try
   load (fullfile (obj.data_dir, [strjoin([lib_name_solver, ...
-    {'approximate', 'solution'}], '_'), '.mat']), 'app_sol');
+    {'approximate_solution'}], '__'), '.mat']), 'app_sol');
   vsdp_obj.add_solution (app_sol.sol_type, app_sol.x, app_sol.y, ...
     app_sol.z, app_sol.f_objective, app_sol.solver_info);
 catch
@@ -111,7 +111,7 @@ end
 % Try to add rigorous lower bound.
 try
   load (fullfile (obj.data_dir, [strjoin([lib_name_solver, ...
-    {'rigorous', 'lower', 'bound'}], '_'), '.mat']), 'rig_lbd');
+    {'rigorous_lower_bound'}], '__'), '.mat']), 'rig_lbd');
   vsdp_obj.add_solution (rig_lbd.sol_type, rig_lbd.x, rig_lbd.y, ...
     rig_lbd.z, rig_lbd.f_objective, rig_lbd.solver_info);
 catch
@@ -120,7 +120,7 @@ end
 % Try to add rigorous upper bound.
 try
   load (fullfile (obj.data_dir, [strjoin([lib_name_solver, ...
-    {'rigorous', 'upper', 'bound'}], '_'), '.mat']), 'rig_ubd');
+    {'rigorous_upper_bound'}], '__'), '.mat']), 'rig_ubd');
   vsdp_obj.add_solution (rig_ubd.sol_type, rig_ubd.x, rig_ubd.y, ...
     rig_ubd.z, rig_ubd.f_objective, rig_ubd.solver_info);
 catch
