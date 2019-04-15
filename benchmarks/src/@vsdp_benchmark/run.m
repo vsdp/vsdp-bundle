@@ -203,7 +203,7 @@ for j = f.benchmark
         % Save or verify cached results.
         set_or_compare (options, obj, j, 'fp', fp, ii);
         set_or_compare (options, obj, j, 'fd', fd, ii);
-        set_or_compare (options, obj, j, 'ts', ts + 2, ii);
+        set_or_compare (options, obj, j, 'ts', ts, ii);
         obj.save_state ();
       end
       fprintf ('done.\n');
