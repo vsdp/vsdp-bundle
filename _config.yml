@@ -13,9 +13,7 @@ incremental: true
 theme: jekyll-theme-minimal
 title: "VSDP"
 description: "Verified SemiDefinite-quadratic-linear Programming"
-logo: /doc/img/sdp_cone.png
+logo: /res/sdp_cone.png
 show_downloads: true
 include: ['_pages']
 exclude: [benchmarks/, solver/, vsdp/]
-plugins:
-  - jekyll-mentions
