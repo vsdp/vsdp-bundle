@@ -15,15 +15,20 @@ that often occur in practical applications.
 These are:
 
 * The non-negative orthant:
+
   $$
   \mathbb{R}^{n}_{+} := \{ x \in \mathbb{R}^{n} \colon\; x_{i} \geq 0, \; i = 1, \ldots, n \}.
   $$
+
 * The Lorentz cone (see [[Alizadeh2003]](s10_references.html#Alizadeh2003)):
+
   $$
   \mathbb{L}^{n} := \{ x \in \mathbb{R}^{n} \colon x_{1}
   \geq \|x_{2:n}\|_{2}\}.
   $$
+
 * The cone of symmetric positive semidefinite matrices:
+
   $$
   \mathbb{S}^{n}_{+} := \left\{ X \in \mathbb{R}^{n \times n} \colon\;
   X = X^{T},\; v^{T} X v \geq 0,\; \forall v \in \mathbb{R}^{n} \right\}.
@@ -48,6 +53,7 @@ Moreover, let $A_{1,j}^{s}, \ldots, A_{m,j}^{s}$, $C_{j}^{s}$, $X_{j}^{s}$
 be symmetric $(s_{j} \times s_{j})$ matrices for $j = 1, \ldots, n_{s}$.
 
 Now we can define the conic semidefinite-quadratic-linear programming problem in primal standard form:
+
 $$
 \begin{array}{ll}
 \text{minimize} &
@@ -63,6 +69,7 @@ A^{f} x^{f} + A^{l} x^{l} + \sum_{i=1}^{n_{q}} A_{i}^{q} x_{i}^{q} +
 & X_{j}^{s} \in \mathbb{S}^{s_{j}}_{+}, \quad j = 1, \ldots, n_{s},
 \end{array}
 $$
+
 where $x^{f}$ are "free variables",
 $x^{l}$ are "non-negative variables",
 $x_{i}^{q}$ are "second-order cone (SOCP) variables",
@@ -94,10 +101,10 @@ $$
 \end{array}
 $$
 
-where $z^{f} \in \lbrace 0 \rbrace^{n_{f}}$,
-$z^{l} \in \mathbb{R}^{n_{l}}_{+}$,
-$z_{i}^{q} \in \mathbb{L}^{q_i}$, $i = 1, \ldots, n_{q}$, and
-$Z_{j}^{s} \in \mathbb{S}^{s_{j}}_{+}$, $j = 1, \ldots, n_{s}$.
+where $$z^{f} \in \lbrace 0 \rbrace^{n_{f}}$$,
+$$z^{l} \in \mathbb{R}^{n_{l}}_{+}$$,
+$$z_{i}^{q} \in \mathbb{L}^{q_i}$$, $$i = 1, \ldots, n_{q}$$, and
+$$Z_{j}^{s} \in \mathbb{S}^{s_{j}}_{+}$$, $$j = 1, \ldots, n_{s}$$.
 
 The objective functions and equality constraints of the primal and dual problem are linear.
 Thus conic programming can be seen an extension of linear programming
@@ -198,7 +205,7 @@ $$
 \end{array}
 $$
 
-with optimal value $\hat{f}_{p}$ and the corresponding dual problem
+with optimal value $$\hat{f}_{p}$$ and the corresponding dual problem
 
 $$
 \begin{array}{ll}
@@ -207,7 +214,7 @@ $$
 \end{array}
 $$
 
-with optimal value $\hat{f}_{d}$.
+with optimal value $$\hat{f}_{d}$$.
 In VSDP each conic problem is fully described by the four variables `(A, b, c, K)`.
 The first two quantities represent the affine constraints $Ax = b$.
 The third is the primal objective vector `c`,
@@ -221,8 +228,8 @@ If a component of `K` is empty,
 then it is assumed that the corresponding cone does not occur.
 
 It is well known that for linear programming problems strong duality
-$\hat{f}_{p} = \hat{f}_{d}$ holds without any constraint qualifications.
-General conic programs satisfy only the weak duality condition $\hat{f}_{d} \leq \hat{f}_{p}$.
+$$\hat{f}_{p} = \hat{f}_{d}$$ holds without any constraint qualifications.
+General conic programs satisfy only the weak duality condition $$\hat{f}_{d} \leq \hat{f}_{p}$$.
 Strong duality requires additional constraint qualifications,
 such as _Slater's constraint qualifications_
 (see [[Vandenberghe1996]](s10_references.html#Vandenberghe1996)
@@ -231,11 +238,11 @@ and [[Ben-Tal2001]](s10_references.html#Ben-Tal2001)).
 **Strong Duality Theorem**
 
 * If the primal problem is strictly feasible (i.e. there exists a primal
-  feasible point $x$ in the interior of $K$) and $\hat{f}_{p}$ is finite,
-  then $\hat{f}_{p} = \hat{f}_{d}$ and the dual supremum is attained.
+  feasible point $x$ in the interior of $K$) and $$\hat{f}_{p}$$ is finite,
+  then $$\hat{f}_{p} = \hat{f}_{d}$$ and the dual supremum is attained.
 * If the dual problem is strictly feasible (i.e. there exists some $y$ such
-  that $z = c - (A)^{T} y$ is in the interior of $K^{*}$) and $\hat{f}_{d}$
-  is finite, then $\hat{f}_{d} = \hat{f}_{p}$, and the primal infimum is
+  that $z = c - (A)^{T} y$ is in the interior of $K^{*}$) and $$\hat{f}_{d}$$
+  is finite, then $$\hat{f}_{d} = \hat{f}_{p}$$, and the primal infimum is
   attained.
 
 In general, the primal or dual problem formulation may have optimal solutions

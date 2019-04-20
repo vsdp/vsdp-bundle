@@ -198,7 +198,7 @@ obj.solve('sdpt3') ...
 
 
 Those approximations match the true primal and dual optimal objective function value
-$\hat{f}_{d} = \hat{f}_{d} = -2.75$.
+$$\hat{f}_{d} = \hat{f}_{d} = -2.75$$.
 
 To compare the approximate solution `X`, `y`, and `Z`
 with the unique solution $\hat{X}$, $\hat{y}$, and $\hat{Z}$ from
@@ -433,14 +433,14 @@ Hence, for
 - $\varepsilon \leq 0$: the problem is **primal infeasible** $\hat{f}_{p} = +\infty$.
 - $\delta < 0$: the problem is **dual infeasible** $\hat{f}_{d} = -\infty$.
 - $\varepsilon = \delta = 0$: the problem is **ill-posed**
-  and there is a duality gap with $\hat{f}_{p} = +\infty$ and $\hat{f}_{d} = -1$.
+  and there is a duality gap with $$\hat{f}_{p} = +\infty$$ and $$\hat{f}_{d} = -1$$.
 - $\varepsilon > 0$ and $\delta > 0$: the problem is **feasible** with
-  $\hat{f}_{p} = \hat{f}_{d} = -1 + \delta / \varepsilon$.
+  $$\hat{f}_{p} = \hat{f}_{d} = -1 + \delta / \varepsilon$$.
 
 To obtain a feasible solution,
 we set $\delta = 10^{-2}$ and $\varepsilon = 2\delta$.
 Thus the primal and dual optimal objective function value is
-$\hat{f}_{p} = \hat{f}_{d} = -0.5$
+$$\hat{f}_{p} = \hat{f}_{d} = -0.5$$
 and one can start the computations with VSDP:
 
 
@@ -496,7 +496,7 @@ obj.solve('sdpt3') ...
 Everything works as expected.
 VSDP computes finite rigorous lower and upper bounds `fU` and `fL`.
 Weak duality,
-e.g. $\hat{f}_{p} \geq \hat{f}_{d}$ and `fU >= fL`,
+e.g. $$\hat{f}_{p} \geq \hat{f}_{d}$$ and `fU >= fL`,
 holds for the approximate and rigorous solutions.
 The accuracy of rigorous the error bounds can again be measured by
 
@@ -508,7 +508,6 @@ fU = obj.solutions.rigorous_upper_bound.f_objective(2);
 mu = (fU - fL) / max (1, (abs (fU) + abs(fL)) / 2)
 ```
 
-    warning: strmatch is obsolete; use strncmp or strcmp instead
     mu =    2.8108e-08
 
 

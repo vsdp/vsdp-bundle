@@ -17,7 +17,7 @@ For linear programming problems the upper bound for the variable $x^{l}$
 is a vector $\bar{x}$ such that $x^{l} \leq \bar{x}$.
 For second-order cone programming the upper bounds for block variables
 $x_{i}^{q}$ with $i = 1,\ldots,n_{q}$
-can be entered as a vector of upper bounds $\overline{\lambda}_{i}$
+can be entered as a vector of upper bounds $$\overline{\lambda}_{i}$$
 of the largest eigenvalues
 $$
 \lambda_{\max}(x_{i}^{q}) = (x_{i}^{q})_{1} + ||(x_{i}^{q})_{:}||_{2}.

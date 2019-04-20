@@ -14,6 +14,7 @@ In particular, two linear programs are considered in detail.
 ## First example
 
 Consider the linear program in primal standard form
+
 $$
 \begin{array}{ll}
 \text{minimize}   & 2x_{2} + 3x_{4} + 5x_{5}, \\
@@ -25,7 +26,9 @@ $$
 & x \in \mathbb{R}^{5}_{+},
 \end{array}
 $$
+
 with its corresponding dual problem
+
 $$
 \begin{array}{ll}
 \text{maximize}   & 2 y_{1} + 3 y_{2}, \\
@@ -42,9 +45,9 @@ z = \begin{pmatrix} 0 \\ 2 \\ 0 \\ 3 \\ 5 \end{pmatrix} -
 $$
 
 The unique exact optimal solution is given by
-$x^{*} = (0, 0.25, 0, 0, 1.5)^{T}$,
-$y^{*} = (1, 2)^{T}$
-with $\hat{f}_{p} = \hat{f}_{d} = 8$.
+$$x^{*} = (0, 0.25, 0, 0, 1.5)^{T}$$,
+$$y^{*} = (1, 2)^{T}$$
+with $$\hat{f}_{p} = \hat{f}_{d} = 8$$.
 
 The input data of the problem in VSDP are:
 
@@ -223,7 +226,7 @@ y = obj.solutions.approximate.y
 
 
 The approximate solution is close to the optimal solution
-$x^{*} = (0, 0.25, 0, 0, 1.5)^{T}$, $y^{*} = (1, 2)^{T}$.
+$$x^{*} = (0, 0.25, 0, 0, 1.5)^{T}$$, $$y^{*} = (1, 2)^{T}$$.
 
 With this approximate solution, a rigorous lower bound `fL`
 of the primal optimal value $\hat{f}_{p} = 8$ can be computed by calling:
@@ -387,6 +390,7 @@ of eight to nine decimal digits.
 
 How a linear program with free variables can be solved with VSDP
 is demonstrated by the following example with one free variable $x_{3}$:
+
 $$
 \begin{array}{ll}
 \text{minimize}   & \begin{pmatrix} 1 & 1 & -0.5 \end{pmatrix} x, \\
@@ -399,9 +403,9 @@ $$
 $$
 
 The optimal solution pair of this problem is
-$x^{*} = (\frac{5}{6}, 0, -\frac{1}{6})^{T}$,
-$y^{*} = (\frac{1}{6}, \frac{5}{6})^{T}$
-with $\hat{f}_{p} = \hat{f}_{d} = \frac{11}{12} \approx 9.166\ldots$.
+$$x^{*} = (\frac{5}{6}, 0, -\frac{1}{6})^{T}$$,
+$$y^{*} = (\frac{1}{6}, \frac{5}{6})^{T}$$
+with $$\hat{f}_{p} = \hat{f}_{d} = \frac{11}{12} \approx 9.166\ldots$$.
 
 When entering a conic problem the order of the variables is important:
 

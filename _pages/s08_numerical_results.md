@@ -57,7 +57,7 @@ for all feasible well-posed problems
 and verify the existence of strictly primal and dual feasible solutions.
 Hence,
 strong duality is proved.
-For the 32 ill-posed problems VSDP has computed the upper bound $\overline{f_{d}} = \text{Inf}$,
+For the 32 ill-posed problems VSDP has computed the upper bound $$\overline{f_{d}} = \text{Inf}$$,
 which reflects the fact that the distance to the next primal infeasible problem is zero.
 For the four infeasible problems
 VSDP could compute rigorous certificates of infeasibility.
@@ -66,10 +66,10 @@ Detailed numerical results can be found in the tables for
 where the computed rigorous upper bound $\overline{f_{d}}$,
 the rigorous lower bound $\underline{f_{p}}$,
 and the rigorous error bound $\mu(\overline{f_{d}},\underline{f_{p}})$ are displayed.
-We have set $\mu(\overline{f_{d}},\underline{f_{p}}) = \text{NaN}$
+We have set $$\mu(\overline{f_{d}},\underline{f_{p}}) = \text{NaN}$$
 if the upper or the lower bound is infinite.
 Both tables also contain running times in seconds,
-where $t_{s}$ is the time for computing the approximations
+where $$t_{s}$$ is the time for computing the approximations
 and $\overline{t}$ and $\underline{t}$ are the times
 for computing the upper and the lower rigorous error bounds,
 respectively.
@@ -79,7 +79,7 @@ are summarized by the following figures.
 
 > ![SDPLIB relative accuracies.](res/2018_12/SDPLIB_mu.png)
 >
-> **Figure 1:** Relative accuracies $\mu(\overline{f_{d}},\underline{f_{p}})$.
+> **Figure 1:** Relative accuracies $$\mu(\overline{f_{d}},\underline{f_{p}})$$.
 > Only results for which both rigorous error bounds were computed
 > are taken into account.
 > With the exception of SDPA,
@@ -88,11 +88,11 @@ are summarized by the following figures.
 
 > ![SDPLIB computation times tL.](res/2018_12/SDPLIB_tL.png)
 >
-> **Figure 2:** Computation times for $\underline{t}$ relative to $t_{s}$.
+> **Figure 2:** Computation times for $\underline{t}$ relative to $$t_{s}$$.
 
 > ![SDPLIB computation times tU.](res/2018_12/SDPLIB_tU.png)
 >
-> **Figure 3:** Computation times for $\overline{t}$ relative to $t_{s}$.
+> **Figure 3:** Computation times for $\overline{t}$ relative to $$t_{s}$$.
 
 Furthermore,
 the figures show,
@@ -129,7 +129,7 @@ A statistic of these numerical experiments is given in the following figures.
 
 > ![SPARSE_SDP relative accuracies.](res/2018_12/SPARSE_SDP_mu.png)
 >
-> **Figure 4:** Relative accuracies $\mu(\overline{f_{d}},\underline{f_{p}})$.
+> **Figure 4:** Relative accuracies $$\mu(\overline{f_{d}},\underline{f_{p}})$$.
 > Only results for which both rigorous error bounds were computed
 > are taken into account.
 
@@ -169,11 +169,11 @@ A statistic of these numerical experiments is given in the following figures.
 
 > ![DIMACS computation times tL.](res/2018_12/DIMACS_tL.png)
 >
-> **Figure 8:** Computation times for $\underline{t}$ relative to $t_{s}$.
+> **Figure 8:** Computation times for $\underline{t}$ relative to $$t_{s}$$.
 
 > ![DIMACS computation times tU.](res/2018_12/DIMACS_tU.png)
 >
-> **Figure 9:** Computation times for $\overline{t}$ relative to $t_{s}$.
+> **Figure 9:** Computation times for $\overline{t}$ relative to $$t_{s}$$.
 
 ## ESC
 
@@ -201,13 +201,13 @@ In the table,
 the rigorous upper and lower error bounds of the optimal value are denoted by
 $\overline{E}$, $\underline{E}$, and $\underline{E}_{2}$,
 respectively.
-The value $\underline{E}_{2}$ is the rigorous lower energy error bound
+The value $$\underline{E}_{2}$$ is the rigorous lower energy error bound
 calculated by using our a priori eigenvalue bounds
 as derived in [[Chaykin2016]](s10_references.html#Chaykin2016).
 The quantities
-$\tilde{t}$, $\overline{t}$, $\underline{t}$, and $\underline{t}_2$
+$\tilde{t}$, $\overline{t}$, $\underline{t}$, and $$\underline{t}_2$$
 denote the running times in seconds for
-$E_{p}$ and $E_{d}$, $\overline{E}$, $\underline{E}$,
+$$E_{p}$$ and $$E_{d}$$, $\overline{E}$, $\underline{E}$,
 and $\underline{E}_{2}$,
 respectively.
 
@@ -215,17 +215,17 @@ A statistic of these numerical experiments is given in the following figures.
 
 > ![ESC relative accuracies.](res/2018_12/ESC_mu.png)
 >
-> **Figure 10:** Relative accuracies $\mu(\overline{f_{d}},\underline{f_{p}})$.
+> **Figure 10:** Relative accuracies $$\mu(\overline{f_{d}},\underline{f_{p}})$$.
 > Only results for which both rigorous error bounds were computed
 > are taken into account.
 
 > ![ESC computation times tL.](res/2018_12/ESC_tL.png)
 >
-> **Figure 11:** Computation times for $\underline{t}$ relative to $t_{s}$.
+> **Figure 11:** Computation times for $\underline{t}$ relative to $$t_{s}$$.
 
 > ![ESC computation times tU.](res/2018_12/ESC_tU.png)
 >
-> **Figure 12:** Computation times for $\overline{t}$ relative to $t_{s}$.
+> **Figure 12:** Computation times for $\overline{t}$ relative to $$t_{s}$$.
 
 ## RDM
 

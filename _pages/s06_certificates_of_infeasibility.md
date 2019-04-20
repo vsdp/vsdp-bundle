@@ -260,6 +260,7 @@ The two SDP constraints of that problem
 depend on two arbitrary fixed chosen parameters
 $\delta = 0.1$ and $\varepsilon = -0.01$.
 
+<div>
 \begin{equation}
 \begin{array}{ll}
 \text{minimize} &
@@ -272,6 +273,7 @@ X \right\rangle = 1, \\
 & X \in \mathbb{S}_{+}^{2}.
 \end{array}
 \end{equation}
+</div>
 
 The problem data is entered in the VSDP 2006 format:
 
