@@ -15,5 +15,4 @@ title: "VSDP"
 description: "Verified SemiDefinite-quadratic-linear Programming"
 logo: /res/sdp_cone.png
 show_downloads: true
-include: ['_pages']
 exclude: [benchmarks/, solver/, vsdp/]
