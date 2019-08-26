@@ -12,7 +12,7 @@ The software is completely written in [MATLAB](https://www.mathworks.com) /
 toolbox [INTLAB](http://www.ti3.tuhh.de/rump/intlab).  Thus interval input is
 supported as well.
 
-![VSDP workflow](/res/vsdp_workflow.svg)
+![VSDP workflow](./res/vsdp_workflow.svg)
 
 The latest version of VSDP provides easy access to the
 [conic solvers](s09_conic_solvers.html):
@@ -51,8 +51,10 @@ Appendix
   - [VSDP 2012](https://github.com/vsdp/vsdp-2012)
     - Improvements: additional support of second-order cones, linear cones, and
       free variables, vectorized internal structure.
+      See [[Härter2012]](s10_references.html#Härter2012).
   - [VSDP 2006](https://github.com/vsdp/vsdp-2006)
     - Support for large scale semidefinite problems, comprehensible code.
+      See [[Jansson2006]](s10_references.html#Jansson2006).
 
 ## Contributors
 

@@ -9129,15 +9129,15 @@ label {
 }
 /* Flexible box model classes */
 /* Taken from Alex Russell http://infrequently.org/2009/08/css-3-progress/ */
-/* This file is a compatability layer.  It allows the usage of flexible box
+/* This file is a compatability layer.  It allows the usage of flexible box 
 model layouts accross multiple browsers, including older browsers.  The newest,
 universal implementation of the flexible box model is used when available (see
-`Modern browsers` comments below).  Browsers that are known to implement this
+`Modern browsers` comments below).  Browsers that are known to implement this 
 new spec completely include:
 
     Firefox 28.0+
     Chrome 29.0+
-    Internet Explorer 11+
+    Internet Explorer 11+ 
     Opera 17.0+
 
 Browsers not listed, including Safari, are supported via the styling under the
@@ -12519,7 +12519,7 @@ div#pager .ui-resizable-handle {
   background: #f7f7f7;
   border-top: 1px solid #cfcfcf;
   border-bottom: 1px solid #cfcfcf;
-  /* This injects handle bars (a short, wide = symbol) for
+  /* This injects handle bars (a short, wide = symbol) for 
         the resize handle. */
 }
 div#pager .ui-resizable-handle::after {
@@ -13017,45 +13017,6 @@ ul.typeahead-list  > li > a.pull-right {
 .highlight .vm { color: #19177C } /* Name.Variable.Magic */
 .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
     </style>
-<style type="text/css">
-
-/* Temporary definitions which will become obsolete with Notebook release 5.0 */
-.ansi-black-fg { color: #3E424D; }
-.ansi-black-bg { background-color: #3E424D; }
-.ansi-black-intense-fg { color: #282C36; }
-.ansi-black-intense-bg { background-color: #282C36; }
-.ansi-red-fg { color: #E75C58; }
-.ansi-red-bg { background-color: #E75C58; }
-.ansi-red-intense-fg { color: #B22B31; }
-.ansi-red-intense-bg { background-color: #B22B31; }
-.ansi-green-fg { color: #00A250; }
-.ansi-green-bg { background-color: #00A250; }
-.ansi-green-intense-fg { color: #007427; }
-.ansi-green-intense-bg { background-color: #007427; }
-.ansi-yellow-fg { color: #DDB62B; }
-.ansi-yellow-bg { background-color: #DDB62B; }
-.ansi-yellow-intense-fg { color: #B27D12; }
-.ansi-yellow-intense-bg { background-color: #B27D12; }
-.ansi-blue-fg { color: #208FFB; }
-.ansi-blue-bg { background-color: #208FFB; }
-.ansi-blue-intense-fg { color: #0065CA; }
-.ansi-blue-intense-bg { background-color: #0065CA; }
-.ansi-magenta-fg { color: #D160C4; }
-.ansi-magenta-bg { background-color: #D160C4; }
-.ansi-magenta-intense-fg { color: #A03196; }
-.ansi-magenta-intense-bg { background-color: #A03196; }
-.ansi-cyan-fg { color: #60C6C8; }
-.ansi-cyan-bg { background-color: #60C6C8; }
-.ansi-cyan-intense-fg { color: #258F8F; }
-.ansi-cyan-intense-bg { background-color: #258F8F; }
-.ansi-white-fg { color: #C5C1B4; }
-.ansi-white-bg { background-color: #C5C1B4; }
-.ansi-white-intense-fg { color: #A1A6B2; }
-.ansi-white-intense-bg { background-color: #A1A6B2; }
-
-.ansi-bold { font-weight: bold; }
-
-    </style>
 
 
 <style type="text/css">
@@ -13072,14 +13033,14 @@ div#notebook {
   div.cell {
     display: block;
     page-break-inside: avoid;
-  }
-  div.output_wrapper {
+  } 
+  div.output_wrapper { 
     display: block;
-    page-break-inside: avoid;
+    page-break-inside: avoid; 
   }
-  div.output {
+  div.output { 
     display: block;
-    page-break-inside: avoid;
+    page-break-inside: avoid; 
   }
 }
 </style>
@@ -13113,6 +13074,19 @@ div#notebook {
   <div tabindex="-1" id="notebook" class="border-box-sizing">
     <div class="container" id="notebook-container">
 
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-octave"><pre><span></span><span class="nb">run</span> <span class="p">(</span><span class="nb">fullfile</span> <span class="p">(</span><span class="s">&#39;..&#39;</span><span class="p">,</span> <span class="s">&#39;install_vsdp.m&#39;</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -13120,7 +13094,7 @@ div#notebook {
 optimal solution is known a priori.  This is the case in many combinatorial
 optimization problems, or, for instance, in truss topology design where the
 design variables such as bar volumes can be roughly bounded.  If such bounds
-are available they can speed up the computation of guaranteed error bounds
+are available they can speed up the computation of rigorous error bounds
 for the optimal value substantially, see
 <a href="s10_references.html#Jansson2006">[Jansson2006]</a>.</p>
 
@@ -13143,7 +13117,7 @@ Similarly, in semidefinite programs upper bounds for the primal variables
 $X_{j}^{s}$ can be entered as a vector of upper bounds of the largest
 eigenvalues $\lambda_{\max}(X_{j}^{s})$, $j = 1,\ldots,n_{s}$.
 An upper bound $\bar{y}$ for the dual optimal solution $y$ is a vector
-which is componentwise larger then $y$.
+which is componentwise larger than $y$.
 Analogously, for conic programs with free variables the upper bound
 can be entered as a vector $\bar{x}$ such that $|x^{f}| \leq \bar{x}$.</p>
 
@@ -13251,21 +13225,21 @@ error bounds by using <code>vsdp.rigorous_lower_bound</code> and <code>vsdp.rigo
 
       Solver &#39;sedumi&#39;: Normal termination, 0.3 seconds.
 
-        c&#39;*x = -4.999990761443296e-01
-        b&#39;*y = -4.999968121450896e-01
+        c&#39;*x = -4.999990761443555e-01
+        b&#39;*y = -4.999968121457571e-01
 
 
   obj.solutions.rigorous_lower_bound:
 
       Normal termination, 0.0 seconds, 0 iterations.
 
-          fL = -5.000872454579481e-01
+          fL = -5.000870874666463e-01
 
   obj.solutions.rigorous_upper_bound:
 
       Normal termination, 0.0 seconds, 0 iterations.
 
-          fU = -4.997496468063052e-01
+          fU = -4.997496499568882e-01
 
 
 
@@ -13313,7 +13287,7 @@ error bounds by using <code>vsdp.rigorous_lower_bound</code> and <code>vsdp.rigo
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>mu =    3.3760e-04
+<pre>mu =    3.3744e-04
 </pre>
 </div>
 </div>
@@ -13336,7 +13310,7 @@ that the computational effort can be neglected.</p>
   </div>
 </body>
 
-
+ 
 
 
 </html>
