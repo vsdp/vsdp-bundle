@@ -13140,8 +13140,8 @@ For a proof, see <a href="s10_references.html#Jansson2007">[Jansson2007]</a>.</p
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Example:-primal-infeasible-SOCP">Example: primal infeasible SOCP<a class="anchor-link" href="#Example:-primal-infeasible-SOCP">&#182;</a></h2><p>We consider a slightly modified second-order cone problem
-(<a href="s10_references.html#Ben-Tal2001">[Ben-Tal2001]</a>, Example 2.4.2)</p>
+<h2 id="Example:-primal-infeasible-SOCP">Example: primal infeasible SOCP<a class="anchor-link" href="#Example:-primal-infeasible-SOCP">&#182;</a></h2><p>We consider a slightly modified second-order cone problem from
+<a href="s10_references.html#Ben-Tal2001">[Ben-Tal2001]</a> (Example 2.4.2)</p>
 
 </div>
 </div>
@@ -13211,7 +13211,7 @@ $y = \alpha\begin{pmatrix} -1 &amp; \sqrt{3}/2 \end{pmatrix}^{T}$ with $\alpha \
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>To solve this problem using VSDP, one first has to specify the input data:</p>
+<p>To show primal infeasibility using VSDP, one first has to specify the input data:</p>
 
 </div>
 </div>
@@ -13399,7 +13399,8 @@ As expected,
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The rigorous certificate of primal infeasiblity <code>y</code> matches the theoretical considerations.
+<p>The interval quantity <code>y</code>, the rigorous certificate of primal infeasiblity,
+matches the theoretical considerations.
 It diverges to infinite values:</p>
 
 </div>
@@ -13875,7 +13876,7 @@ obj =
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>While computing the approximate solution to this problem,
+<p>While computing an approximate solution to this problem,
 SDPT3 already detects potential primal infeasibility.
 Trying to compute a rigorous upper error bound by <code>vsdp.rigorous_upper_bound</code> fails.
 This emphasizes the warning at the beginning of the output

@@ -13321,7 +13321,7 @@ warning: called from
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>When calling <code>vsdp.analyze</code> with <code>true</code>,
+<p>When calling <code>vsdp.analyze</code> with the argument <code>true</code>,
 all possible optimization are applied.
 Note that in the original example by Borchers
 <a href="s10_references.html#Borchers2017">[Borchers2017]</a>
@@ -13335,7 +13335,7 @@ This was only changed for the sake of demonstration.</p>
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Now we compute approximate solutions by using <code>vsdp.solve</code>
-and then verified error bounds by using <code>vsdp.rigorous_lower_bound</code>
+and then rigorous error bounds by using <code>vsdp.rigorous_lower_bound</code>
 and <code>vsdp.rigorous_upper_bound</code>:</p>
 
 </div>
@@ -13925,7 +13925,7 @@ $\hat{f}_{p} = \hat{f}_{d} = -1 + \delta / \varepsilon$.</li>
 we set $\delta = 10^{-2}$ and $\varepsilon = 2\delta$.
 Thus the primal and dual optimal objective function value is
 $\hat{f}_{p} = \hat{f}_{d} = -0.5$
-and one can start the computations with VSDP:</p>
+and one can start the computations with VSDP.</p>
 
 </div>
 </div>

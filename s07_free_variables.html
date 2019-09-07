@@ -13091,16 +13091,16 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Free-Variables">Free Variables<a class="anchor-link" href="#Free-Variables">&#182;</a></h1><p>Free variables occur often in practice.
+<h1 id="Free-Variables">Free Variables<a class="anchor-link" href="#Free-Variables">&#182;</a></h1><p>Free variables often occur in practice.
 Handling free variables in interior-point algorithms is a pending issue
 (see for example
 <a href="s10_references.html#Andersen2002">[Andersen2002]</a>,
 <a href="s10_references.html#Kobayashi2007">[Kobayashi2007]</a>,
 <a href="s10_references.html#Anjos2007">[Anjos2007]</a>, and
 <a href="s10_references.html#Meszaros1998">[Meszaros1998]</a>).
-Frequently users convert a problem with free variables
+Frequently problems with free variables are converted
 into one with restricted variables by representing the free variables
-as a difference of two nonnegative variables.
+as a difference of two non-negative variables.
 This approach increases the problem size and introduces ill-posedness,
 which may lead to numerical difficulties.</p>
 
@@ -13115,10 +13115,10 @@ from the DIMACS test library <a href="s10_references.html#Pataki2002">[Pataki200
 The problem originates from side lobe minimization in antenna engineering.
 This is a second-order cone programming problem with 915 equality constraints,
 793 SOCP blocks each of size 3,
-and 797 nonnegative variables.
+and 797 non-negative variables.
 Moreover,
 the problem has two free variables
-that are described as the difference of four nonnegative variables.
+that are described as the difference of four non-negative variables.
 This problem can be loaded from the <code>test</code> directory of VSDP.</p>
 
 </div>

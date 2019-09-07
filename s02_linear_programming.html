@@ -13171,7 +13171,7 @@ with $\hat{f}_{p} = \hat{f}_{d} = 8$.</p>
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>To create a VSDP object of the linear program data above,
 we call the VSDP class constructor
-and do not suppress the output by a semicolon <code>;</code>.</p>
+and do not suppress the output by terminating the statement with a semicolon <code>;</code>.</p>
 
 </div>
 </div>
@@ -13311,7 +13311,7 @@ it pstep dstep pinfeas dinfeas  gap      prim-obj      dual-obj    cputime
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The solver output is often quite verbose.
-Especially for large problem instances it is recommended to display the solver progress.
+Especially for large problems it is recommended to display the solver progress.
 To suppress solver messages,
 the following option can be set:</p>
 
@@ -13426,7 +13426,7 @@ use the following option:</p>
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>On success,
-one can obtain the approximate <code>x</code> and <code>y</code> solutions for further processing.</p>
+one can obtain the approximate solutions for further processing.</p>
 
 </div>
 </div>
@@ -13562,8 +13562,9 @@ a rigorous upper bound <code>fU</code> of the dual optimal value $\hat{f_{d}}$ c
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>All this information is available in the summary of the VSDP object
-and must only be extracted if necessary.</p>
+<p>The summary output of the VSDP object contains the information about
+the rigorous error bounds, as well.
+It can be extracted if necessary.</p>
 
 </div>
 </div>
@@ -13777,7 +13778,7 @@ the primal problem is strictly feasible.</p>
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Summarizing,
-we have obtained a primal dual interval solution pair with an accuracy measured by
+we have obtained a primal-dual interval solution pair with an accuracy measured by
 $$
 \mu(a, b) = \dfrac{a-b}{\max\{1.0, (|a| + |b|)/2\}},
 $$
@@ -13864,7 +13865,7 @@ with $\hat{f}_{p} = \hat{f}_{d} = \frac{11}{12} \approx 9.166\ldots$.</p>
 <p>When entering a conic problem the order of the variables is important:</p>
 <ol>
 <li>free variables,</li>
-<li>nonnegative variables,</li>
+<li>non-negative variables,</li>
 <li>second-order cone variables,</li>
 <li>semidefinite variables.</li>
 </ol>
@@ -13875,7 +13876,7 @@ the primal solution <code>x</code>,
 as well as <code>z</code>,
 follow this order.
 In the second linear programming example,
-the free variable is $x_{3}$ and the nonnegative variables are $x_{1}$ and $x_{2}$,
+the free variable is $x_{3}$ and the non-negative variables are $x_{1}$ and $x_{2}$,
 respectively.
 Second-order cone variables and semidefinite variables are not present.</p>
 <p>Therefore, the problem data are:</p>
@@ -13889,7 +13890,7 @@ Second-order cone variables and semidefinite variables are not present.</p>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-octave"><pre><span></span><span class="n">K</span><span class="p">.</span><span class="n">f</span> <span class="p">=</span> <span class="mi">1</span><span class="p">;</span>  <span class="c">% number of free variables</span>
-<span class="n">K</span><span class="p">.</span><span class="n">l</span> <span class="p">=</span> <span class="mi">2</span><span class="p">;</span>  <span class="c">% number of nonnegative variables</span>
+<span class="n">K</span><span class="p">.</span><span class="n">l</span> <span class="p">=</span> <span class="mi">2</span><span class="p">;</span>  <span class="c">% number of non-negative variables</span>
 <span class="n">A</span> <span class="p">=</span> <span class="p">[</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>   <span class="c">% first column corresponds to free variable x3</span>
      <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>  <span class="mi">1</span><span class="p">];</span>  <span class="c">% second and third to bounded x1, x2</span>
 <span class="n">c</span> <span class="p">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">;</span> <span class="mi">1</span><span class="p">;</span> <span class="mi">1</span><span class="p">];</span> <span class="c">% the same applies to c</span>

@@ -13090,7 +13090,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Conic-Programming">Conic Programming<a class="anchor-link" href="#Conic-Programming">&#182;</a></h1><h2 id="Primal-and-dual-form">Primal and dual form<a class="anchor-link" href="#Primal-and-dual-form">&#182;</a></h2><p>VSDP can handle three self dual convex cones $\mathcal{K}$,
+<h1 id="Conic-Programming">Conic Programming<a class="anchor-link" href="#Conic-Programming">&#182;</a></h1><h2 id="Primal-and-dual-form">Primal and dual form<a class="anchor-link" href="#Primal-and-dual-form">&#182;</a></h2><p>VSDP can handle three self dual convex cones,
 that often occur in practical applications.
 These are:</p>
 
@@ -13151,7 +13151,7 @@ $c^{l} \in \mathbb{R}^{n_{l}}$,
 $c_{i}^{q} \in \mathbb{R}^{q_i}$, and
 $b \in \mathbb{R}^{m}$.
 Moreover, let $A_{1,j}^{s}, \ldots, A_{m,j}^{s}$, $C_{j}^{s}$, $X_{j}^{s}$
-be symmetric $(s_{j} \times s_{j})$ matrices for $j = 1, \ldots, n_{s}$.</p>
+be symmetric $s_{j} \times s_{j}$ matrices for $j = 1, \ldots, n_{s}$.</p>
 
 </div>
 </div>
@@ -13159,7 +13159,7 @@ be symmetric $(s_{j} \times s_{j})$ matrices for $j = 1, \ldots, n_{s}$.</p>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now we can define the conic semidefinite-quadratic-linear programming problem in primal standard form:
+<p>Now we can define the conic semidefinite-quadratic-linear programming problem in primal standard form
 $$
 \begin{array}{ll}
 \text{minimize} &amp;
@@ -13235,7 +13235,7 @@ $Z_{j}^{s} \in \mathbb{S}^{s_{j}}_{+}$, $j = 1, \ldots, n_{s}$.</p>
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The objective functions and equality constraints of the primal and dual problem are linear.
-Thus conic programming can be seen an extension of linear programming
+Thus conic programming can be seen as an extension of linear programming
 with additional conic constraints.</p>
 
 </div>
@@ -13247,7 +13247,7 @@ with additional conic constraints.</p>
 <p>By definition the vector $x^{f}$ contains all unconstrained or free variables,
 whereas all other variables are bounded by conic constraints.
 In several applications some solvers (for example SDPA or CSDP) require that
-free variables are converted into the difference of nonnegative variables.
+free variables are converted into the difference of non-negative variables.
 Besides the major disadvantage that this transformation is numerical unstable,
 it also increases the number of variables of the particular problems.
 In VSDP <a href="s07_free_variables.html">free variables</a>
@@ -13261,7 +13261,7 @@ can be handled in a numerical stable manner.</p>
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Condensed-form">Condensed form<a class="anchor-link" href="#Condensed-form">&#182;</a></h1><p>Occasionally, it is useful to represent the conic programming problem in a
 more compact form by using the symmetric vectorization operator.
-This operator maps a symmetric matrix $X \in \mathbb{S}^{n \times n}$
+This operator maps a symmetric matrix $X \in \mathbb{S}^{n}$
 to an $n(n + 1)/2$-dimensional vector
 $$
 svec(X, \alpha) :=
@@ -13270,7 +13270,11 @@ X_{11} &amp; \alpha X_{12} &amp; X_{22} &amp; \alpha X_{13} &amp; \cdots &amp;  
 \end{pmatrix}^{T},
 $$
 where $\alpha$ is a scaling factor for the off diagonal elements.
-The inverse operation is denoted by $smat(x)$ such that $smat(svec(X)) = X$.</p>
+The inverse operation is denoted by $smat$ such that
+$smat(svec(X, \alpha), 1/\alpha) = X$.
+For a vectorized quantity $x$, scaled by $\alpha$,
+we often write $x \in \mathbb{S}^{n}$ as abbreviation for
+$smat(x, 1/\alpha) \in \mathbb{S}^{n}$.</p>
 
 </div>
 </div>
@@ -13283,7 +13287,7 @@ quantity.  Additionally, by using the scaling factor $\alpha = 1$ for all
 $A_{kj}^{s}$, $C_{j}^{s}$, and $Z_{j}^{s}$ and the scaling factor
 $\alpha = 2$ for all $X_{j}^{s}$, the inner product of symmetric matrices
 reduces to a simple scalar product of two vectors.  Thus all cones can be
-treated in exactly the same way.</p>
+treated equally.</p>
 
 </div>
 </div>
@@ -13322,8 +13326,8 @@ $$
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>where $n = n_{f} + n_{l} + \sum_{i = 1}^{n_{q}} q_{i} + \sum_{j = 1}^{n_{s}} s_{j}(s_{j} + 1)/2$
-and $A^{T}$ becomes an $n \times m$ matrix</p>
+<p>where $n = n_{f} + n_{l} + \sum_{i = 1}^{n_{q}} q_{i} + \sum_{j = 1}^{n_{s}} s_{j}(s_{j} + 1)/2$.
+$A^{T}$ becomes an $n \times m$ matrix</p>
 
 </div>
 </div>
@@ -13426,7 +13430,7 @@ The third is the primal objective vector <code>c</code>,
 and the last describes the underlying cone.
 The cone <code>K</code> is a structure with four fields: <code>K.f</code>, <code>K.l</code>, <code>K.q</code>, and <code>K.s</code>.
 The field <code>K.f</code> stores the number of free variables $n_{f}$,
-the field <code>K.l</code> stores the number of nonnegative variables $n_{l}$,
+the field <code>K.l</code> stores the number of non-negative variables $n_{l}$,
 the field <code>K.q</code> stores the dimensions $q_{1}, \ldots, q_{n_{q}}$ of the second order cones,
 and similarly <code>K.s</code> stores the dimensions $s_{1}, \ldots, s_{n_{s}}$ of the semidefinite cones.
 If a component of <code>K</code> is empty,
@@ -13481,7 +13485,7 @@ positive at optimality.</p>
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Duality theory is central to the study of optimization.
 Firstly, algorithms are frequently based on duality
-(like primal-dual interior point methods),
+(like primal-dual interior-point methods),
 secondly, they enable one to check whether or not a given feasible point is optimal,
 and thirdly, it allows one to compute verified results efficiently.</p>
 
@@ -13491,8 +13495,9 @@ and thirdly, it allows one to compute verified results efficiently.</p>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Interval-arithmetic">Interval arithmetic<a class="anchor-link" href="#Interval-arithmetic">&#182;</a></h1><p>For the usage of VSDP a knowledge of interval arithmetic is not required.
-Intervals are only used to specify error bounds.
+<h1 id="Interval-arithmetic">Interval arithmetic<a class="anchor-link" href="#Interval-arithmetic">&#182;</a></h1><p>For the usage of VSDP a knowledge of interval arithmetic is not required,
+but some error bound outputs are intervals.
+Therefore we give a very brief introduction to interval formats.
 An interval vector or an interval matrix is defined as a set of vectors or matrices
 that vary between a lower and an upper vector or matrix,
 respectively.
