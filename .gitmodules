@@ -34,6 +34,6 @@
 [submodule "vsdp/2006"]
 	path = vsdp/2006
 	url = https://github.com/vsdp/vsdp-2006.git
-[submodule "vsdp/2018"]
-	path = vsdp/2018
-	url = https://github.com/vsdp/vsdp-2018.git
+[submodule "vsdp/2020"]
+	path = vsdp/2020
+	url = https://github.com/vsdp/vsdp-2020.git
