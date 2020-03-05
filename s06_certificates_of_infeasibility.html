@@ -13080,7 +13080,6 @@ div#notebook {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-octave"><pre><span></span><span class="nb">run</span> <span class="p">(</span><span class="nb">fullfile</span> <span class="p">(</span><span class="s">&#39;..&#39;</span><span class="p">,</span> <span class="s">&#39;install_vsdp.m&#39;</span><span class="p">))</span>
-<span class="nb">warning</span> <span class="p">(</span><span class="s">&#39;off&#39;</span><span class="p">,</span> <span class="s">&#39;Octave:legacy-function&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13287,8 +13286,8 @@ it pstep dstep pinfeas dinfeas  gap      prim-obj      dual-obj    cputime
   sqlp stop: primal or dual is diverging, 9.1e+16
 -------------------------------------------------------------------
  number of iterations   =  6
- Total CPU time (secs)  = 0.31  
- CPU time per iteration = 0.05  
+ Total CPU time (secs)  = 0.22  
+ CPU time per iteration = 0.04  
  termination code       =  3
  DIMACS: 3.4e-01  0.0e+00  0.0e+00  0.0e+00  -1.0e+00  1.3e-02
 -------------------------------------------------------------------
@@ -13830,7 +13829,7 @@ obj =
 
   obj.solutions.approximate:
 
-      Solver &#39;sdpt3&#39;: Primal infeasible, 0.6 seconds.
+      Solver &#39;sdpt3&#39;: Primal infeasible, 0.4 seconds.
 
         c&#39;*x = 0.000000000000000e+00
         b&#39;*y = 1.000000000000000e+00
@@ -13841,7 +13840,7 @@ obj =
     &#39;obj = obj.rigorous_lower_bound()&#39;
   obj.solutions.rigorous_upper_bound:
 
-      Solver &#39;sdpt3&#39;: Unknown, 0.7 seconds, 1 iterations.
+      Solver &#39;sdpt3&#39;: Unknown, 0.4 seconds, 1 iterations.
 
           fU = Inf
 
@@ -14004,7 +14003,7 @@ $\langle \tilde{y}, b \rangle$ is positive:</p>
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>intval ans = 
-[    0.9999,    1.0001] 
+[    1.0000,    1.0000] 
 </pre>
 </div>
 </div>

@@ -13080,7 +13080,6 @@ div#notebook {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-octave"><pre><span></span><span class="nb">run</span> <span class="p">(</span><span class="nb">fullfile</span> <span class="p">(</span><span class="s">&#39;..&#39;</span><span class="p">,</span> <span class="s">&#39;install_vsdp.m&#39;</span><span class="p">))</span>
-<span class="nb">warning</span> <span class="p">(</span><span class="s">&#39;off&#39;</span><span class="p">,</span> <span class="s">&#39;Octave:legacy-function&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13380,7 +13379,7 @@ and <code>vsdp.rigorous_upper_bound</code>:</p>
 
   obj.solutions.approximate:
 
-      Solver &#39;sdpt3&#39;: Normal termination, 0.7 seconds.
+      Solver &#39;sdpt3&#39;: Normal termination, 0.5 seconds.
 
         c&#39;*x = -2.749999966056186e+00
         b&#39;*y = -2.750000014595577e+00
@@ -13388,15 +13387,15 @@ and <code>vsdp.rigorous_upper_bound</code>:</p>
 
   obj.solutions.rigorous_lower_bound:
 
-      Normal termination, 0.1 seconds, 0 iterations.
+      Normal termination, 0.0 seconds, 0 iterations.
 
           fL = -2.750000014595577e+00
 
   obj.solutions.rigorous_upper_bound:
 
-      Normal termination, 0.1 seconds, 0 iterations.
+      Normal termination, 0.0 seconds, 0 iterations.
 
-          fU = -2.749999966061940e+00
+          fU = -2.749999966061941e+00
 
 
 
@@ -13972,7 +13971,7 @@ and one can start the computations with VSDP.</p>
 
   obj.solutions.approximate:
 
-      Solver &#39;sdpt3&#39;: Normal termination, 1.2 seconds.
+      Solver &#39;sdpt3&#39;: Normal termination, 0.6 seconds.
 
         c&#39;*x = -4.999999947476755e-01
         b&#39;*y = -5.000000065021177e-01
@@ -13980,15 +13979,15 @@ and one can start the computations with VSDP.</p>
 
   obj.solutions.rigorous_lower_bound:
 
-      Solver &#39;sdpt3&#39;: Normal termination, 1.3 seconds, 1 iterations.
+      Normal termination, 0.0 seconds, 0 iterations.
 
-          fL = -5.000000146303779e-01
+          fL = -5.000000065021177e-01
 
   obj.solutions.rigorous_upper_bound:
 
-      Solver &#39;sdpt3&#39;: Normal termination, 1.3 seconds, 1 iterations.
+      Solver &#39;sdpt3&#39;: Normal termination, 0.7 seconds, 1 iterations.
 
-          fU = -4.999999865227940e-01
+          fU = -4.999999933708725e-01
 
 
 
@@ -14041,7 +14040,7 @@ The accuracy of rigorous the error bounds can again be measured by</p>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>mu =    2.8108e-08
+<pre>mu =    1.3131e-08
 </pre>
 </div>
 </div>
@@ -14111,7 +14110,7 @@ one can apply SeDuMi to the same problem:</p>
 
   obj.solutions.approximate:
 
-      Solver &#39;sedumi&#39;: Normal termination, 0.6 seconds.
+      Solver &#39;sedumi&#39;: Normal termination, 0.5 seconds.
 
         c&#39;*x = -4.999990761443555e-01
         b&#39;*y = -4.999968121457571e-01
@@ -14119,15 +14118,15 @@ one can apply SeDuMi to the same problem:</p>
 
   obj.solutions.rigorous_lower_bound:
 
-      Solver &#39;sedumi&#39;: Normal termination, 0.6 seconds, 1 iterations.
+      Solver &#39;sedumi&#39;: Normal termination, 0.5 seconds, 1 iterations.
 
-          fL = -5.000035826169670e-01
+          fL = -5.000035760394096e-01
 
   obj.solutions.rigorous_upper_bound:
 
-      Solver &#39;sedumi&#39;: Normal termination, 0.6 seconds, 1 iterations.
+      Solver &#39;sedumi&#39;: Normal termination, 0.5 seconds, 1 iterations.
 
-          fU = -4.999953346395458e-01
+          fU = -4.999953448740588e-01
 
 
 
@@ -14260,7 +14259,7 @@ For example compare the accuracy of SeDuMi below with SDPT3 above:</p>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>acc_mu =    8.2480e-06
+<pre>acc_mu =    8.2312e-06
 </pre>
 </div>
 </div>

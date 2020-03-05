@@ -45,7 +45,7 @@ Appendix
 ## Available VSDP versions
 
 - The VSDP versions numbers reflect the release date:
-  - [VSDP 2018](https://github.com/vsdp/vsdp-2018)
+  - [VSDP 2020](https://github.com/vsdp/vsdp-2020)
     - Improvements: solver support and detection, workflow, testing, and
       documentation.
   - [VSDP 2012](https://github.com/vsdp/vsdp-2012)
